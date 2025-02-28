@@ -17,8 +17,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
-//# include "libft.h"
-//# include "MLX42.h"
+# include "libft.h"
+# include "MLX42.h"
 # include <stdbool.h>
 
 enum e_errors
