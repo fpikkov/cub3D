@@ -48,7 +48,6 @@ all: lftbuild ${MLX_BUILD} | ${BUILD}
 ${BUILD}: ${OBJS}
 	@echo "${GREEN}Generating build...${CLEAR}"
 	@mkdir -p ${BUILD_DIR}
-	@make -C ${LFT_DIR}
 	@${CC} ${CFLAGS} -o $@ $^ ${LIB_FLAGS} ${MLX_FLAGS}
 	@echo "${GREEN}Executable ${YELLOW}${NAME}${GREEN} was created in ${YELLOW}"${BUILD_DIR}"${CLEAR}"
 
@@ -64,7 +63,7 @@ ${MLX_BUILD}:
 	fi
 	@echo "${CYAN}Building mlx42 library...${CLEAR}"
 	@cmake -S ${MLX_DIR} -B ${MLX_BUILD}
-	@make -C ${MLX_BUILD}
+	@make --no-print-directory -C ${MLX_BUILD}
 
 lftbuild:
 	@make --no-print-directory -C ${LFT_DIR}
@@ -75,7 +74,6 @@ debug: lftbuild ${MLX_BUILD} | ${DBG_BUILD}
 ${DBG_BUILD}: ${OBJS}
 	@echo "${GREEN}Generating debug build...${CLEAR}"
 	@mkdir -p ${BUILD_DIR}
-	@make -C ${LFT_DIR}
 	@$(CC) $(DBG_FLAGS) -o $@ $^ $(LIB_FLAGS) $(MLX_FLAGS)
 	@echo "${GREEN}Executable ${YELLOW}${DBG_NAME}${GREEN} was created in ${YELLOW}"${BUILD_DIR}"${CLEAR}"
 
