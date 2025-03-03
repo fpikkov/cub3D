@@ -19,17 +19,17 @@
 # include <string.h>
 # include "libft.h"
 # include "MLX42.h"
-# include <stdbool.h>
 
-enum e_errors
-{
-	FILE_NO_ARGS = 200,
-	FILE_INVALID_EXTENSION,
-	FILE_BYTES_READ,
-	MAP_MISSING_WALLS,
-	MAP_INVALID_PATH,
-	MAP_INVALID_FORMAT,
-	MAP_NO_PLAYER,
-};
+# include "types.h"
+# include "constants.h"
+
+// Parsing functions
+
+bool	parse_data(int argc, char **argv, t_data *data);
+
+
+// Utility functions
+
+void	print_error(t_errors error, bool warning, bool quit);
 
 #endif

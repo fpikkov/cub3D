@@ -37,8 +37,12 @@ DBG_BUILD = ${BUILD_DIR}/${DBG_NAME}
 
 # Paths to source files, add additinal dirs here
 VPATH = ${SRC_DIR}/main/ \
+		${SRC_DIR}/parser/ \
+		${SRC_DIR}/utils/ \
 
 SRCS =	main.c \
+		parser.c \
+		error.c \
 
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}
 
