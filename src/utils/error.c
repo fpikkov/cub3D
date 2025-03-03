@@ -31,7 +31,7 @@ void	print_error(t_errors error, bool warning, bool quit)
 {
 	if (!warning)
 	{
-		ft_putstr_fd("\033[1;31m", STDERR_FILENO);
+		ft_putstr_fd(RED, STDERR_FILENO);
 		ft_putstr_fd("error: ", STDERR_FILENO);
 	}
 	else
