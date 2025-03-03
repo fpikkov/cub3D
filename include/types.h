@@ -29,6 +29,7 @@ typedef enum e_errors
 	MAP_INVALID_PATH,
 	MAP_INVALID_FORMAT,
 	MAP_NO_PLAYER,
+	SYS_MALLOC,
 }	t_errors;
 
 typedef union u_color

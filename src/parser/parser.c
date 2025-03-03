@@ -38,6 +38,9 @@ bool	parse_data(int argc, char **argv, t_data *data)
 		print_error(FILE_MULTIPLE_ARGS, true, false);
 	if (!check_ext(argv[1]))
 		print_error(FILE_INVALID_EXTENSION, false, true);
+	// TODO: check the textures and colors, store them in a struct. Can do during first read.
+	// TODO: read lines from the file, check how many lines neeed to be allocated
+	// and how big the longest line is.
 
 	return (true);
 }

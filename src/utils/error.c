@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-static const char	*g_message[12] = {
+static const char	*g_message[13] = {
 	"missing argument to map file",
 	"ignoring multiple arguments",
 	"invalid file extension",
@@ -24,7 +24,8 @@ static const char	*g_message[12] = {
 	"the given map is not enclosed by walls",
 	"all empty cells could not be reached",
 	"given map was not formatted correctly",
-	"missing player position in the given map"
+	"missing player position in the given map",
+	"allocation failure"
 };
 
 void	print_error(t_errors error, bool warning, bool quit)
