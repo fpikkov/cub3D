@@ -42,6 +42,8 @@ VPATH = ${SRC_DIR}/main/ \
 
 SRCS =	main.c \
 		parser.c \
+		parse_textures.c \
+		parse_texture_utils.c \
 		error.c \
 
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}

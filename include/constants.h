@@ -22,4 +22,12 @@
 # define YLW "\033[1;33m"
 # define CLR "\033[0m"
 
+// Parsing
+# define SEPARATOR " \v\t\f\r"
+# define VALUE_SEPARATOR " .,"
+# define NUMBERS "0123456789"
+# define CONT 1
+# define STOP 0
+# define CRITICAL -1
+
 #endif

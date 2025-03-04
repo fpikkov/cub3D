@@ -16,6 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
+	ft_memset(&data, 0, sizeof(t_data));
 	if (!parse_data(argc, argv, &data))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

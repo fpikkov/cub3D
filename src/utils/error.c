@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-static const char	*g_message[13] = {
+static const char	*g_message[14] = {
 	"missing argument to map file",
 	"ignoring multiple arguments",
 	"invalid file extension",
@@ -21,6 +21,7 @@ static const char	*g_message[13] = {
 	"multiple texture parameters found, defaulting to the first occurence",
 	"map did not include the nescessary texture information",
 	"unable to process texture information",
+	"failed to convert texture to image",
 	"the given map is not enclosed by walls",
 	"all empty cells could not be reached",
 	"given map was not formatted correctly",

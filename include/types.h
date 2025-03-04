@@ -22,9 +22,10 @@ typedef enum e_errors
 	FILE_INVALID_EXTENSION,
 	FILE_NO_OPEN,
 	FILE_BYTES_READ,
-	FILE_DUPLICATE_PARAMS,
 	FILE_MISSING_PARAMS,
-	FILE_TEXTURE_NO_OPEN,
+	TEXTURE_DUPLICATE,
+	TEXTURE_NO_OPEN,
+	TEXTURE_FAILURE,
 	MAP_MISSING_WALLS,
 	MAP_INVALID_PATH,
 	MAP_INVALID_FORMAT,
@@ -32,15 +33,25 @@ typedef enum e_errors
 	SYS_MALLOC,
 }	t_errors;
 
+typedef enum e_direction
+{
+	NORTH = 0,
+	EAST,
+	SOUTH,
+	WEST,
+	FLOOR,
+	CEILING
+}	t_direction;
+
 typedef union u_color
 {
-	struct s_col
+	struct
 	{
 		uint8_t	red;
 		uint8_t	green;
 		uint8_t	blue;
 		uint8_t	alpha;
-	};
+	}			s_col;
 	uint32_t	value;
 }				t_color;
 
@@ -57,6 +68,7 @@ typedef struct s_imgs
 typedef struct s_data
 {
 	mlx_t	*mlx;
+	t_imgs	imgs;
 
 }	t_data;
 
