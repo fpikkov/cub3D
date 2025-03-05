@@ -12,35 +12,52 @@
 
 #include "cube.h"
 
-static bool	check_ext(const char *filename)
+static bool	check_ext(char **argv)
 {
 	char	*ext;
+	int		idx;
 
-	ext = ft_strrchr(filename, '.');
-	if (!ext)
-		return (false);
-	if (ft_strncmp(ext, ".cub", 5))
-		return (false);
+	idx = 1;
+	while (argv[idx])
+	{
+		ext = ft_strrchr(argv[idx], '.');
+		if (!ext)
+			return (false);
+		if (ft_strncmp(ext, ".cub", 5))
+			return (false);
+		idx++;
+	}
 	return (true);
 
 }
 
 /**
- * @brief Parses data given in as program argument
+ * @brief Parses data given in as program argument.
  * @param data struct to game data passed in by pointer to the struct
  * @return true if successfull, otherwise false
  */
 bool	parse_data(int argc, char **argv, t_data *data)
 {
-	if (argc < 2)
-		print_error(FILE_NO_ARGS, false, true);
-	if (argc > 2)
-		print_error(FILE_MULTIPLE_ARGS, true, false);
-	if (!check_ext(argv[1]))
-		print_error(FILE_INVALID_EXTENSION, false, true);
-	// TODO: check the textures and colors, store them in a struct. Can do during first read.
-	// TODO: read lines from the file, check how many lines neeed to be allocated
-	// and how big the longest line is.
+	int	idx;
 
+	if (argc < 2)
+	{
+		print_error(FILE_NO_ARGS, false);
+		return (false);
+	}
+	if (!check_ext(argv))
+	{
+		print_error(FILE_INVALID_EXTENSION, false);
+		return (false);
+	}
+	idx = 1;
+	while (argv[idx])
+	{
+		if (!new_level_node(data))
+			return (false);
+		if (!parse_textures(argv[idx], data))
+			return (false);
+		// TODO: Parse each map
+	}
 	return (true);
 }

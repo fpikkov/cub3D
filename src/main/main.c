@@ -18,6 +18,10 @@ int	main(int argc, char **argv)
 
 	ft_memset(&data, 0, sizeof(t_data));
 	if (!parse_data(argc, argv, &data))
+	{
+		delete_levels(&data);
 		return (EXIT_FAILURE);
+	}
+	delete_levels(&data);
 	return (EXIT_SUCCESS);
 }

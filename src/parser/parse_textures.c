@@ -14,23 +14,29 @@
 
 /**
  * @brief Reads color and texture information from file
+ * @param filename the file which to read from
+ * @param data struct which contains levels where textures get stored
  * @return false if a critial error occured
  */
 bool	parse_textures(char *filename, t_data *data)
 {
-	int	fd;
-	int	ret;
+	t_level	*lvl;
+	int		fd;
+	int		ret;
 
 	ret = 0;
+	lvl = data->levels;
+	while (lvl->next)
+		lvl = lvl->next;
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		print_error(FILE_NO_OPEN, false, false);
+		print_error(FILE_NO_OPEN, false);
 		return (false);
 	}
 	while (true)
 	{
-		ret = parse_color_data(fd, data);
+		ret = parse_color_data(fd, lvl);
 		if (ret == STOP || ret == CRITICAL)
 			break ;
 	}

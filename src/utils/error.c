@@ -13,13 +13,12 @@
 #include "cube.h"
 
 static const char	*g_message[14] = {
-	"missing argument to map file",
-	"ignoring multiple arguments",
+	"missing argument to map file(s)",
 	"invalid file extension",
 	"unable to open file",
 	"bytes read from file was less than expected",
-	"multiple texture parameters found, defaulting to the first occurence",
 	"map did not include the nescessary texture information",
+	"multiple texture parameters found, defaulting to the first occurence",
 	"unable to process texture information",
 	"failed to convert texture to image",
 	"the given map is not enclosed by walls",
@@ -29,7 +28,7 @@ static const char	*g_message[14] = {
 	"allocation failure"
 };
 
-void	print_error(t_errors error, bool warning, bool quit)
+void	print_error(t_errors error, bool warning)
 {
 	if (!warning)
 	{
@@ -43,9 +42,4 @@ void	print_error(t_errors error, bool warning, bool quit)
 	}
 	ft_putendl_fd(g_message[(error - 200)], STDERR_FILENO);
 	ft_putstr_fd(CLR, STDERR_FILENO);
-	if (quit)
-	{
-		ft_putendl_fd("exiting", STDERR_FILENO);
-		exit(EXIT_FAILURE);
-	}
 }

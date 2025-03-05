@@ -18,7 +18,6 @@
 typedef enum e_errors
 {
 	FILE_NO_ARGS = 200,
-	FILE_MULTIPLE_ARGS,
 	FILE_INVALID_EXTENSION,
 	FILE_NO_OPEN,
 	FILE_BYTES_READ,
@@ -53,7 +52,7 @@ typedef union u_color
 		uint8_t	alpha;
 	}			s_col;
 	uint32_t	value;
-}				t_color;
+}	t_color;
 
 typedef struct s_imgs
 {
@@ -65,11 +64,22 @@ typedef struct s_imgs
 	t_color		ceiling;
 }	t_imgs;
 
+typedef struct s_level
+{
+	size_t	index;
+	char	**map;
+	char	direction;
+	int32_t	player_x;
+	int32_t	player_y;
+	t_imgs	imgs;
+	mlx_t	**mlx;
+	t_level	*next;
+}	t_level;
+
 typedef struct s_data
 {
 	mlx_t	*mlx;
-	t_imgs	imgs;
-
+	t_level	*levels;
 }	t_data;
 
 #endif

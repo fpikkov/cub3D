@@ -28,12 +28,16 @@
 // Parsing functions
 
 bool	parse_data(int argc, char **argv, t_data *data);
-int		parse_color_data(int fd, t_data *data);
 bool	parse_textures(char *filename, t_data *data);
-
+int		parse_color_data(int fd, t_level *lvl);
+bool	new_level_node(t_data *data);
 
 // Utility functions
 
-void	print_error(t_errors error, bool warning, bool quit);
+void	print_error(t_errors error, bool warning);
+
+// Cleanup functions
+
+void	delete_levels(t_data *data);
 
 #endif
