@@ -66,14 +66,14 @@ typedef struct s_imgs
 
 typedef struct s_level
 {
-	size_t	index;
-	char	**map;
-	char	direction;
-	int32_t	player_x;
-	int32_t	player_y;
-	t_imgs	imgs;
-	mlx_t	**mlx;
-	t_level	*next;
+	size_t			index;
+	char			**map;
+	char			direction;
+	int32_t			player_x;
+	int32_t			player_y;
+	t_imgs			imgs;
+	mlx_t			**mlx;
+	struct s_level	*next;
 }	t_level;
 
 typedef struct s_data
