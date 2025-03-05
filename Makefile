@@ -46,6 +46,7 @@ SRCS =	main.c \
 		parse_texture_utils.c \
 		linked_level.c \
 		error.c \
+		cleanup.c \
 
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}
 
