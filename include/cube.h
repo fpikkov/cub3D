@@ -39,5 +39,6 @@ void	print_error(t_errors error, bool warning);
 // Cleanup functions
 
 void	delete_levels(t_data *data);
+void	cube_terminate(t_data *data);
 
 #endif

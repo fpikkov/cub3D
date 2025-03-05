@@ -16,6 +16,7 @@
 // Window configuration
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
+# define TITLE "John Carmero"
 
 // ANSI color macros
 # define RED "\033[1;31m"
