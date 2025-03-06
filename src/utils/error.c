@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-static const char	*g_message[14] = {
+static const char	*g_message[18] = {
 	"missing argument to map file(s)",
 	"invalid file extension",
 	"unable to open file",
@@ -25,8 +25,18 @@ static const char	*g_message[14] = {
 	"all empty cells could not be reached",
 	"given map was not formatted correctly",
 	"missing player position in the given map",
+	"no starting point for the map detected",
+	"unknown characters detected in the given map",
+	"too many player positions detected in the given map",
+	"the given map is not closed properly",
 	"allocation failure"
 };
+
+void	*malloc_error(void)
+{
+	print_error(SYS_MALLOC);
+	return (NULL);
+}
 
 void	print_error(t_errors error, bool warning)
 {
