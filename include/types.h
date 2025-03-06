@@ -42,16 +42,12 @@ typedef enum e_direction
 	CEILING
 }	t_direction;
 
-typedef union u_color
+typedef struct s_color
 {
-	struct
-	{
-		uint8_t	red;
-		uint8_t	green;
-		uint8_t	blue;
-		uint8_t	alpha;
-	}			s_col;
-	uint32_t	value;
+	uint8_t	red;
+	uint8_t	green;
+	uint8_t	blue;
+	uint8_t	alpha;
 }	t_color;
 
 typedef struct s_imgs
@@ -60,8 +56,8 @@ typedef struct s_imgs
 	mlx_image_t	*east;
 	mlx_image_t	*south;
 	mlx_image_t	*west;
-	t_color		floor;
-	t_color		ceiling;
+	mlx_image_t	*floor;
+	mlx_image_t	*ceiling;
 }	t_imgs;
 
 typedef struct s_level

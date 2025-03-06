@@ -32,7 +32,7 @@ static char	*g_message[14] = {
  * @brief Prints an error message based on the given error enumerator
  * @param error error enum
  * @param warning should we print a warning instead of messsage
- * @return always false for compactng code
+ * @return false in most cases unless exiting program
  */
 bool	print_error(t_errors error, bool warning)
 {
@@ -48,5 +48,7 @@ bool	print_error(t_errors error, bool warning)
 	}
 	ft_putendl_fd(g_message[(error - 200)], STDERR_FILENO);
 	ft_putstr_fd(CLR, STDERR_FILENO);
+	if (error == FILE_NO_ARGS)
+		return (true);
 	return (false);
 }

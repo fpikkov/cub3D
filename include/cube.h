@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
+# include <stdio.h>
 # include "libft.h"
 # include "get_next_line.h"
 # include "ft_printf.h"
@@ -27,9 +28,10 @@
 
 // Parsing functions
 
-bool	parse_data(int argc, char **argv, t_data *data);
+bool	parse_data(char **argv, t_data *data);
 bool	parse_textures(char *filename, t_data *data);
 int		parse_color_data(int fd, t_level *lvl);
+bool	load_color(char *buffer, t_level *lvl, int direction);
 bool	new_level_node(t_data *data);
 
 // Utility functions
@@ -39,6 +41,6 @@ bool	print_error(t_errors error, bool warning);
 // Cleanup functions
 
 void	delete_levels(t_data *data);
-void	cube_terminate(t_data *data);
+void	terminate(t_data *data);
 
 #endif

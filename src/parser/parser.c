@@ -28,7 +28,6 @@ static bool	check_ext(char **argv)
 		idx++;
 	}
 	return (true);
-
 }
 
 /**
@@ -36,12 +35,10 @@ static bool	check_ext(char **argv)
  * @param data struct to game data passed in by pointer to the struct
  * @return true if successfull, otherwise false
  */
-bool	parse_data(int argc, char **argv, t_data *data)
+bool	parse_data(char **argv, t_data *data)
 {
 	int	idx;
 
-	if (argc < 2)
-		return (print_error(FILE_NO_ARGS, false));
 	if (!check_ext(argv))
 		return (print_error(FILE_INVALID_EXTENSION, false));
 	idx = 1;
@@ -53,6 +50,7 @@ bool	parse_data(int argc, char **argv, t_data *data)
 			return (false);
 		// TODO: Parse each map
 		// TODO: Vallidate map
+		idx++;
 	}
 	return (true);
 }

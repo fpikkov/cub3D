@@ -33,6 +33,10 @@ static void	delete_level_data(t_level *lvl)
 		mlx_delete_image(*lvl->mlx, lvl->imgs.south);
 	if (lvl->imgs.west)
 		mlx_delete_image(*lvl->mlx, lvl->imgs.west);
+	if (lvl->imgs.floor)
+		mlx_delete_image(*lvl->mlx, lvl->imgs.floor);
+	if (lvl->imgs.ceiling)
+		mlx_delete_image(*lvl->mlx, lvl->imgs.ceiling);
 	lvl->mlx = NULL;
 }
 

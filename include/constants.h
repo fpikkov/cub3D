@@ -14,8 +14,8 @@
 # define CONSTANTS_H
 
 // Window configuration
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
+# define W_WIDTH 1920
+# define W_HEIGHT 1080
 # define TITLE "John Carmero"
 
 // ANSI color macros
@@ -24,8 +24,8 @@
 # define CLR "\033[0m"
 
 // Parsing
-# define SEPARATOR " \v\t\f\r"
-# define VALUE_SEPARATOR " .,"
+# define SEPARATOR " \v\t\f\r\n"
+# define VALUE_SEPARATOR " .,\t\v"
 # define NUMBERS "0123456789"
 # define CONT 1
 # define STOP 0
