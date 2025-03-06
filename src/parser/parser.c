@@ -41,15 +41,9 @@ bool	parse_data(int argc, char **argv, t_data *data)
 	int	idx;
 
 	if (argc < 2)
-	{
-		print_error(FILE_NO_ARGS, false);
-		return (false);
-	}
+		return (print_error(FILE_NO_ARGS, false));
 	if (!check_ext(argv))
-	{
-		print_error(FILE_INVALID_EXTENSION, false);
-		return (false);
-	}
+		return (print_error(FILE_INVALID_EXTENSION, false));
 	idx = 1;
 	while (argv[idx])
 	{

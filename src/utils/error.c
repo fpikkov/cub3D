@@ -28,7 +28,13 @@ static const char	*g_message[14] = {
 	"allocation failure"
 };
 
-void	print_error(t_errors error, bool warning)
+/**
+ * @brief Prints an error message based on the given error enumerator
+ * @param error error enum
+ * @param warning should we print a warning instead of messsage
+ * @return always false for compactng code
+ */
+bool	print_error(t_errors error, bool warning)
 {
 	if (!warning)
 	{

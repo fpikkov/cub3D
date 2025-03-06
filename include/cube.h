@@ -34,7 +34,7 @@ bool	new_level_node(t_data *data);
 
 // Utility functions
 
-void	print_error(t_errors error, bool warning);
+bool	print_error(t_errors error, bool warning);
 
 // Cleanup functions
 

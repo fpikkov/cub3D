@@ -19,10 +19,7 @@ static bool	store_as_image(mlx_texture_t *tex, mlx_image_t **loc, t_level *lvl)
 	else
 		*loc = mlx_texture_to_image(*lvl->mlx, tex);
 	if (!*loc)
-	{
-		print_error(TEXTURE_FAILURE, false);
-		return (false);
-	}
+		return (print_error(TEXTURE_FAILURE, false));
 	return (true);
 }
 
