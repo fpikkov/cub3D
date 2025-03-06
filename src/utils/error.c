@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-static const char	*g_message[14] = {
+static char	*g_message[14] = {
 	"missing argument to map file(s)",
 	"invalid file extension",
 	"unable to open file",

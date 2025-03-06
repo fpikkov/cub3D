@@ -36,10 +36,8 @@ static bool	load_texture(char *buffer, t_level *lvl, int direction)
 		return (true);
 	texture = mlx_load_png(buffer + idx);
 	if (!texture)
-	{
-		print_error(TEXTURE_NO_OPEN, true);
-		return (false);
-	}
+		return (print_error(TEXTURE_NO_OPEN, true));
+	ret = true;
 	if (direction == NORTH)
 		ret = store_as_image(texture, &lvl->imgs.north, lvl);
 	else if (direction == EAST)
@@ -120,7 +118,7 @@ int	parse_color_data(int fd, t_level *lvl)
 	idx = 0;
 	while (buffer[idx] && ft_strchr(SEPARATOR, buffer[idx]) == NULL)
 		idx++;
-	if (buffer[idx] != NULL && buffer[idx] != '#')
+	if (buffer[idx] && buffer[idx] != '#')
 	{
 		if (!is_texture_or_color(buffer, idx, lvl))
 		{
