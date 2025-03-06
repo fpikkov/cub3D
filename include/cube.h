@@ -38,7 +38,7 @@ char	**extract_map(char *file);
 
 void	space_to_zero(char **map);
 void	malloc_error(void);
-void	print_error(t_errors error, bool warning);
+bool	print_error(t_errors error, bool warning);
 
 // Cleanup functions
 

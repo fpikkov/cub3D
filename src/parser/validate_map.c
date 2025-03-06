@@ -72,19 +72,10 @@ bool	validate_map(t_data *data)
 	while (lvl->next)
 		lvl = lvl->next;
 	if (!check_unknown_characters(lvl->map))
-	{
-		print_error(MAP_UNKNOWN_CHARACTERS);
-		return (false);
-	}
+		return (print_error(MAP_UNKNOWN_CHARACTERS));
 	if (!check_single_player(lvl->map))
-	{
-		print_error(MAP_TOO_MANY_PLAYERS);
-		return (false);
-	}
+		return (print_error(MAP_TOO_MANY_PLAYERS));
 	if (!check_if_closed(lvl->map_copy, lvl->player_y, lvl->player_x))
-	{
-		print_error(MAP_NOT_CLOSED);
-		return (false);
-	}
+		return (print_error(MAP_NOT_CLOSED));
 	return (true);
 }

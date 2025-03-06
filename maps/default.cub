@@ -1,7 +1,7 @@
- NO ./path_to_north_texture
- SO ./path_to_south_texture
- WE ./path_to_west_texture
- EA ./path_to_east_texture
+ NO ./textures/missing.png
+ SO ./textures/missing.png
+ WE ./textures/missing.png
+ EA ./textures/missing.png
 
  F 220,100,0
  C 225,30,0

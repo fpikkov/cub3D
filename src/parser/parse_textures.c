@@ -30,10 +30,7 @@ bool	parse_textures(char *filename, t_data *data)
 		lvl = lvl->next;
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-	{
-		print_error(FILE_NO_OPEN, false);
-		return (false);
-	}
+		return (print_error(FILE_NO_OPEN, false));
 	while (true)
 	{
 		ret = parse_color_data(fd, lvl);

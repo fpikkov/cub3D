@@ -54,9 +54,6 @@ bool	parse_map(char *filename, t_data *data)
 	if (!lvl->map || !lvl->map_copy)
 		return (false);
 	if (!find_player_pos(lvl))
-	{
-		print_error(MAP_NO_PLAYER);
-		return (false);
-	}
+		return (print_error(MAP_NO_PLAYER));
 	return (true);
 }

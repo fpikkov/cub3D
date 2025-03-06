@@ -61,10 +61,7 @@ static t_level	*init_level_node(t_data *data)
 
 	new = (t_level *)ft_calloc(1, sizeof(t_level));
 	if (!new)
-	{
-		print_error(SYS_MALLOC, false);
-		return (NULL);
-	}
+		return ((void *)print_error(SYS_MALLOC, false));
 	new->index = idx;
 	idx++;
 	new->mlx = &data->mlx;

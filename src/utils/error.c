@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-static const char	*g_message[18] = {
+static char	*g_message[18] = {
 	"missing argument to map file(s)",
 	"invalid file extension",
 	"unable to open file",
@@ -38,7 +38,13 @@ void	*malloc_error(void)
 	return (NULL);
 }
 
-void	print_error(t_errors error, bool warning)
+/**
+ * @brief Prints an error message based on the given error enumerator
+ * @param error error enum
+ * @param warning should we print a warning instead of messsage
+ * @return always false for compactng code
+ */
+bool	print_error(t_errors error, bool warning)
 {
 	if (!warning)
 	{
@@ -52,4 +58,5 @@ void	print_error(t_errors error, bool warning)
 	}
 	ft_putendl_fd(g_message[(error - 200)], STDERR_FILENO);
 	ft_putstr_fd(CLR, STDERR_FILENO);
+	return (false);
 }
