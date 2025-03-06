@@ -38,6 +38,7 @@ static	bool	find_player_pos(t_level *lvl)
 	}
 	return (false);
 }
+
 /* Parse_map will extract the map portion from the file
 *  and memorize the player direction and the position
 *  via the find_player_pos function
@@ -54,6 +55,6 @@ bool	parse_map(char *filename, t_data *data)
 	if (!lvl->map || !lvl->map_copy)
 		return (false);
 	if (!find_player_pos(lvl))
-		return (print_error(MAP_NO_PLAYER));
+		return (print_error(MAP_NO_PLAYER, false));
 	return (true);
 }

@@ -32,12 +32,6 @@ static char	*g_message[18] = {
 	"allocation failure"
 };
 
-void	*malloc_error(void)
-{
-	print_error(SYS_MALLOC);
-	return (NULL);
-}
-
 /**
  * @brief Prints an error message based on the given error enumerator
  * @param error error enum

@@ -34,12 +34,13 @@ int		parse_color_data(int fd, t_level *lvl);
 bool	load_color(char *buffer, t_level *lvl, int direction);
 bool	new_level_node(t_data *data);
 
+bool	parse_map(char *filename, t_data *data);
 char	**extract_map(char *file);
+bool	validate_map(t_data *data);
 
 // Utility functions
 
 void	space_to_zero(char **map);
-void	malloc_error(void);
 bool	print_error(t_errors error, bool warning);
 
 // Cleanup functions
