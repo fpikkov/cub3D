@@ -29,6 +29,10 @@ typedef enum e_errors
 	MAP_INVALID_PATH,
 	MAP_INVALID_FORMAT,
 	MAP_NO_PLAYER,
+	MAP_NO_START,
+	MAP_UNKNOWN_CHARACTERS,
+	MAP_TOO_MANY_PLAYERS,
+	MAP_NOT_CLOSED,
 	SYS_MALLOC,
 }	t_errors;
 
@@ -64,6 +68,7 @@ typedef struct s_level
 {
 	size_t			index;
 	char			**map;
+	char			**map_copy;
 	char			direction;
 	int32_t			player_x;
 	int32_t			player_y;

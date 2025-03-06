@@ -48,9 +48,10 @@ bool	parse_data(char **argv, t_data *data)
 			return (false);
 		if (!parse_textures(argv[idx], data))
 			return (false);
-		// TODO: Parse each map
-		// TODO: Vallidate map
-		idx++;
+		if (!parse_map(argv[idx], data))
+			return (false);
+		if (!validate_map(data))
+			return (false);
 	}
 	return (true);
 }
