@@ -52,6 +52,7 @@ bool	parse_data(int argc, char **argv, t_data *data)
 		if (!parse_textures(argv[idx], data))
 			return (false);
 		// TODO: Parse each map
+		// TODO: Vallidate map
 	}
 	return (true);
 }

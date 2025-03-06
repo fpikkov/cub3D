@@ -48,4 +48,5 @@ bool	print_error(t_errors error, bool warning)
 	}
 	ft_putendl_fd(g_message[(error - 200)], STDERR_FILENO);
 	ft_putstr_fd(CLR, STDERR_FILENO);
+	return (false);
 }
