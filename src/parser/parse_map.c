@@ -51,8 +51,10 @@ bool	parse_map(char *filename, t_data *data)
 	while (lvl->next)
 		lvl = lvl->next;
 	lvl->map = extract_map(filename);
+	if (!lvl->map)
+		return (false);
 	lvl->map_copy = extract_map(filename);
-	if (!lvl->map || !lvl->map_copy)
+	if (!lvl->map_copy)
 		return (false);
 	if (!find_player_pos(lvl))
 		return (print_error(MAP_NO_PLAYER, false));

@@ -47,7 +47,10 @@ static	bool	check_single_player(char **map)
 		while (map[i][j])
 		{
 			if (ft_strchr("NSEW", map[i][j]))
+			{
+				map[i][j] = '0';
 				player_count++;
+			}
 			j++;
 		}
 		i++;
