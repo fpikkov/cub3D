@@ -19,12 +19,6 @@ static void	delete_level_data(t_level *lvl)
 	i = 0;
 	if (!lvl)
 		return ;
-	if (lvl->map)
-	{
-		while (lvl->map[i])
-			free(lvl->map[i++]);
-		free(lvl->map);
-	}
 	if (lvl->imgs.north)
 		mlx_delete_image(*lvl->mlx, lvl->imgs.north);
 	if (lvl->imgs.east)
