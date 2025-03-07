@@ -47,6 +47,7 @@ SRCS =	main.c \
 		parse_colors.c \
 		linked_level.c \
 		parse_map.c \
+		parse_map_utils.c \
 		extract_map.c \
 		validate_map.c \
 		error.c \

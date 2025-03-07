@@ -52,6 +52,7 @@ bool	parse_data(char **argv, t_data *data)
 			return (false);
 		if (!validate_map(data))
 			return (false);
+		idx++;
 	}
 	return (true);
 }

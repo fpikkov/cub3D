@@ -78,24 +78,27 @@ static	char	*copy_file_data(char *file)
 static	int	find_map_start(char *file_data)
 {
 	int		i;
-	int		line_start;
+	int		map_start;
+	bool	start;
 
 	i = 0;
 	while (file_data[i])
 	{
-		line_start = i;
-		while (file_data[i] && (file_data[i] == '1' || \
-		file_data[i] == '0' || file_data[i] == ' '))
-		{
-			i++;
-			if (file_data[i] && file_data[i] == '\n')
-			{
-				return (file_data[line_start]);
-			}
-		}
+		start = true;
+		map_start = i;
 		while (file_data[i] && file_data[i] != '\n')
+		{
+			if (!ft_strchr(" 01", file_data[i]))
+			{
+				while (file_data[i] && file_data[i] != '\n')
+					i++;
+				start = false;
+			}
 			i++;
-		if (file_data[i] && file_data[i] == '\n')
+		}
+		if (start == true)
+			return (map_start);
+		while (file_data[i] && file_data[i] == '\n')
 			i++;
 	}
 	return (-1);

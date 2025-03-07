@@ -15,14 +15,20 @@
 static	bool	check_unknown_characters(char **map)
 {
 	int		i;
+	int		j;
 
 	i = 0;
 	while (map[i])
 	{
-		if (!ft_strchr("01NSEW", map[i]))
-			return (false);
-		else
-			i++;
+		j = 0;
+		while (map[i][j])
+		{
+			if (!ft_strchr("01NSEW", map[i][j]))
+				return (false);
+			else
+				j++;
+		}
+		i++;
 	}
 	return (true);
 }
@@ -30,14 +36,20 @@ static	bool	check_unknown_characters(char **map)
 static	bool	check_single_player(char **map)
 {
 	int		i;
+	int		j;
 	int		player_count;
 
 	player_count = 0;
 	i = 0;
 	while (map[i])
 	{
-		if (ft_strchr("NSEW", map[i]))
-			player_count++;
+		j = 0;
+		while (map[i][j])
+		{
+			if (ft_strchr("NSEW", map[i][j]))
+				player_count++;
+			j++;
+		}
 		i++;
 	}
 	if (player_count != 1)
@@ -45,20 +57,20 @@ static	bool	check_single_player(char **map)
 	return (true);
 }
 
-static	bool	check_if_close(char **map, int y, int x)
+static	bool	check_if_closed(char **map, int y, int x)
 {
 	if (y < 0 || x < 0 || !map[y] || !map[y][x])
 		return (false);
 	if (map[y][x] == '1' || map[y][x] == 'X')
-		return ;
+		return (true);
 	map[y][x] = 'X';
-	if (!check_if_close(map, y - 1, x))
+	if (!check_if_closed(map, y - 1, x))
 		return (false);
-	if (!check_if_close(map, y + 1, x))
+	if (!check_if_closed(map, y + 1, x))
 		return (false);
-	if (!check_if_close(map, y, x - 1))
+	if (!check_if_closed(map, y, x - 1))
 		return (false);
-	if (!check_if_close(map, y, x + 1))
+	if (!check_if_closed(map, y, x + 1))
 		return (false);
 	return (true);
 }
