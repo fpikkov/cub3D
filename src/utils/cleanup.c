@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-void	cube_terminate(t_data *data)
+void	terminate(t_data *data)
 {
 	if (!data)
 		return ;

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdio.h"
+#include "cube.h"
 
 static	bool	check_unknown_characters(char **map)
 {
@@ -42,7 +42,6 @@ static	bool	check_single_player(char **map)
 	}
 	if (player_count != 1)
 		return (false);
-
 	return (true);
 }
 
@@ -66,16 +65,16 @@ static	bool	check_if_close(char **map, int y, int x)
 
 bool	validate_map(t_data *data)
 {
-	t_level *lvl;
+	t_level	*lvl;
 
 	lvl = data->levels;
 	while (lvl->next)
 		lvl = lvl->next;
 	if (!check_unknown_characters(lvl->map))
-		return (print_error(MAP_UNKNOWN_CHARACTERS));
+		return (print_error(MAP_UNKNOWN_CHARACTERS, false));
 	if (!check_single_player(lvl->map))
-		return (print_error(MAP_TOO_MANY_PLAYERS));
+		return (print_error(MAP_TOO_MANY_PLAYERS, false));
 	if (!check_if_closed(lvl->map_copy, lvl->player_y, lvl->player_x))
-		return (print_error(MAP_NOT_CLOSED));
+		return (print_error(MAP_NOT_CLOSED, false));
 	return (true);
 }

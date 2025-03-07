@@ -34,7 +34,7 @@ static	char	*map_strjoin(char *s1, char *s2)
 	{
 		free_null(&s1);
 		free_null(&s2);
-		return (malloc_error());
+		return ((void *)print_error(SYS_MALLOC, false));
 	}
 	i = -1;
 	while (s1[++i])
@@ -54,7 +54,7 @@ static	char	*copy_file_data(char *file)
 
 	file_data = ft_calloc(1, 1);
 	if (!file_data)
-		return (malloc_error());
+		return ((void *)print_error(SYS_MALLOC, false));
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
@@ -81,10 +81,11 @@ static	int	find_map_start(char *file_data)
 	int		line_start;
 
 	i = 0;
-	while(file_data[i])
+	while (file_data[i])
 	{
 		line_start = i;
-		while (file_data[i] && (file_data[i] == '1' || file_data[i] == '0' || file_data[i] == ' '))
+		while (file_data[i] && (file_data[i] == '1' || \
+		file_data[i] == '0' || file_data[i] == ' '))
 		{
 			i++;
 			if (file_data[i] && file_data[i] == '\n')
@@ -112,13 +113,13 @@ char	**extract_map(char *file)
 	map_start = find_map_start(file_data);
 	if (map_start < 0)
 	{
-		print_error(MAP_NO_START);
+		print_error(MAP_NO_START, false);
 		return (free_null(&file_data));
 	}
 	map = ft_split(&file_data[map_start], '\n');
 	if (!map)
 	{
-		print_error(SYS_MALLOC);
+		print_error(SYS_MALLOC, false);
 		return (free_null(&file_data));
 	}
 	space_to_zero(map);

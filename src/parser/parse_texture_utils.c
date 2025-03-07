@@ -23,20 +23,41 @@ static bool	store_as_image(mlx_texture_t *tex, mlx_image_t **loc, t_level *lvl)
 	return (true);
 }
 
+static char	*texture_path(char *buffer)
+{
+	char	*path;
+	size_t	start;
+	size_t	end;
+
+	if (!buffer)
+		return (NULL);
+	start = 0;
+	while (buffer[start] && ft_strchr(SEPARATOR, buffer[start]) != NULL)
+		start++;
+	end = start;
+	while (buffer[end] && ft_strchr(SEPARATOR, buffer[end]) == NULL)
+		end++;
+	path = ft_substr(buffer, start, end - start);
+	if (!path)
+		return (NULL);
+	return (path);
+}
+
 static bool	load_texture(char *buffer, t_level *lvl, int direction)
 {
 	mlx_texture_t	*texture;
-	int				idx;
+	char			*path;
 	bool			ret;
 
-	idx = 0;
-	while (buffer[idx] && ft_strchr(SEPARATOR, buffer[idx]) == NULL)
-		idx++;
-	if (!buffer[idx])
+	if (!buffer)
 		return (true);
-	texture = mlx_load_png(buffer + idx);
+	path = texture_path(buffer);
+	if (!path)
+		return (print_error(SYS_MALLOC, false));
+	texture = mlx_load_png(path);
+	free(path);
 	if (!texture)
-		return (print_error(TEXTURE_NO_OPEN, true));
+		return (print_error(TEXTURE_NO_OPEN, false));
 	ret = true;
 	if (direction == NORTH)
 		ret = store_as_image(texture, &lvl->imgs.north, lvl);
@@ -50,38 +71,6 @@ static bool	load_texture(char *buffer, t_level *lvl, int direction)
 	return (ret);
 }
 
-/**
- * NOTE: Could be improved by creating a separate argument to uint8 converter
- */
-static bool	load_color(char *buffer, t_color *loc)
-{
-	int		idx;
-
-	if (!loc)
-		return (false);
-	idx = 0;
-	while (buffer[idx] && ft_strchr(SEPARATOR, buffer[idx]) == NULL)
-		idx++;
-	loc->s_col.red = ft_atoi(buffer + idx);
-	while (buffer[idx] && ft_strchr(NUMBERS, buffer[idx]) != NULL)
-		idx++;
-	while (buffer[idx] && ft_strchr(VALUE_SEPARATOR, buffer[idx]) != NULL)
-		idx++;
-	loc->s_col.green = ft_atoi(buffer + idx);
-	while (buffer[idx] && ft_strchr(NUMBERS, buffer[idx]) != NULL)
-		idx++;
-	while (buffer[idx] && ft_strchr(VALUE_SEPARATOR, buffer[idx]) != NULL)
-		idx++;
-	loc->s_col.blue = ft_atoi(buffer + idx);
-	while (buffer[idx] && ft_strchr(NUMBERS, buffer[idx]) != NULL)
-		idx++;
-	while (buffer[idx] && ft_strchr(VALUE_SEPARATOR, buffer[idx]) != NULL)
-		idx++;
-	if (buffer[idx])
-		loc->s_col.alpha = ft_atoi(buffer + idx);
-	return (true);
-}
-
 static bool	is_texture_or_color(char *buffer, int idx, t_level *lvl)
 {
 	if (ft_strncmp(buffer + idx, "NO", 2) == 0)
@@ -93,9 +82,9 @@ static bool	is_texture_or_color(char *buffer, int idx, t_level *lvl)
 	else if (ft_strncmp(buffer + idx, "WE", 2) == 0)
 		return (load_texture(buffer + idx + 2, lvl, WEST));
 	else if (ft_strncmp(buffer + idx, "F", 1) == 0)
-		return (load_color(buffer + idx + 1, &lvl->imgs.floor));
+		return (load_color(buffer + idx + 1, lvl, FLOOR));
 	else if (ft_strncmp(buffer + idx, "C", 1) == 0)
-		return (load_color(buffer + idx + 1, &lvl->imgs.ceiling));
+		return (load_color(buffer + idx + 1, lvl, CEILING));
 	return (true);
 }
 
@@ -116,7 +105,7 @@ int	parse_color_data(int fd, t_level *lvl)
 	if (buffer == NULL)
 		return (STOP);
 	idx = 0;
-	while (buffer[idx] && ft_strchr(SEPARATOR, buffer[idx]) == NULL)
+	while (buffer[idx] && ft_strchr(SEPARATOR, buffer[idx]) != NULL)
 		idx++;
 	if (buffer[idx] && buffer[idx] != '#')
 	{
