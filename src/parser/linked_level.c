@@ -40,6 +40,10 @@ static void	delete_level_data(t_level *lvl)
 	lvl->mlx = NULL;
 }
 
+/**
+ * @brief Deletes the image data and frees up maps in all level nodes
+ * @param data the master struct of the project
+ */
 void	delete_levels(t_data *data)
 {
 	t_level	*ptr;
@@ -52,6 +56,10 @@ void	delete_levels(t_data *data)
 	{
 		nptr = ptr->next;
 		delete_level_data(ptr);
+		if (ptr->map)
+			free_map(ptr->map);
+		if (ptr->map_copy)
+			free_map(ptr->map_copy);
 		free(ptr);
 		ptr = nptr;
 	}
