@@ -39,6 +39,7 @@ DBG_BUILD = ${BUILD_DIR}/${DBG_NAME}
 VPATH = ${SRC_DIR}/main/ \
 		${SRC_DIR}/parser/ \
 		${SRC_DIR}/utils/ \
+		${SRC_DIR}/game/ \
 
 SRCS =	main.c \
 		parser.c \
@@ -52,6 +53,9 @@ SRCS =	main.c \
 		validate_map.c \
 		error.c \
 		cleanup.c \
+		keybinds.c \
+		hook.c \
+		tick.c \
 
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}
 

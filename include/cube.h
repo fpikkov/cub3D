@@ -34,6 +34,12 @@ bool	validate_map(t_data *data);
 void	space_to_zero(char **map);
 bool	print_error(t_errors error, bool warning);
 
+// Game logic
+
+void	key_hook(mlx_key_data_t keydata, void *param);
+void	game_hook(void *param);
+bool	game_tick(void);
+
 // Cleanup functions
 
 void	free_map(char **map);

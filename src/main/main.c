@@ -22,13 +22,6 @@ static bool	init_window(t_data *data)
 	return (true);
 }
 
-// TODO: Temporary function for debugging, remove or refactor later
-static void	draw_images(t_level *lvl)
-{
-	mlx_image_to_window(*lvl->mlx, lvl->imgs.floor, 0, W_HEIGHT / 2);
-	mlx_image_to_window(*lvl->mlx, lvl->imgs.ceiling, 0, 0);
-}
-
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -43,7 +36,8 @@ int	main(int argc, char **argv)
 		terminate(&data);
 		return (EXIT_FAILURE);
 	}
-	draw_images(data.levels);
+	mlx_key_hook(data.mlx, key_hook, &data);
+	mlx_loop_hook(data.mlx, game_hook, &data);
 	mlx_loop(data.mlx);
 	terminate(&data);
 	return (EXIT_SUCCESS);
