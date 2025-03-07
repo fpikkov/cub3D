@@ -31,9 +31,10 @@
 # define STOP 0
 # define CRITICAL -1
 
-// Game logic
+// Rendering constants
 # define FPS 60
 # define MSEC_PER_FRAME 16L
 # define FOV 60
+# define TILE 128
 
 #endif
