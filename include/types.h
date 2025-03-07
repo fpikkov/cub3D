@@ -24,6 +24,7 @@ typedef enum e_errors
 	FILE_NO_OPEN,
 	FILE_BYTES_READ,
 	FILE_MISSING_PARAMS,
+	IMG_FAILURE,
 	TEXTURE_DUPLICATE,
 	TEXTURE_NO_OPEN,
 	TEXTURE_FAILURE,
@@ -66,15 +67,25 @@ typedef struct s_imgs
 	mlx_image_t	*ceiling;
 }	t_imgs;
 
+typedef struct s_textures
+{
+	mlx_texture_t	*north;
+	mlx_texture_t	*east;
+	mlx_texture_t	*south;
+	mlx_texture_t	*west;
+}	t_textures;
+
 typedef struct s_level
 {
 	size_t			index;
+	bool			loaded;
 	char			**map;
 	char			**map_copy;
 	char			direction;
 	int32_t			player_x;
 	int32_t			player_y;
 	t_imgs			imgs;
+	t_textures		textures;
 	mlx_t			**mlx;
 	struct s_level	*next;
 }	t_level;

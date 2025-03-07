@@ -56,3 +56,4 @@ build/
 obj/
 .vscode/
 *.json
+*.txt

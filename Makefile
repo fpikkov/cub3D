@@ -40,6 +40,7 @@ VPATH = ${SRC_DIR}/main/ \
 		${SRC_DIR}/parser/ \
 		${SRC_DIR}/utils/ \
 		${SRC_DIR}/game/ \
+		${SRC_DIR}/renderer/ \
 
 SRCS =	main.c \
 		parser.c \
@@ -56,6 +57,8 @@ SRCS =	main.c \
 		keybinds.c \
 		hook.c \
 		tick.c \
+		renderer.c \
+		refresh.c \
 
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}
 

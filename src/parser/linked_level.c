@@ -12,26 +12,31 @@
 
 #include "cube.h"
 
-static void	delete_level_data(t_level *lvl)
+/**
+ * @brief Deletes all textures in a single level struct
+ */
+static void	delete_textures(t_level *lvl)
 {
-	int	i;
-
-	i = 0;
-	if (!lvl)
-		return ;
-	if (lvl->imgs.north)
-		mlx_delete_image(*lvl->mlx, lvl->imgs.north);
-	if (lvl->imgs.east)
-		mlx_delete_image(*lvl->mlx, lvl->imgs.east);
-	if (lvl->imgs.south)
-		mlx_delete_image(*lvl->mlx, lvl->imgs.south);
-	if (lvl->imgs.west)
-		mlx_delete_image(*lvl->mlx, lvl->imgs.west);
-	if (lvl->imgs.floor)
-		mlx_delete_image(*lvl->mlx, lvl->imgs.floor);
-	if (lvl->imgs.ceiling)
-		mlx_delete_image(*lvl->mlx, lvl->imgs.ceiling);
-	lvl->mlx = NULL;
+	if (lvl->textures.north)
+	{
+		mlx_delete_texture(lvl->textures.north);
+		lvl->textures.north = NULL;
+	}
+	if (lvl->textures.east)
+	{
+		mlx_delete_texture(lvl->textures.east);
+		lvl->textures.east = NULL;
+	}
+	if (lvl->textures.south)
+	{
+		mlx_delete_texture(lvl->textures.south);
+		lvl->textures.south = NULL;
+	}
+	if (lvl->textures.west)
+	{
+		mlx_delete_texture(lvl->textures.west);
+		lvl->textures.west = NULL;
+	}
 }
 
 /**
@@ -49,7 +54,8 @@ void	delete_levels(t_data *data)
 	while (ptr)
 	{
 		nptr = ptr->next;
-		delete_level_data(ptr);
+		delete_images(ptr, true);
+		delete_textures(ptr);
 		if (ptr->map)
 			free_map(ptr->map);
 		if (ptr->map_copy)

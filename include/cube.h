@@ -40,6 +40,12 @@ void	key_hook(mlx_key_data_t keydata, void *param);
 void	game_hook(void *param);
 bool	game_tick(void);
 
+// Renderer
+
+void	new_images(t_level *lvl);
+void	delete_images(t_level *lvl, bool all);
+void	render_surfaces(t_level *lvl);
+
 // Cleanup functions
 
 void	free_map(char **map);

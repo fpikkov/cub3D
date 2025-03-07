@@ -12,12 +12,13 @@
 
 #include "cube.h"
 
-static char	*g_message[18] = {
+static char	*g_message[19] = {
 	"missing argument to map file(s)",
 	"invalid file extension",
 	"unable to open file",
 	"bytes read from file was less than expected",
 	"map did not include the nescessary texture information",
+	"image creation failed",
 	"multiple texture parameters found, defaulting to the first occurence",
 	"unable to process texture information",
 	"failed to convert texture to image",

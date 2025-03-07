@@ -12,17 +12,6 @@
 
 #include "cube.h"
 
-static bool	store_as_image(mlx_texture_t *tex, mlx_image_t **loc, t_level *lvl)
-{
-	if (*loc)
-		print_error(TEXTURE_DUPLICATE, true);
-	else
-		*loc = mlx_texture_to_image(*lvl->mlx, tex);
-	if (!*loc)
-		return (print_error(TEXTURE_FAILURE, false));
-	return (true);
-}
-
 static char	*texture_path(char *buffer)
 {
 	char	*path;
@@ -47,7 +36,6 @@ static bool	load_texture(char *buffer, t_level *lvl, int direction)
 {
 	mlx_texture_t	*texture;
 	char			*path;
-	bool			ret;
 
 	if (!buffer)
 		return (true);
@@ -58,17 +46,17 @@ static bool	load_texture(char *buffer, t_level *lvl, int direction)
 	free(path);
 	if (!texture)
 		return (print_error(TEXTURE_NO_OPEN, false));
-	ret = true;
-	if (direction == NORTH)
-		ret = store_as_image(texture, &lvl->imgs.north, lvl);
-	else if (direction == EAST)
-		ret = store_as_image(texture, &lvl->imgs.east, lvl);
-	else if (direction == SOUTH)
-		ret = store_as_image(texture, &lvl->imgs.south, lvl);
-	else if (direction == WEST)
-		ret = store_as_image(texture, &lvl->imgs.west, lvl);
-	mlx_delete_texture(texture);
-	return (ret);
+	if (direction == NORTH && !lvl->textures.north)
+		lvl->textures.north = texture;
+	else if (direction == EAST && !lvl->textures.east)
+		lvl->textures.east = texture;
+	else if (direction == SOUTH && !lvl->textures.south)
+		lvl->textures.south = texture;
+	else if (direction == WEST && !lvl->textures.west)
+		lvl->textures.west = texture;
+	else
+		mlx_delete_texture(texture);
+	return (true);
 }
 
 static bool	is_texture_or_color(char *buffer, int idx, t_level *lvl)
