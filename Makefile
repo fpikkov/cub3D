@@ -37,8 +37,25 @@ DBG_BUILD = ${BUILD_DIR}/${DBG_NAME}
 
 # Paths to source files, add additinal dirs here
 VPATH = ${SRC_DIR}/main/ \
+		${SRC_DIR}/parser/ \
+		${SRC_DIR}/utils/ \
+		${SRC_DIR}/game/ \
 
 SRCS =	main.c \
+		parser.c \
+		parse_textures.c \
+		parse_texture_utils.c \
+		parse_colors.c \
+		linked_level.c \
+		parse_map.c \
+		parse_map_utils.c \
+		extract_map.c \
+		validate_map.c \
+		error.c \
+		cleanup.c \
+		keybinds.c \
+		hook.c \
+		tick.c \
 
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}
 

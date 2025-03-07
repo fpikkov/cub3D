@@ -52,5 +52,7 @@ Mkfile.old
 dkms.conf
 
 # Custom ignores
+build/
+obj/
 .vscode/
 *.json
