@@ -52,6 +52,7 @@ static	bool	check_if_close(char **map, int y, int x)
 		return (false);
 	if (map[y][x] == '1' || map[y][x] == 'X')
 		return ;
+	map[y][x] = 'X';
 	if (!check_if_close(map, y - 1, x))
 		return (false);
 	if (!check_if_close(map, y + 1, x))
@@ -60,7 +61,6 @@ static	bool	check_if_close(char **map, int y, int x)
 		return (false);
 	if (!check_if_close(map, y, x + 1))
 		return (false);
-	map[y][x] = 'X';
 	return (true);
 }
 
