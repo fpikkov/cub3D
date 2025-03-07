@@ -13,7 +13,9 @@
 #ifndef TYPES_H
 # define TYPES_H
 
-# include "MLX42.h"
+# ifndef MLX42_H
+#  include "MLX42.h"
+# endif
 
 typedef enum e_errors
 {
