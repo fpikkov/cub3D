@@ -13,16 +13,7 @@
 #ifndef CUBE_H
 # define CUBE_H
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <string.h>
-# include <stdio.h>
-# include "libft.h"
-# include "get_next_line.h"
-# include "ft_printf.h"
-# include "MLX42.h"
-
+# include "headers.h"
 # include "types.h"
 # include "constants.h"
 
@@ -45,6 +36,7 @@ bool	print_error(t_errors error, bool warning);
 
 // Cleanup functions
 
+void	free_map(char **map);
 void	delete_levels(t_data *data);
 void	terminate(t_data *data);
 
