@@ -12,26 +12,30 @@
 
 #include "cube.h"
 
+// TODO: Collision checking
 void	move_forward(t_player *p)
 {
 	p->x += p->delta_x;
 	p->y += p->delta_y;
 }
 
+// TODO: Collision checking
 void	move_backward(t_player *p)
 {
 	p->x -= p->delta_x;
 	p->y -= p->delta_y;
 }
 
-// Double check the math
+// TODO: Collision checking
+// TODO: Double check the math
 void	move_left(t_player *p)
 {
 	p->x -= p->delta_x;
 	p->y += p->delta_y;
 }
 
-// Double check the math.
+// TODO: Collision checking
+// TODO: Double check the math
 void	move_right(t_player *p)
 {
 	p->x += p->delta_x;

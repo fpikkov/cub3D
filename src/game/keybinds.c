@@ -29,9 +29,6 @@ static bool	is_loaded(t_data *data)
 }
 
 /**
- * TODO: Player movement and rotation
- * TODO: Update after each tick (1.6 milliseconds)
- * TODO: Reset player x and y when changing maps
  * TODO: Wall collision by checking if player is some units away from wall
  */
 void	key_hook(mlx_key_data_t keydata, void *param)

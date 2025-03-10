@@ -12,7 +12,6 @@
 
 #include "cube.h"
 
-// TODO: Temporary function for debugging, remove or refactor later
 static bool	init_window(t_data *data)
 {
 	mlx_set_setting(MLX_MAXIMIZED, false);
