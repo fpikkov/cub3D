@@ -38,3 +38,28 @@ bool	game_tick(void)
 	}
 	return (false);
 }
+
+/**
+ * @brief Returns true if a keypress hasn't been received
+ * during the current tick
+ * @return true if movement is accepted during the current tick
+ */
+bool	input_tick(void)
+{
+	static int64_t	current = 0;
+	static bool		pressed = false;
+
+	if (current == 0)
+		current = get_time();
+	if ((get_time() - current) >= MSEC_PER_FRAME)
+	{
+		current = get_time();
+		pressed = false;
+	}
+	if (!pressed)
+	{
+		pressed = true;
+		return (true);
+	}
+	return (false);
+}

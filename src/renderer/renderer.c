@@ -12,10 +12,14 @@
 
 #include "cube.h"
 
-static void	render_floor(t_level *lvl)
+/**
+ * @brief Renders the floor and ceiling and initializes player position
+ */
+static void	level_setup(t_level *lvl, t_player *p)
 {
 	if (lvl->loaded == false)
 	{
+		init_level_params(lvl, p);
 		if (lvl->imgs.floor)
 			mlx_image_to_window(*lvl->mlx, lvl->imgs.floor, 0, W_HEIGHT / 2);
 		if (lvl->imgs.ceiling)
@@ -27,8 +31,8 @@ static void	render_floor(t_level *lvl)
 /**
  * TODO: Implement raycasting features so we know how far to render walls
  */
-void	render_surfaces(t_level *lvl)
+void	render_surfaces(t_level *lvl, t_player *p)
 {
 	new_images(lvl);
-	render_floor(lvl);
+	level_setup(lvl, p);
 }

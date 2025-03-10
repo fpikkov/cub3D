@@ -14,15 +14,18 @@
 
 /**
  * TODO: If exit is reached, draw the images from the next level node
- * TODO: Keep track of level changes
- * TODO:At the start of a frame delete the previous image fetched from texture,
- * then create a new image from the texture and draw it on the screen
+ * TODO: Keep track of level changes and cleanup previous images
+ * before changing the level
  */
 void	game_hook(void *param)
 {
 	t_data	*data;
+	t_level	*instance;
 
 	data = (t_data *)param;
+	instance = data->levels;
+	while (instance->index != data->lvl_idx && instance->next)
+		instance = instance->next;
 	if (game_tick())
-		render_surfaces(data->levels);
+		render_surfaces(instance, &data->player);
 }

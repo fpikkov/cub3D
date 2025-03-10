@@ -39,12 +39,23 @@ bool	print_error(t_errors error, bool warning);
 void	key_hook(mlx_key_data_t keydata, void *param);
 void	game_hook(void *param);
 bool	game_tick(void);
+bool	input_tick(void);
+void	init_level_params(t_level *level, t_player *player);
 
 // Renderer
 
 void	new_images(t_level *lvl);
 void	delete_images(t_level *lvl, bool all);
-void	render_surfaces(t_level *lvl);
+void	render_surfaces(t_level *lvl, t_player *p);
+
+// Player position
+
+void	move_forward(t_player *p);
+void	move_backward(t_player *p);
+void	move_left(t_player *p);
+void	move_right(t_player *p);
+void	rotate_left(t_player *p);
+void	rotate_right(t_player *p);
 
 // Cleanup functions
 

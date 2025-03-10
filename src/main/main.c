@@ -19,6 +19,8 @@ static bool	init_window(t_data *data)
 	data->mlx = mlx_init(W_WIDTH, W_HEIGHT, TITLE, false);
 	if (!data->mlx)
 		return (false);
+	game_tick();
+	input_tick();
 	return (true);
 }
 

@@ -37,4 +37,9 @@
 # define FOV 60
 # define TILE 128
 
+// Movement and angles
+# define PI 3.14159265359
+# define ROTATE_AMOUNT 0.1
+# define TRIG_MULTIPLIER 5
+
 #endif

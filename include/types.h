@@ -90,10 +90,21 @@ typedef struct s_level
 	struct s_level	*next;
 }	t_level;
 
+typedef	struct s_player
+{
+	double	x;
+	double	y;
+	double	delta_x;
+	double	delta_y;
+	double	angle;
+}	t_player;
+
 typedef struct s_data
 {
-	mlx_t	*mlx;
-	t_level	*levels;
+	mlx_t		*mlx;
+	size_t		lvl_idx;
+	t_level		*levels;
+	t_player	player;
 }	t_data;
 
 #endif
