@@ -12,6 +12,14 @@
 
 #include "cube.h"
 
+static bool	textures_exist(t_level *lvl)
+{
+	if (!lvl->textures.north || !lvl->textures.south \
+	|| !lvl->textures.east || !lvl->textures.west)
+		return (print_error(FILE_MISSING_PARAMS, false));
+	return (true);
+}
+
 /**
  * @brief Reads color and texture information from file
  * @param filename the file which to read from
@@ -40,7 +48,7 @@ bool	parse_textures(char *filename, t_data *data)
 	close(fd);
 	if (ret == CRITICAL)
 		return (false);
-	if (!create_background(lvl))
+	if (!create_background(lvl) || !textures_exist(lvl))
 		return (false);
 	return (true);
 }

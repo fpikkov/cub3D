@@ -17,7 +17,7 @@ static char	*g_message[19] = {
 	"invalid file extension",
 	"unable to open file",
 	"bytes read from file was less than expected",
-	"map did not include the nescessary texture information",
+	"map did not include the necessary texture information",
 	"image creation failed",
 	"parsed texture was not a png file",
 	"unable to process texture information",
