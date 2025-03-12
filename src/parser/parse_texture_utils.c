@@ -12,6 +12,18 @@
 
 #include "cube.h"
 
+static bool	verify_png(char *filepath)
+{
+	char	*ext;
+
+	ext = ft_strrchr(filepath, '.');
+	if (!ext)
+		return (false);
+	if (ft_strncmp(ext, ".png", 5))
+		return (false);
+	return (true);
+}
+
 static char	*texture_path(char *buffer)
 {
 	char	*path;
@@ -28,7 +40,12 @@ static char	*texture_path(char *buffer)
 		end++;
 	path = ft_substr(buffer, start, end - start);
 	if (!path)
-		return (NULL);
+		return ((void *)print_error(SYS_MALLOC, false));
+	if (!verify_png(path))
+	{
+		free(path);
+		return ((void *)print_error(TEXTURE_NO_PNG, false));
+	}
 	return (path);
 }
 
@@ -41,7 +58,7 @@ static bool	load_texture(char *buffer, t_level *lvl, int direction)
 		return (true);
 	path = texture_path(buffer);
 	if (!path)
-		return (print_error(SYS_MALLOC, false));
+		return (false);
 	texture = mlx_load_png(path);
 	free(path);
 	if (!texture)

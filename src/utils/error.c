@@ -19,7 +19,7 @@ static char	*g_message[19] = {
 	"bytes read from file was less than expected",
 	"map did not include the nescessary texture information",
 	"image creation failed",
-	"multiple texture parameters found, defaulting to the first occurence",
+	"parsed texture was not a png file",
 	"unable to process texture information",
 	"failed to convert texture to image",
 	"the given map is not enclosed by walls",
