@@ -20,10 +20,8 @@ static void	level_setup(t_level *lvl, t_player *p)
 	if (lvl->loaded == false)
 	{
 		init_level_params(lvl, p);
-		if (lvl->imgs.floor)
-			mlx_image_to_window(*lvl->mlx, lvl->imgs.floor, 0, W_HEIGHT / 2);
-		if (lvl->imgs.ceiling)
-			mlx_image_to_window(*lvl->mlx, lvl->imgs.ceiling, 0, 0);
+		if (lvl->imgs.bg)
+			mlx_image_to_window(*lvl->mlx, lvl->imgs.bg, 0, 0);
 		lvl->loaded = true;
 	}
 }

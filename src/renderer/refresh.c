@@ -41,12 +41,10 @@ void	delete_images(t_level *lvl, bool all)
 	if (!lvl)
 		return ;
 	delete_walls(lvl);
-	if (all)
+	if (all && lvl->imgs.bg)
 	{
-		if (lvl->imgs.floor)
-			mlx_delete_image(*lvl->mlx, lvl->imgs.floor);
-		if (lvl->imgs.ceiling)
-			mlx_delete_image(*lvl->mlx, lvl->imgs.ceiling);
+		mlx_delete_image(*lvl->mlx, lvl->imgs.bg);
+		lvl->imgs.bg = NULL;
 	}
 }
 

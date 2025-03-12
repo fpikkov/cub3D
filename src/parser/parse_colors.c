@@ -34,7 +34,11 @@ static uint8_t	get_next_color(char *buffer, bool reset)
 	return ((uint8_t)value);
 }
 
-static uint32_t	fetch_colors(char *buffer)
+/**
+ * @brief Fetches the color data in buffer
+ * @return color value im 32 bit unsigned integer
+ */
+uint32_t	fetch_color(char *buffer)
 {
 	t_color	color;
 
@@ -47,56 +51,31 @@ static uint32_t	fetch_colors(char *buffer)
 	color.blue << 8 | color.alpha);
 }
 
-static void	set_colors(mlx_image_t *img, uint32_t value)
+/**
+ * @brief Creates a background image for a level from floor and ceiling colors
+ * @return false on image creation failure, otherwise true
+ */
+bool	create_background(t_level *lvl)
 {
 	uint32_t	i;
 	uint32_t	j;
 
+	lvl->imgs.bg = mlx_new_image(*lvl->mlx, W_WIDTH, W_HEIGHT);
+	if (!lvl->imgs.bg)
+		return (print_error(IMG_FAILURE, false));
 	i = 0;
-	while (i < img->height)
+	while (i < lvl->imgs.bg->height)
 	{
 		j = 0;
-		while (j < img->width)
+		while (j < lvl->imgs.bg->width)
 		{
-			mlx_put_pixel(img, j, i, value);
+			if (i < lvl->imgs.bg->height / 2)
+				mlx_put_pixel(lvl->imgs.bg, j, i, lvl->imgs.ceiling);
+			else
+				mlx_put_pixel(lvl->imgs.bg, j, i, lvl->imgs.floor);
 			j++;
 		}
 		i++;
 	}
-}
-
-static bool	create_color(uint32_t value, t_level *lvl, int dir)
-{
-	if (dir == FLOOR)
-	{
-		if (lvl->imgs.floor)
-			print_error(TEXTURE_DUPLICATE, true);
-		else
-			lvl->imgs.floor = mlx_new_image(*lvl->mlx, W_WIDTH, W_HEIGHT / 2);
-		if (!lvl->imgs.floor)
-			return (print_error(TEXTURE_FAILURE, false));
-		set_colors(lvl->imgs.floor, value);
-	}
-	else if (dir == CEILING)
-	{
-		if (lvl->imgs.ceiling)
-			print_error(TEXTURE_DUPLICATE, true);
-		else
-			lvl->imgs.ceiling = \
-			mlx_new_image(*lvl->mlx, W_WIDTH, W_HEIGHT / 2);
-		if (!lvl->imgs.ceiling)
-			return (print_error(TEXTURE_FAILURE, false));
-		set_colors(lvl->imgs.ceiling, value);
-	}
-	return (true);
-}
-
-bool	load_color(char *buffer, t_level *lvl, int direction)
-{
-	uint32_t	value;
-
-	value = fetch_colors(buffer);
-	if (!create_color(value, lvl, direction))
-		return (false);
 	return (true);
 }

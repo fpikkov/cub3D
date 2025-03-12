@@ -63,8 +63,9 @@ typedef struct s_imgs
 	mlx_image_t	*east;
 	mlx_image_t	*south;
 	mlx_image_t	*west;
-	mlx_image_t	*floor;
-	mlx_image_t	*ceiling;
+	mlx_image_t	*bg;
+	uint32_t	floor;
+	uint32_t	ceiling;
 }	t_imgs;
 
 typedef struct s_textures
