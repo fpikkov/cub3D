@@ -122,8 +122,9 @@ static void	draw_walls(t_level *lvl, t_player *p)
 	// Put image to window: W_HEIGHT / ray_distance (if dist > 0)
 	if (dist > 0.0)
 	{
-		mlx_resize_image(lvl->imgs.north, (uint32_t)(TILE / dist), (uint32_t)(TILE / dist));
-		mlx_image_to_window(*lvl->mlx, lvl->imgs.north, (W_WIDTH - lvl->imgs.north->width) / 2, (W_HEIGHT - lvl->imgs.north->height) / 2);
+		//mlx_resize_image(lvl->imgs.north, (uint32_t)(TILE / dist), (uint32_t)(TILE / dist));
+		//mlx_image_to_window(*lvl->mlx, lvl->imgs.north, (W_WIDTH - lvl->imgs.north->width) / 2, (W_HEIGHT - lvl->imgs.north->height) / 2);
+		mlx_image_to_window(*lvl->mlx, lvl->imgs.north, (W_WIDTH - TILE) / 2, (W_HEIGHT / dist));
 	}
 	//printf("Dist: %f\n	P_angle: %f\n", dist, p->angle);
 }

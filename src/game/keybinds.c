@@ -42,17 +42,17 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		return ;
 	if (input_tick())
 	{
-		if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
+		if (keydata.key == MLX_KEY_W && keydata.action == MLX_REPEAT)
 			move_forward(&data->player);
-		else if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
+		else if (keydata.key == MLX_KEY_S && keydata.action == MLX_REPEAT)
 			move_backward(&data->player);
-		else if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
+		else if (keydata.key == MLX_KEY_D && keydata.action == MLX_REPEAT)
 			move_right(&data->player);
-		else if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
+		else if (keydata.key == MLX_KEY_A && keydata.action == MLX_REPEAT)
 			move_left(&data->player);
-		else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
+		else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_REPEAT)
 			rotate_left(&data->player);
-		else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
+		else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_REPEAT)
 			rotate_right(&data->player);
 	}
 }

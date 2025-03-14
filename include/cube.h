@@ -17,6 +17,10 @@
 # include "types.h"
 # include "constants.h"
 
+# ifndef DEBUG
+#  define DEBUG 0
+# endif
+
 // Parsing functions
 
 bool		parse_data(char **argv, t_data *data);
@@ -32,7 +36,7 @@ bool		validate_map(t_data *data);
 
 // Utility functions
 
-void		space_to_zero(char **map);
+void		space_to_one(char **map);
 bool		print_error(t_errors error, bool warning);
 
 // Game logic
