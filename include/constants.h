@@ -40,6 +40,7 @@
 
 // Movement and angles
 # define PI 3.14159265359
+# define DEGREE 0.01745329
 # define ROTATE_AMOUNT 0.1
 # define TRIG_MULTIPLIER 5
 

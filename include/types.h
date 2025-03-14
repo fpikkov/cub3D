@@ -108,4 +108,21 @@ typedef struct s_data
 	t_player	player;
 }	t_data;
 
+typedef struct s_ray
+{
+	double	x;
+	double	y;
+	double	step_x;
+	double	step_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	int		map_x;
+	int		map_y;
+	int		delta_x;
+	int		delta_y;
+	int		side; // 0 for vertical, 1 for horizontal
+}	t_ray;
+
 #endif

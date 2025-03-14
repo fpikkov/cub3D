@@ -17,8 +17,8 @@
  */
 void	init_level_params(t_level *level, t_player *player)
 {
-	player->x = (double)level->player_x + 0.5;
-	player->y = (double)level->player_y + 0.5;
+	player->x = level->player_x + 0.5;
+	player->y = level->player_y + 0.5;
 	if (level->direction == 'N')
 		player->angle = PI / 2.0;
 	else if (level->direction == 'E')
