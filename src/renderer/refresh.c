@@ -46,6 +46,11 @@ void	delete_images(t_level *lvl, bool all)
 		mlx_delete_image(*lvl->mlx, lvl->imgs.bg);
 		lvl->imgs.bg = NULL;
 	}
+	if (all && lvl->imgs.fg)
+	{
+		mlx_delete_image(*lvl->mlx, lvl->imgs.fg);
+		lvl->imgs.fg = NULL;
+	}
 }
 
 void	new_images(t_level *lvl)
@@ -53,6 +58,7 @@ void	new_images(t_level *lvl)
 	if (!lvl)
 		return ;
 	delete_images(lvl, false);
+	reset_foreground(lvl);
 	lvl->imgs.north = mlx_texture_to_image(*lvl->mlx, lvl->textures.north);
 	lvl->imgs.east = mlx_texture_to_image(*lvl->mlx, lvl->textures.east);
 	lvl->imgs.south = mlx_texture_to_image(*lvl->mlx, lvl->textures.south);
@@ -60,4 +66,10 @@ void	new_images(t_level *lvl)
 	if (!lvl->imgs.north || !lvl->imgs.east || \
 	!lvl->imgs.south || !lvl->imgs.west)
 		print_error(IMG_FAILURE, true);
+}
+
+void	reset_foreground(t_level *lvl)
+{
+	ft_memset(lvl->imgs.fg->pixels, 0, \
+	lvl->imgs.fg->width * lvl->imgs.fg->height * sizeof(int32_t));
 }

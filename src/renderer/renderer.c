@@ -28,6 +28,54 @@ static void	level_setup(t_level *lvl, t_player *p)
 }
 
 /**
+ * @brief Returns the encoded color value from x and y position of the texture.
+ * @return color value in uint32_t format
+ */
+static uint32_t	get_pixel(mlx_texture_t	*tex, uint32_t x, uint32_t y)
+{
+	uint32_t	col;
+	uint8_t		*ptr;
+
+	col = 0;
+	ptr = tex->pixels + (x * y * tex->bytes_per_pixel);
+	col |= *ptr << 24;
+	ptr++;
+	col |= *ptr << 16;
+	ptr++;
+	col |= *ptr << 8;
+	ptr++;
+	col |= *ptr;
+	return (col);
+}
+
+/**
+ * TODO: Take in the side of wall which was hit (pass correect tex to get_pixel)
+ * TODO: y scales from 0 to factor (scaled height), this will require an offset
+ * TODO: Make sure you're not dividing by 0
+ */
+static void	draw_wall_to_fg(t_level *lvl, double distance, double angle)
+{
+	uint32_t	factor;
+	uint32_t	color;
+	uint32_t	screen_x;
+	uint32_t	x;
+	uint32_t	y;
+	uint32_t	i;
+
+	screen_x = ((angle + (to_radian(FOV) / 2)) / to_radian(FOV)) * W_WIDTH;
+	x = (angle / to_radian(FOV)) * TILE;
+	factor = W_HEIGHT / distance;
+	i = 0;
+	while (i < factor)
+	{
+		y = (i / factor) * TILE;
+		color = get_pixel(lvl->textures.north, x, y);
+		mlx_put_pixel(lvl->imgs.fg, screen_x, y, color);
+		i++;
+	}
+}
+
+/**
  * TODO: Test function for drawing wall images on the screen
  */
 static void	draw_walls(t_level *lvl, t_player *p)
@@ -40,11 +88,8 @@ static void	draw_walls(t_level *lvl, t_player *p)
 	// Put image to window: W_HEIGHT / ray_distance (if dist > 0)
 	if (dist > 0.0)
 	{
-		//mlx_resize_image(lvl->imgs.north, (uint32_t)(TILE / dist), (uint32_t)(TILE / dist));
-		//mlx_image_to_window(*lvl->mlx, lvl->imgs.north, (W_WIDTH - lvl->imgs.north->width) / 2, (W_HEIGHT - lvl->imgs.north->height) / 2);
-		mlx_image_to_window(*lvl->mlx, lvl->imgs.north, (W_WIDTH - TILE) / 2, (W_HEIGHT / dist));
+		draw_wall_to_fg(lvl, dist, p->angle);
 	}
-	//printf("Dist: %f\n	P_angle: %f\n", dist, p->angle);
 }
 
 /**

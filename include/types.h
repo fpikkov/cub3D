@@ -57,12 +57,17 @@ typedef struct s_color
 	uint8_t	alpha;
 }	t_color;
 
+/**
+ * TODO: Ignore the wall images, color data will be fetched from textures.
+ * Wall pixel data will be placed onto a foreground image.
+ */
 typedef struct s_imgs
 {
 	mlx_image_t	*north;
 	mlx_image_t	*east;
 	mlx_image_t	*south;
 	mlx_image_t	*west;
+	mlx_image_t	*fg;
 	mlx_image_t	*bg;
 	uint32_t	floor;
 	uint32_t	ceiling;

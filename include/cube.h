@@ -28,6 +28,7 @@ bool		parse_textures(char *filename, t_data *data);
 int			parse_color_data(int fd, t_level *lvl);
 uint32_t	fetch_color(char *buffer);
 bool		create_background(t_level *lvl);
+bool		create_foreground(t_level *lvl);
 bool		new_level_node(t_data *data);
 
 bool		parse_map(char *filename, t_data *data);
@@ -55,6 +56,7 @@ void		init_level_params(t_level *level, t_player *player);
 
 void		new_images(t_level *lvl);
 void		delete_images(t_level *lvl, bool all);
+void		reset_foreground(t_level *lvl);
 void		render_surfaces(t_level *lvl, t_player *p);
 double		raycast(t_level *lvl, t_player *p, double angle);
 
