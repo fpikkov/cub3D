@@ -30,6 +30,33 @@ static bool	check_ext(char **argv)
 	return (true);
 }
 
+static void	print_latest_map(t_data *data)
+{
+	t_level	*lvl;
+	size_t	x;
+	size_t	y;
+
+	lvl = data->levels;
+	while (lvl->next)
+		lvl = lvl->next;
+	y = 0;
+	while (lvl->map[y])
+	{
+		x = 0;
+		while (lvl->map[y][x])
+		{
+			if (lvl->map[y][x] == '1')
+				ft_putchar_fd('#', STDOUT_FILENO);
+			else
+				ft_putchar_fd(' ', STDOUT_FILENO);
+			x++;
+		}
+		ft_putendl_fd("!", STDOUT_FILENO);
+		y++;
+	}
+	ft_putendl_fd("!", STDOUT_FILENO);
+}
+
 /**
  * @brief Parses data given in as program argument.
  * @param data struct to game data passed in by pointer to the struct
@@ -52,6 +79,8 @@ bool	parse_data(char **argv, t_data *data)
 			return (false);
 		if (!validate_map(data))
 			return (false);
+		if (DEBUG)
+			print_latest_map(data);
 		idx++;
 	}
 	return (true);

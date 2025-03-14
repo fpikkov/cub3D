@@ -33,6 +33,9 @@ bool		new_level_node(t_data *data);
 bool		parse_map(char *filename, t_data *data);
 char		**extract_map(char *file);
 bool		validate_map(t_data *data);
+int			map_col_len(char **map);
+int			map_row_len(char **map);
+char		**resize_to_rectangular(char **map);
 
 // Utility functions
 

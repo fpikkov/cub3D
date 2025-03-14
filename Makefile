@@ -52,6 +52,7 @@ SRCS =	main.c \
 		parse_map_utils.c \
 		extract_map.c \
 		validate_map.c \
+		resize_map.c \
 		error.c \
 		cleanup.c \
 		keybinds.c \

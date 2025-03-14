@@ -82,6 +82,8 @@ typedef struct s_level
 	bool			loaded;
 	char			**map;
 	char			**map_copy;
+	int				row_len;
+	int				col_len;
 	char			direction;
 	int32_t			player_x;
 	int32_t			player_y;

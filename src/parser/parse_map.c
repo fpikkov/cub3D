@@ -46,16 +46,21 @@ static	bool	find_player_pos(t_level *lvl)
 bool	parse_map(char *filename, t_data *data)
 {
 	t_level	*lvl;
+	char	**map;
 
 	lvl = data->levels;
 	while (lvl->next)
 		lvl = lvl->next;
-	lvl->map = extract_map(filename);
-	if (!lvl->map)
+	map = extract_map(filename);
+	if (!map)
 		return (false);
-	lvl->map_copy = extract_map(filename);
-	if (!lvl->map_copy)
+	lvl->map = resize_to_rectangular(map);
+	lvl->map_copy = resize_to_rectangular(map);
+	free_map(map);
+	if (!lvl->map || !lvl->map_copy)
 		return (false);
+	lvl->col_len = map_col_len(lvl->map);
+	lvl->row_len = map_row_len(lvl->map);
 	if (!find_player_pos(lvl))
 		return (print_error(MAP_NO_PLAYER, false));
 	return (true);
