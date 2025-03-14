@@ -60,9 +60,7 @@ static void	ray_init(t_ray *r, t_player *p, double angle)
 // TODO: Square the map and store map width and height
 static bool	is_wall(t_level	*lvl, int x, int y)
 {
-	if (y < 0 || x < 0 || !lvl->map[y] || !lvl->map[y][x])
-		return (true);
-	if (x > (int)ft_strlen(lvl->map[y]))
+	if (y <= 0 || x <= 0 || y >= lvl->row_len || x >= lvl->col_len)
 		return (true);
 	if (lvl->map[y][x] == '1')
 		return (true);
