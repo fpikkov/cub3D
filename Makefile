@@ -64,6 +64,7 @@ SRCS =	main.c \
 		movement.c \
 		rotation.c \
 		level_change.c \
+		conversions.c \
 
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}
 

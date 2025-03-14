@@ -27,6 +27,9 @@ static void	level_setup(t_level *lvl, t_player *p)
 	}
 }
 
+/**
+ * TODO: Test function for drawing wall images on the screen
+ */
 static void	draw_walls(t_level *lvl, t_player *p)
 {
 	double	dist;

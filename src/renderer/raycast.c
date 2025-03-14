@@ -13,31 +13,32 @@
 #include "cube.h"
 
 /**
- * @brief Sets up variables before starting the ray casting loop
+ * @brief Sets up variables before starting the ray casting loop.
+ *
+ * Step: Ray direction in 2D space.
+ * Map: Iterators which let us navigate the map when checking for ray hits.
+ * Delta: What we used to increment the map position.
+ * Delta distances: What we use to increase the length of the ray distance.
+ * Side distances: Initial point where the ray hits the next cell.
  */
 static void	ray_init(t_ray *r, t_player *p, double angle)
 {
-	// Ray direction
 	r->step_x = cos(angle);
 	r->step_y = sin(angle);
-	// Map position
 	r->map_x = (int)p->y;
 	r->map_y = (int)p->y;
-	// Step direction (positive or negative)
 	r->delta_x = -1;
 	if (r->step_x > 0)
 		r->delta_x = 1;
 	r->delta_y = -1;
 	if (r->step_y > 0)
 		r->delta_y = 1;
-	// Delta distances
 	r->delta_dist_x = INFINITY;
 	if (r->step_x != 0)
 		r->delta_dist_x = fabs(1 / r->step_x);
 	r->delta_dist_y = INFINITY;
 	if (r->step_y != 0)
 		r->delta_dist_y = fabs(1 / r->step_y);
-	// Side distances
 	r->side_dist_x = (p->x - r->map_x) * r->delta_dist_x;
 	if (r->step_x > 0)
 		r->side_dist_x = (r->map_x + 1.0 - p->x) * r->delta_dist_x;
