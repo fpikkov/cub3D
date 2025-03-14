@@ -23,6 +23,8 @@ static void	level_setup(t_level *lvl, t_player *p)
 		init_level_params(lvl, p);
 		if (lvl->imgs.bg)
 			mlx_image_to_window(*lvl->mlx, lvl->imgs.bg, 0, 0);
+		if (lvl->imgs.fg)
+			mlx_image_to_window(*lvl->mlx, lvl->imgs.fg, 0, 0);
 		lvl->loaded = true;
 	}
 }
@@ -77,18 +79,26 @@ static void	draw_wall_to_fg(t_level *lvl, double distance, double angle)
 
 /**
  * TODO: Test function for drawing wall images on the screen
+ * TODO: Ray distance is an extreme value, please fix
  */
 static void	draw_walls(t_level *lvl, t_player *p)
 {
 	double	dist;
+	double	offset;
 
+	offset = 0.0;
 	// Cast ray for each degree within FOV
 	dist = raycast(lvl, p, p->angle);
 
+	//printf("distance: %f\n", dist);
 	// Put image to window: W_HEIGHT / ray_distance (if dist > 0)
 	if (dist > 0.0)
 	{
-		draw_wall_to_fg(lvl, dist, p->angle);
+		while (offset < (PI / 2))
+		{
+			draw_wall_to_fg(lvl, dist, p->angle + offset);
+			offset += DEGREE * 10;
+		}
 	}
 }
 
