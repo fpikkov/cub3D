@@ -59,6 +59,7 @@ SRCS =	main.c \
 		hook.c \
 		tick.c \
 		renderer.c \
+		raycast.c \
 		refresh.c \
 		movement.c \
 		rotation.c \

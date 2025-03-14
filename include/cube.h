@@ -55,6 +55,7 @@ void		init_level_params(t_level *level, t_player *player);
 void		new_images(t_level *lvl);
 void		delete_images(t_level *lvl, bool all);
 void		render_surfaces(t_level *lvl, t_player *p);
+double		raycast(t_level *lvl, t_player *p, double angle);
 
 // Player position
 
