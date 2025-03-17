@@ -30,32 +30,11 @@ static void	level_setup(t_level *lvl, t_player *p)
 }
 
 /**
- * @brief Returns the encoded color value from x and y position of the texture.
- * @return color value in uint32_t format
- */
-static uint32_t	get_pixel(mlx_texture_t	*tex, uint32_t x, uint32_t y)
-{
-	uint32_t	col;
-	uint8_t		*ptr;
-
-	col = 0;
-	ptr = tex->pixels + (x * y * tex->bytes_per_pixel);
-	col |= *ptr << 24;
-	ptr++;
-	col |= *ptr << 16;
-	ptr++;
-	col |= *ptr << 8;
-	ptr++;
-	col |= *ptr;
-	return (col);
-}
-
-/**
  * TODO: Take in the side of wall which was hit (pass correect tex to get_pixel)
  * TODO: y scales from 0 to factor (scaled height), this will require an offset
  * TODO: Make sure you're not dividing by 0
  */
-static void	draw_wall_to_fg(t_level *lvl, double distance, double angle)
+/* static void	draw_wall_to_fg(t_level *lvl, double distance, double angle)
 {
 	uint32_t	factor;
 	uint32_t	color;
@@ -71,9 +50,45 @@ static void	draw_wall_to_fg(t_level *lvl, double distance, double angle)
 	while (i < factor)
 	{
 		y = (i / factor) * TILE;
-		color = get_pixel(lvl->textures.north, x, y);
+		color = nearest_neighbor(lvl->textures.north, x, y);
+		//color = 0xFF65FF65;
 		mlx_put_pixel(lvl->imgs.fg, screen_x, y, color);
 		i++;
+	}
+} */
+
+/**
+ * TODO: Test code from ray casting resource
+ */
+static void	draw_wall_to_fg(t_level *lvl, double distance, double angle)
+{
+	int			line_height;
+	int			line_start;
+	int			line_current;
+	int			line_end;
+	int			scaled;
+	uint32_t	color;
+	int			x;
+	int			screen_x;
+
+	line_height = (int)floor(W_HEIGHT / distance);
+	line_start = (-line_height / 2) + (W_HEIGHT / 2);
+	if (line_start < 0)
+		line_start = 0;
+	line_end = (line_height / 2) + (W_HEIGHT / 2);
+	if (line_end >= W_HEIGHT)
+		line_end = W_HEIGHT - 1;
+	color = 0;
+	x = 0;
+	screen_x = W_WIDTH / 2;
+	(void)angle;
+	line_current = line_start;
+	while (line_current <= line_end)
+	{
+		scaled = (((line_current - line_start) * TILE) / (line_end - line_start));
+		color = nearest_neighbor(lvl->textures.north, x, scaled);
+		mlx_put_pixel(lvl->imgs.fg, screen_x, line_current, color);
+		line_current++;
 	}
 }
 
@@ -96,8 +111,8 @@ static void	draw_walls(t_level *lvl, t_player *p)
 	{
 		while (offset < (PI / 2))
 		{
-			draw_wall_to_fg(lvl, dist, p->angle + offset);
-			offset += DEGREE * 10;
+			draw_wall_to_fg(lvl, 5.0, p->angle + offset);
+			offset += DEGREE;
 		}
 	}
 }
