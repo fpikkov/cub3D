@@ -59,19 +59,22 @@ static void	level_setup(t_level *lvl, t_player *p)
 
 /**
  * TODO: Test code from ray casting resource
+ * TODO: Pure spaghetti, optimize this later
+ * TODO: angle is currently discarded and scaled_x is a hardcoded value
  */
 static void	draw_wall_to_fg(t_level *lvl, double distance, double angle)
 {
-	int			line_height;
-	int			line_start;
-	int			line_current;
-	int			line_end;
+	float			line_height;
+	float			line_start;
+	float			line_current;
+	float			line_end;
+	float			line_delta;
 	int			scaled;
 	uint32_t	color;
 	int			x;
 	int			screen_x;
 
-	line_height = (int)floor(W_HEIGHT / distance);
+	line_height = floor(W_HEIGHT / distance);
 	line_start = (-line_height / 2) + (W_HEIGHT / 2);
 	if (line_start < 0)
 		line_start = 0;
@@ -80,16 +83,24 @@ static void	draw_wall_to_fg(t_level *lvl, double distance, double angle)
 		line_end = W_HEIGHT - 1;
 	color = 0;
 	x = 0;
-	screen_x = W_WIDTH / 2;
-	(void)angle;
-	line_current = line_start;
-	while (line_current <= line_end)
+	//(void)angle;
+	line_delta = line_end - line_start;
+	if (line_delta <= 0.0)
+		line_delta = 1.0;
+	while (x < TILE)
 	{
-		scaled = (((line_current - line_start) * TILE) / (line_end - line_start));
-		color = nearest_neighbor(lvl->textures.north, x, scaled);
-		mlx_put_pixel(lvl->imgs.fg, screen_x, line_current, color);
-		line_current++;
+		line_current = line_start;
+		screen_x = (((angle + (to_radian(FOV) / 2)) / to_radian(FOV)) * W_WIDTH) + x;
+		while (line_current <= line_end)
+		{
+			scaled = (int)floor(((line_current - line_start) * TILE) / line_delta);
+			color = nearest_neighbor(lvl->textures.north, x, scaled);
+			mlx_put_pixel(lvl->imgs.fg, screen_x, (int)floor(line_current), color);
+			line_current++;
+		}
+		x++;
 	}
+
 }
 
 /**
@@ -109,11 +120,12 @@ static void	draw_walls(t_level *lvl, t_player *p)
 	// Put image to window: W_HEIGHT / ray_distance (if dist > 0)
 	if (dist > 0.0)
 	{
-		while (offset < (PI / 2))
+		draw_wall_to_fg(lvl, dist, p->angle + offset);
+		/* while (offset < (PI / 2))
 		{
-			draw_wall_to_fg(lvl, 5.0, p->angle + offset);
+			draw_wall_to_fg(lvl, dist, p->angle + offset);
 			offset += DEGREE;
-		}
+		} */
 	}
 }
 

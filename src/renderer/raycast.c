@@ -84,7 +84,10 @@ static bool	hitscan(t_ray *r, t_level *lvl)
 			r->side = 1;
 		}
 		if (is_wall(lvl, r->map_x, r->map_y))
+		{
+			printf("Wall was hit at x:%i y:%i\n", r->map_x, r->map_y);
 			hit = true;
+		}
 		depth++;
 	}
 	return (hit);
