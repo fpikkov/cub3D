@@ -38,10 +38,21 @@
 # define DOF 8
 # define TILE 128
 
+// Raycasting
+# define VERTICAL 0
+# define HORIZONTAL 1
+
 // Movement and angles
 # define PI 3.14159265359
-# define DEGREE 0.01745329
+# define DEGREE 0.01745329251
+# define FOV_RAD (FOV * DEGREE)
 # define ROTATE_AMOUNT 0.1
 # define TRIG_MULTIPLIER 5
+
+// Unit circle angles
+# define UP (PI / 2.0)
+# define DOWN ((3.0 * PI) / 2.0)
+# define LEFT (PI)
+# define RIGHT (0)
 
 #endif

@@ -58,7 +58,7 @@ void		new_images(t_level *lvl);
 void		delete_images(t_level *lvl, bool all);
 void		reset_foreground(t_level *lvl);
 void		render_surfaces(t_level *lvl, t_player *p);
-double		raycast(t_level *lvl, t_player *p, double angle);
+double		raycast(t_ray *ray, t_level *lvl, t_player *p, int x);
 uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y);
 
 // Player position

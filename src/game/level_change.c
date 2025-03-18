@@ -20,13 +20,13 @@ void	init_level_params(t_level *level, t_player *player)
 	player->x = level->player_x + 0.5;
 	player->y = level->player_y + 0.5;
 	if (level->direction == 'N')
-		player->angle = PI / 2.0;
+		player->angle = UP;
 	else if (level->direction == 'E')
-		player->angle = 0;
+		player->angle = RIGHT;
 	else if (level->direction == 'S')
-		player->angle = (3.0 * PI) / 2.0;
+		player->angle = DOWN;
 	else if (level->direction == 'W')
-		player->angle = PI;
+		player->angle = LEFT;
 	player->delta_x = cos(player->angle) * TRIG_MULTIPLIER;
 	player->delta_y = sin(player->angle) * TRIG_MULTIPLIER;
 }

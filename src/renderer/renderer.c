@@ -109,23 +109,20 @@ static void	draw_wall_to_fg(t_level *lvl, double distance, double angle)
  */
 static void	draw_walls(t_level *lvl, t_player *p)
 {
+	t_ray	ray;
 	double	dist;
-	double	offset;
+	int		x;
 
-	offset = 0.0;
-	// Cast ray for each degree within FOV
-	dist = raycast(lvl, p, p->angle);
-
-	//printf("distance: %f\n", dist);
-	// Put image to window: W_HEIGHT / ray_distance (if dist > 0)
-	if (dist > 0.0)
+	x = 0;
+	while (x < W_WIDTH)
 	{
-		draw_wall_to_fg(lvl, dist, p->angle + offset);
-		/* while (offset < (PI / 2))
-		{
-			draw_wall_to_fg(lvl, dist, p->angle + offset);
-			offset += DEGREE;
-		} */
+		// Reset ray struct
+		ft_memset(&ray, 0, sizeof(t_ray));
+		// Cast ray for each degree within FOV
+		dist = raycast(&ray, lvl, p, x);
+		if (dist > 0.0)
+			draw_wall_to_fg(lvl, dist, p->angle);
+		x++;
 	}
 }
 

@@ -119,17 +119,20 @@ typedef struct s_ray
 {
 	double	x;
 	double	y;
-	double	step_x;
-	double	step_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
 	double	side_dist_x;
 	double	side_dist_y;
 	double	delta_dist_x;
 	double	delta_dist_y;
 	int		map_x;
 	int		map_y;
-	int		delta_x;
-	int		delta_y;
+	int		step_x;
+	int		step_y;
 	int		side; // 0 for vertical, 1 for horizontal
+	int		camera_x;
 }	t_ray;
 
 #endif

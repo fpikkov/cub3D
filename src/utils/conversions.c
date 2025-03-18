@@ -14,5 +14,5 @@
 
 double	to_radian(int degrees)
 {
-	return ((double)(degrees * (PI / 180.0)));
+	return ((double)((degrees * PI) / 180.0));
 }

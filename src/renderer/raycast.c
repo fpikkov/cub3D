@@ -13,38 +13,41 @@
 #include "cube.h"
 
 /**
- * @brief Sets up variables before starting the ray casting loop.
+ * @brief Sets up the initial ray vectors.
  *
- * Step: Ray direction in 2D space.
- * Map: Iterators which let us navigate the map when checking for ray hits.
- * Delta: What we used to increment the map position.
- * Delta distances: What we use to increase the length of the ray distance.
- * Side distances: Initial point where the ray hits the next cell.
+ * Dirs: Ray direction vectoors converted from radian angle.
+ * Map: Initial map position of the ray.
+ * Plane: 2D vectors perpendicular to the ray. FOV gives us the scaling factor.
+ * Steps: Should we increment or decrement map position.
+ * Deltas: The distance between adjacent vertical or horizontal cell borders.
+ * Sides: The length of the ray's adjacent and opposite vectors.
  */
-static void	ray_init(t_ray *r, t_player *p, double angle)
+static void	ray_init(t_ray *r, t_player *p)
 {
-	r->step_x = cos(angle);
-	r->step_y = sin(angle);
 	r->map_x = (int)p->y;
 	r->map_y = (int)p->y;
-	r->delta_x = -1;
-	if (r->step_x > 0)
-		r->delta_x = 1;
-	r->delta_y = -1;
-	if (r->step_y > 0)
-		r->delta_y = 1;
+	r->plane_x = r->dir_y * tan(FOV_RAD / 2);
+	r->plane_y = -r->dir_x * tan(FOV_RAD / 2);
+	r->dir_x = cos(p->angle) + r->plane_x * r->camera_x;
+	r->dir_y = sin(p->angle) + r->plane_y * r->camera_x;
+	r->step_x = 1;
+	if (r->dir_x < 0)
+		r->step_x = -1;
+	r->step_y = 1;
+	if (r->dir_y < 0)
+		r->step_y = -1;
 	r->delta_dist_x = INFINITY;
-	if (r->step_x != 0)
-		r->delta_dist_x = fabs(1 / r->step_x);
+	if (r->dir_x != 0)
+		r->delta_dist_x = fabs(1 / r->dir_x);
 	r->delta_dist_y = INFINITY;
-	if (r->step_y != 0)
-		r->delta_dist_y = fabs(1 / r->step_y);
-	r->side_dist_x = (p->x - r->map_x) * r->delta_dist_x;
-	if (r->step_x > 0)
-		r->side_dist_x = (r->map_x + 1.0 - p->x) * r->delta_dist_x;
-	r->side_dist_y = (p->y - r->map_y) * r->delta_dist_y;
-	if (r->step_y > 0)
-		r->side_dist_y = (r->map_y + 1.0 - p->y) * r->delta_dist_y;
+	if (r->dir_y != 0)
+		r->delta_dist_y = fabs(1 / r->dir_y);
+	r->side_dist_x = (r->map_x + 1.0 - p->x) * r->delta_dist_x;
+	if (r->dir_x < 0)
+		r->side_dist_x = (p->x - r->map_x) * r->delta_dist_x;
+	r->side_dist_y = (r->map_y + 1.0 - p->y) * r->delta_dist_y;
+	if (r->dir_y < 0)
+		r->side_dist_y = (p->y - r->map_y) * r->delta_dist_y;
 }
 
 /**
@@ -53,9 +56,17 @@ static void	ray_init(t_ray *r, t_player *p, double angle)
 static bool	is_wall(t_level	*lvl, int x, int y)
 {
 	if (y <= 0 || x <= 0 || y >= lvl->row_len || x >= lvl->col_len)
+	{
+		if (DEBUG)
+			printf("Out of bounds hit at x:%i y:%i\n", x, y);
 		return (true);
+	}
 	if (lvl->map[y][x] == '1')
+	{
+		if (DEBUG)
+			printf("Wall was hit at x:%i y:%i\n", x, y);
 		return (true);
+	}
 	return (false);
 }
 
@@ -74,47 +85,45 @@ static bool	hitscan(t_ray *r, t_level *lvl)
 		if (r->side_dist_x < r->side_dist_y)
 		{
 			r->side_dist_x += r->delta_dist_x;
-			r->map_x += r->delta_x;
-			r->side = 0;
+			r->map_x += r->step_x;
+			r->side = VERTICAL;
 		}
 		else
 		{
 			r->delta_dist_y += r->delta_dist_y;
-			r->map_y += r->delta_y;
-			r->side = 1;
+			r->map_y += r->step_y;
+			r->side = HORIZONTAL;
 		}
 		if (is_wall(lvl, r->map_x, r->map_y))
-		{
-			printf("Wall was hit at x:%i y:%i\n", r->map_x, r->map_y);
 			hit = true;
-		}
 		depth++;
 	}
 	return (hit);
 }
 
 /**
- * NOTE: The current raycasting implementation uses Bresenham's line algorithm
+ * NOTE: The raycaster is using Digital Differential Analysis
  *
  * @brief Instantiates a ray from the player position towards the given angle
+ * @param[in] ray the ray struct which gets used for distance calculation
  * @param[in] lvl level where the map data gets fetched from
  * @param[in] p player data where we fetch the player's position
- * @param[in] angle the starting direction of the ray
+ * @param[in] x the x-axis to check oon the camera plane
  * @return distance to the reached wall from player position, 0.0 if unreached
  */
-double	raycast(t_level *lvl, t_player *p, double angle)
+double	raycast(t_ray *ray, t_level *lvl, t_player *p, int x)
 {
-	t_ray	r;
 	double	distance;
 
 	distance = 0.0;
-	ft_memset(&r, 0, sizeof(t_ray));
-	ray_init(&r, p, angle);
-	if (hitscan(&r, lvl))
+	ray->camera_x = (2 * x) / (double)W_WIDTH - 1;
+	ray_init(ray, p);
+	if (hitscan(ray, lvl))
 	{
-		distance = r.side_dist_y - r.delta_dist_y;
-		if (r.side == 0)
-			distance = r.side_dist_x - r.delta_dist_x;
+		if (ray->side == VERTICAL)
+			distance = ray->side_dist_x - ray->delta_dist_x;
+		else
+			distance = ray->side_dist_y - ray->delta_dist_y;
 		return (fabs(distance));
 	}
 	return (0.0);
