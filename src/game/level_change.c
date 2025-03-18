@@ -30,3 +30,20 @@ void	init_level_params(t_level *level, t_player *player)
 	player->delta_x = cos(player->angle) * TRIG_MULTIPLIER;
 	player->delta_y = sin(player->angle) * TRIG_MULTIPLIER;
 }
+
+/**
+ * @brief Renders the floor and ceiling and initializes player position.
+ * This function will initialize the loading of a new level.
+ */
+void	level_setup(t_level *lvl, t_player *p)
+{
+	if (lvl->loaded == false)
+	{
+		init_level_params(lvl, p);
+		if (lvl->imgs.bg)
+			mlx_image_to_window(*lvl->mlx, lvl->imgs.bg, 0, 0);
+		if (lvl->imgs.fg)
+			mlx_image_to_window(*lvl->mlx, lvl->imgs.fg, 0, 0);
+		lvl->loaded = true;
+	}
+}
