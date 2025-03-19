@@ -41,9 +41,9 @@ VPATH = ${SRC_DIR}/main/ \
 		${SRC_DIR}/utils/ \
 		${SRC_DIR}/game/ \
 		${SRC_DIR}/renderer/ \
+		${SRC_DIR}/minimap/ \
 
-SRCS =	main.c \
-		parser.c \
+SRCS =		parser.c \
 		parse_textures.c \
 		parse_texture_utils.c \
 		parse_colors.c \
@@ -62,6 +62,7 @@ SRCS =	main.c \
 		movement.c \
 		rotation.c \
 		level_change.c \
+		minimap.c \
 
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}
 
