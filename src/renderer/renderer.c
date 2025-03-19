@@ -70,7 +70,7 @@ static void	draw_foreground(t_level *lvl, t_player *p)
  */
 void	render_surfaces(t_level *lvl, t_player *p)
 {
-	new_images(lvl);
 	level_setup(lvl, p);
+	reset_foreground(lvl);
 	draw_foreground(lvl, p);
 }

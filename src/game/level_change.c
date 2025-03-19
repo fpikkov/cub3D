@@ -27,8 +27,6 @@ void	init_level_params(t_level *level, t_player *player)
 		player->angle = DOWN;
 	else if (level->direction == 'W')
 		player->angle = LEFT;
-	player->delta_x = cos(player->angle) * TRIG_MULTIPLIER;
-	player->delta_y = sin(player->angle) * TRIG_MULTIPLIER;
 }
 
 /**

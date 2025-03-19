@@ -55,7 +55,6 @@ void		init_level_params(t_level *level, t_player *player);
 // Renderer
 
 void		level_setup(t_level *lvl, t_player *p);
-void		new_images(t_level *lvl);
 void		delete_images(t_level *lvl, bool all);
 void		reset_foreground(t_level *lvl);
 void		render_surfaces(t_level *lvl, t_player *p);

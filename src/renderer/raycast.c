@@ -57,13 +57,13 @@ static bool	is_wall(t_level	*lvl, int x, int y)
 {
 	if (y <= 0 || x <= 0 || y >= lvl->row_len || x >= lvl->col_len)
 	{
-		if (DEBUG)
+		if (DEBUG == 2)
 			printf("Out of bounds hit at x:%i y:%i\n", x, y);
 		return (true);
 	}
 	if (lvl->map[y][x] == '1')
 	{
-		if (DEBUG)
+		if (DEBUG == 2)
 			printf("Wall was hit at x:%i y:%i\n", x, y);
 		return (true);
 	}
