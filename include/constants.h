@@ -34,7 +34,7 @@
 // Rendering constants
 # define FPS 60
 # define MSEC_PER_FRAME 16L
-# define FOV 60
+# define FOV 90
 # define DOF 16
 # define TILE 128
 
@@ -44,10 +44,11 @@
 
 // Movement and angles
 # define PI 3.14159265359
+# define PI2 (PI / 2.0)
 # define DEGREE 0.01745329251
 # define FOV_RAD (FOV * DEGREE)
 # define ROTATE_AMOUNT 0.1
-# define TRIG_MULTIPLIER 5
+# define MOVE_SPEED 0.5
 
 // Unit circle angles
 # define UP (PI / 2.0)

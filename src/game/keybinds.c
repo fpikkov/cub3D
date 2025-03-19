@@ -30,6 +30,7 @@ static bool	is_loaded(t_data *data)
 
 /**
  * TODO: Wall collision by checking if player is some units away from wall
+ * TODO: Pass the map data to the movement so collision can be checked
  */
 void	key_hook(mlx_key_data_t keydata, void *param)
 {
@@ -54,5 +55,8 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 			rotate_left(&data->player);
 		else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_REPEAT)
 			rotate_right(&data->player);
+		if (DEBUG)
+			printf("pX:%.2f pY;%.2f | pA: %.2f\n", \
+			data->player.x, data->player.y, data->player.angle);
 	}
 }

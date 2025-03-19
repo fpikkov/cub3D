@@ -63,10 +63,6 @@ typedef struct s_color
  */
 typedef struct s_imgs
 {
-	mlx_image_t	*north;
-	mlx_image_t	*east;
-	mlx_image_t	*south;
-	mlx_image_t	*west;
 	mlx_image_t	*fg;
 	mlx_image_t	*bg;
 	uint32_t	floor;
@@ -102,8 +98,6 @@ typedef	struct s_player
 {
 	double	x;
 	double	y;
-	double	delta_x;
-	double	delta_y;
 	double	angle;
 }	t_player;
 
