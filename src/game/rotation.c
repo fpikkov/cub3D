@@ -13,7 +13,7 @@
 #include "cube.h"
 
 // TODO: Collision checking
-void	rotate_right(t_player *p)
+void	rotate_left(t_player *p)
 {
 	p->angle -= ROTATE_AMOUNT;
 	if (p->angle < 0)
@@ -21,7 +21,7 @@ void	rotate_right(t_player *p)
 }
 
 // TODO: Collision checking
-void	rotate_left(t_player *p)
+void	rotate_right(t_player *p)
 {
 	p->angle += ROTATE_AMOUNT;
 	if (p->angle > PI * 2.0)

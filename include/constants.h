@@ -53,7 +53,7 @@
 // Unit circle angles (flipped when working with arrays)
 # define DOWN (PI / 2.0)
 # define UP ((3.0 * PI) / 2.0)
-# define RIGHT (PI)
-# define LEFT (0)
+# define LEFT (PI)
+# define RIGHT (0)
 
 #endif

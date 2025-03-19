@@ -26,8 +26,8 @@ static void	ray_init(t_ray *r, t_player *p)
 {
 	r->map_x = (int)p->y;
 	r->map_y = (int)p->y;
-	r->plane_x = sin(p->angle) * FOV_RAD;
-	r->plane_y = -(cos(p->angle)) * FOV_RAD;
+	r->plane_x = -sin(p->angle) * FOV_RAD;
+	r->plane_y = cos(p->angle) * FOV_RAD;
 	r->dir_x = cos(p->angle) + r->plane_x * r->camera_x;
 	r->dir_y = sin(p->angle) + r->plane_y * r->camera_x;
 	r->step_x = 1;
@@ -102,6 +102,8 @@ static bool	hitscan(t_ray *r, t_level *lvl)
 }
 
 /**
+ * TODO: Since the unit circle is flipped, check that the wall textures are correct
+ *
  * @brief Checks where on the wall the ray hit and selects a texture.
  */
 static void	ray_texture_position(t_ray *ray, t_player *p)
