@@ -1,0 +1,14 @@
+ NO ./textures/missing.png
+ SO ./textures/missing.png
+ WE ./textures/missing.png
+ EA ./textures/missing.png
+
+ F 150,130,110
+ C 25,150,200
+
+1111111
+1110111
+1100011
+110N001
+1100011
+1111111
