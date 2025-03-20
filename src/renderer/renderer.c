@@ -27,22 +27,49 @@ static void	line_init(t_line *line, t_ray *ray)
 	line->current = line->start;
 }
 
+/**
+ * @brief Returns the color data for the current wall we're drawing
+ */
+static uint32_t	select_texture(t_ray *ray, t_level *lvl, int y)
+{
+	uint32_t	color;
+
+	color = 0x0;
+	if (ray->wall_type == NORTH)
+		color = nearest_neighbor(lvl->textures.north, (int)ray->hit_column, y);
+	else if (ray->wall_type == EAST)
+		color = nearest_neighbor(lvl->textures.east, (int)ray->hit_column, y);
+	else if (ray->wall_type == SOUTH)
+		color = nearest_neighbor(lvl->textures.south, (int)ray->hit_column, y);
+	else if (ray->wall_type == WEST)
+		color = nearest_neighbor(lvl->textures.west, (int)ray->hit_column, y);
+	return (color);
+}
+
+/**
+ * TODO: pcik the correct color from the hit column (x)
+ */
 static void	draw_wall(t_ray *ray, t_level *lvl, int x)
 {
 	t_line		line;
 	int			scaled;
 	uint32_t	color;
+	static bool	once = false;
 
 	ft_memset(&line, 0, sizeof(t_line));
 	line_init(&line, ray);
 	color = 0;
 	while (line.current <= line.end)
 	{
-		scaled = (int)floor(((line.current - line.start) * TILE) / line.delta);
-		color = nearest_neighbor(lvl->textures.north, (int)ray->hit_column, scaled);
+		//scaled = (int)floor(((line.end - line.current) * TILE) / line.delta);
+		scaled = (int)floor(((TILE - 1) / line.delta) * (line.current - line.start));
+		if (!once)
+			printf("Scaled y:%i, x: %i, hit: %i\n",scaled, x, (int)ray->hit_column);
+		color = select_texture(ray, lvl, scaled);
 		mlx_put_pixel(lvl->imgs.fg, x, (int)floor(line.current), color);
 		line.current++;
 	}
+	once = true;
 }
 
 /**
@@ -56,9 +83,7 @@ static void	draw_foreground(t_level *lvl, t_player *p)
 	x = 0;
 	while (x < W_WIDTH)
 	{
-		// Reset ray struct
 		ft_memset(&ray, 0, sizeof(t_ray));
-		// Cast ray for each degree within FOV
 		if (raycast(&ray, lvl, p, x))
 			draw_wall(&ray, lvl, x);
 		x++;

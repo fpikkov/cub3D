@@ -26,22 +26,19 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	instance = current_level(data);
 	if (!instance->loaded)
 		return ;
-	if (input_tick())
-	{
-		if (keydata.key == MLX_KEY_W && keydata.action == MLX_REPEAT)
-			move_forward(&data->player, instance);
-		else if (keydata.key == MLX_KEY_S && keydata.action == MLX_REPEAT)
-			move_backward(&data->player, instance);
-		else if (keydata.key == MLX_KEY_D && keydata.action == MLX_REPEAT)
-			move_right(&data->player, instance);
-		else if (keydata.key == MLX_KEY_A && keydata.action == MLX_REPEAT)
-			move_left(&data->player, instance);
-		else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_REPEAT)
-			rotate_left(&data->player);
-		else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_REPEAT)
-			rotate_right(&data->player);
-		if (DEBUG)
-			printf("pX:%.2f pY;%.2f | pA: %.2f\n", \
-			data->player.x, data->player.y, data->player.angle);
-	}
+	if (keydata.key == MLX_KEY_W)
+		move_forward(&data->player, instance);
+	else if (keydata.key == MLX_KEY_S)
+		move_backward(&data->player, instance);
+	else if (keydata.key == MLX_KEY_D)
+		move_right(&data->player, instance);
+	else if (keydata.key == MLX_KEY_A)
+		move_left(&data->player, instance);
+	else if (keydata.key == MLX_KEY_LEFT)
+		rotate_left(&data->player);
+	else if (keydata.key == MLX_KEY_RIGHT)
+		rotate_right(&data->player);
+	if (DEBUG)
+		printf("pX:%.2f pY;%.2f | pA: %.2f\n", \
+		data->player.x, data->player.y, data->player.angle);
 }
