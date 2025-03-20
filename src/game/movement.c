@@ -13,23 +13,44 @@
 #include "cube.h"
 
 // TODO: Collision checking
-void	move_forward(t_player *p)
+void	move_forward(t_player *p, t_level *lvl)
 {
+	double	x;
+	double	y;
+
+	x = p->x + cos(p->angle) * MOVE_SPEED;
+	y = p->y + sin(p->angle) * MOVE_SPEED;
+	if (is_wall(lvl, x, y))
+		return ;
 	p->x += cos(p->angle) * MOVE_SPEED;
 	p->y += sin(p->angle) * MOVE_SPEED;
 }
 
 // TODO: Collision checking
-void	move_backward(t_player *p)
+void	move_backward(t_player *p, t_level *lvl)
 {
+	double	x;
+	double	y;
+
+	x = p->x + cos(p->angle) * MOVE_SPEED;
+	y = p->y + sin(p->angle) * MOVE_SPEED;
+	if (is_wall(lvl, x, y))
+		return ;
 	p->x -= cos(p->angle) * MOVE_SPEED;
 	p->y -= sin(p->angle) * MOVE_SPEED;
 }
 
 // TODO: Collision checking
 // TODO: Double check the math
-void	move_left(t_player *p)
+void	move_left(t_player *p, t_level *lvl)
 {
+	double	x;
+	double	y;
+
+	x = p->x + cos(p->angle) * MOVE_SPEED;
+	y = p->y + sin(p->angle) * MOVE_SPEED;
+	if (is_wall(lvl, x, y))
+		return ;
 	double	side_delta;
 
 	side_delta = p->angle - PI2;
@@ -41,10 +62,16 @@ void	move_left(t_player *p)
 
 // TODO: Collision checking
 // TODO: Double check the math
-void	move_right(t_player *p)
+void	move_right(t_player *p, t_level *lvl)
 {
+	double	x;
+	double	y;
 	double	side_delta;
 
+	x = p->x + cos(p->angle) * MOVE_SPEED;
+	y = p->y + sin(p->angle) * MOVE_SPEED;
+	if (is_wall(lvl, x, y))
+		return ;
 	side_delta = p->angle + PI2;
 	if (side_delta > PI * 2.0)
 		side_delta -= PI * 2.0;

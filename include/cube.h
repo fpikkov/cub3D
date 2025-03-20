@@ -43,6 +43,7 @@ char		**resize_to_rectangular(char **map);
 double		to_radian(int degrees);
 void		space_to_one(char **map);
 bool		print_error(t_errors error, bool warning);
+bool		is_wall(t_level	*lvl, int x, int y);
 
 // Game logic
 
@@ -63,10 +64,10 @@ uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y);
 
 // Player position
 
-void		move_forward(t_player *p);
-void		move_backward(t_player *p);
-void		move_left(t_player *p);
-void		move_right(t_player *p);
+void		move_forward(t_player *p, t_level *lvl);
+void		move_backward(t_player *p, t_level *lvl);
+void		move_left(t_player *p, t_level *lvl);
+void		move_right(t_player *p, t_level *lvl);
 void		rotate_left(t_player *p);
 void		rotate_right(t_player *p);
 

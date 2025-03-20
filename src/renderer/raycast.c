@@ -53,7 +53,7 @@ static void	ray_init(t_ray *r, t_player *p)
 /**
  * @brief Checks if the given co-ordinates reached a wall or out of bounds
  */
-static bool	is_wall(t_level	*lvl, int x, int y)
+bool	is_wall(t_level	*lvl, int x, int y)
 {
 	if (y <= 0 || x <= 0 || y >= lvl->row_len || x >= lvl->col_len)
 	{
