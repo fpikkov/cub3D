@@ -45,3 +45,17 @@ void	level_setup(t_level *lvl, t_player *p)
 		lvl->loaded = true;
 	}
 }
+
+/**
+ * @brief Fetches currently loaded level from data
+ * @return instance of the currently loaded level
+ */
+t_level	*current_level(t_data *data)
+{
+	t_level	*instance;
+
+	instance = data->levels;
+	while (instance->index != data->lvl_idx && instance->next)
+		instance = instance->next;
+	return (instance);
+}

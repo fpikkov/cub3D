@@ -12,69 +12,66 @@
 
 #include "cube.h"
 
-// TODO: Collision checking
 void	move_forward(t_player *p, t_level *lvl)
 {
-	double	x;
-	double	y;
+	double	dir_x;
+	double	dir_y;
 
-	x = p->x + cos(p->angle) * MOVE_SPEED;
-	y = p->y + sin(p->angle) * MOVE_SPEED;
-	if (is_wall(lvl, x, y))
+	dir_x = cos(p->angle);
+	dir_y = sin(p->angle);
+	if (is_wall(lvl, (int)(p->x + (dir_x * (MOVE_SPEED + BOUNDARY))), \
+	(int)(p->y + (dir_y * (MOVE_SPEED + BOUNDARY)))))
 		return ;
-	p->x += cos(p->angle) * MOVE_SPEED;
-	p->y += sin(p->angle) * MOVE_SPEED;
+	p->x += dir_x * MOVE_SPEED;
+	p->y += dir_y * MOVE_SPEED;
 }
 
-// TODO: Collision checking
 void	move_backward(t_player *p, t_level *lvl)
 {
-	double	x;
-	double	y;
+	double	dir_x;
+	double	dir_y;
 
-	x = p->x + cos(p->angle) * MOVE_SPEED;
-	y = p->y + sin(p->angle) * MOVE_SPEED;
-	if (is_wall(lvl, x, y))
+	dir_x = cos(p->angle);
+	dir_y = sin(p->angle);
+	if (is_wall(lvl, (int)(p->x - (dir_x * (MOVE_SPEED + BOUNDARY))), \
+	(int)(p->y - (dir_y * (MOVE_SPEED + BOUNDARY)))))
 		return ;
-	p->x -= cos(p->angle) * MOVE_SPEED;
-	p->y -= sin(p->angle) * MOVE_SPEED;
+	p->x -= dir_x * MOVE_SPEED;
+	p->y -= dir_y * MOVE_SPEED;
 }
 
-// TODO: Collision checking
-// TODO: Double check the math
 void	move_left(t_player *p, t_level *lvl)
 {
-	double	x;
-	double	y;
+	double	delta;
+	double	dir_x;
+	double	dir_y;
 
-	x = p->x + cos(p->angle) * MOVE_SPEED;
-	y = p->y + sin(p->angle) * MOVE_SPEED;
-	if (is_wall(lvl, x, y))
+	delta = p->angle - PI_DIAGONAL;
+	if (delta < 0)
+		delta += PI2;
+	dir_x = -cos(delta);
+	dir_y = -sin(delta);
+	if (is_wall(lvl, (int)(p->x - (dir_x * (MOVE_SPEED + BOUNDARY))), \
+	(int)(p->y - (dir_y * (MOVE_SPEED + BOUNDARY)))))
 		return ;
-	double	side_delta;
-
-	side_delta = p->angle - PI2;
-	if (side_delta < 0)
-		side_delta += PI * 2.0;
-	p->x -= cos(side_delta) * MOVE_SPEED;
-	p->y -= -sin(side_delta) * MOVE_SPEED;
+	p->x -= dir_x * MOVE_SPEED;
+	p->y -= dir_y * MOVE_SPEED;
 }
 
-// TODO: Collision checking
-// TODO: Double check the math
 void	move_right(t_player *p, t_level *lvl)
 {
-	double	x;
-	double	y;
-	double	side_delta;
+	double	delta;
+	double	dir_x;
+	double	dir_y;
 
-	x = p->x + cos(p->angle) * MOVE_SPEED;
-	y = p->y + sin(p->angle) * MOVE_SPEED;
-	if (is_wall(lvl, x, y))
+	delta = p->angle + PI_DIAGONAL;
+	if (delta > PI2)
+		delta -= PI2;
+	dir_x = cos(delta);
+	dir_y = sin(delta);
+	if (is_wall(lvl, (int)(p->x + (dir_x * (MOVE_SPEED + BOUNDARY))), \
+	(int)(p->y + (dir_y * (MOVE_SPEED + BOUNDARY)))))
 		return ;
-	side_delta = p->angle + PI2;
-	if (side_delta > PI * 2.0)
-		side_delta -= PI * 2.0;
-	p->x += -cos(side_delta) * MOVE_SPEED;
-	p->y += sin(side_delta) * MOVE_SPEED;
+	p->x += dir_x * MOVE_SPEED;
+	p->y += dir_y * MOVE_SPEED;
 }

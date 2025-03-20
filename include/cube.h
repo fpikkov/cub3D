@@ -51,11 +51,15 @@ void		key_hook(mlx_key_data_t keydata, void *param);
 void		game_hook(void *param);
 bool		game_tick(void);
 bool		input_tick(void);
+
+// Level handling
+
 void		init_level_params(t_level *level, t_player *player);
+void		level_setup(t_level *lvl, t_player *p);
+t_level		*current_level(t_data *data);
 
 // Renderer
 
-void		level_setup(t_level *lvl, t_player *p);
 void		delete_images(t_level *lvl, bool all);
 void		reset_foreground(t_level *lvl);
 void		render_surfaces(t_level *lvl, t_player *p);

@@ -44,11 +44,13 @@
 
 // Movement and angles
 # define PI 3.14159265359
-# define PI2 (PI / 2.0)
+# define PI2 (PI * 2.0)
+# define PI_DIAGONAL (PI / 2.0)
 # define DEGREE 0.01745329251
 # define FOV_RAD (FOV * DEGREE)
 # define ROTATE_AMOUNT 0.1
-# define MOVE_SPEED 0.5
+# define MOVE_SPEED 0.2
+# define BOUNDARY 0.4
 
 // Unit circle angles (flipped when working with arrays)
 # define DOWN (PI / 2.0)
