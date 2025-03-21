@@ -14,14 +14,14 @@
 
 static void	line_init(t_line *line, t_ray *ray)
 {
-	line->height= floor(W_HEIGHT / ray->distance);
+	line->height = floor(W_HEIGHT / ray->distance);
 	line->start = (-line->height / 2) + (W_HEIGHT / 2);
 	if (line->start < 0)
 		line->start = 0;
 	line->end = (line->height / 2) + (W_HEIGHT / 2);
 	if (line->end >= W_HEIGHT)
 		line->end = W_HEIGHT - 1;
-	line->delta = fabs(line->end - line->start);
+	line->delta = line->end - line->start;
 	if (line->delta == 0)
 		line->delta++;
 	line->current = line->start;
@@ -47,29 +47,29 @@ static uint32_t	select_texture(t_ray *ray, t_level *lvl, int y)
 }
 
 /**
- * TODO: pcik the correct color from the hit column (x)
+ * @brief Draws vertical line onto the screen x position based on how far
+ * the ray hit the wall on the map. The image size gets interpolated so pixel
+ * data is always fetched from a square range defined by the TILE constant.
+ * @param[in] ray the casted ray struct
+ * @param[in] lvl the current level
+ * @param[in] x the horizontal screen coordinate
  */
-static void	draw_wall(t_ray *ray, t_level *lvl, int x)
+static void	draw_line(t_ray *ray, t_level *lvl, int x)
 {
 	t_line		line;
-	int			scaled;
+	int			scaled_y;
 	uint32_t	color;
-	static bool	once = false;
 
 	ft_memset(&line, 0, sizeof(t_line));
 	line_init(&line, ray);
 	color = 0;
 	while (line.current <= line.end)
 	{
-		//scaled = (int)floor(((line.end - line.current) * TILE) / line.delta);
-		scaled = (int)floor(((TILE - 1) / line.delta) * (line.current - line.start));
-		if (!once)
-			printf("Scaled y:%i, x: %i, hit: %i\n",scaled, x, (int)ray->hit_column);
-		color = select_texture(ray, lvl, scaled);
-		mlx_put_pixel(lvl->imgs.fg, x, (int)floor(line.current), color);
+		scaled_y = (int)floor(((line.end - line.current) * TILE) / line.delta);
+		color = select_texture(ray, lvl, scaled_y);
+		mlx_put_pixel(lvl->imgs.fg, x, (int)line.current, color);
 		line.current++;
 	}
-	once = true;
 }
 
 /**
@@ -85,7 +85,7 @@ static void	draw_foreground(t_level *lvl, t_player *p)
 	{
 		ft_memset(&ray, 0, sizeof(t_ray));
 		if (raycast(&ray, lvl, p, x))
-			draw_wall(&ray, lvl, x);
+			draw_line(&ray, lvl, x);
 		x++;
 	}
 }

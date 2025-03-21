@@ -102,7 +102,8 @@ static bool	hitscan(t_ray *r, t_level *lvl)
 }
 
 /**
- * TODO: Since the unit circle is flipped, check that the wall textures are correct
+ * TODO: Since the unit circle is flipped,
+ * check that the wall textures are correct
  *
  * @brief Checks where on the wall the ray hit and selects a texture.
  */

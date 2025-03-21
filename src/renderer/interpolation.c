@@ -13,8 +13,6 @@
 #include "cube.h"
 
 /**
- * TODO: Fix the damn x-axis. The hit column is not properly fetched form the texture.
- *
  * @brief Uses nearest neighbor interpolation to return a color value closest
  * to the target image size's grid. The x and y have to be converted to bytes
  * as the color data is fetched from a pointer that gets incremented.
@@ -30,10 +28,9 @@ uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y)
 	uint32_t	color;
 	uint8_t		*ptr;
 
-	//src_x = (x / TILE) * tex->bytes_per_pixel;
-	src_x = (uint32_t)(floor(((TILE - 1) / tex->width) * x) * tex->bytes_per_pixel);
-	src_y = (uint32_t)(floor((tex->height / TILE) * y) * tex->bytes_per_pixel);
-	ptr = &tex->pixels[src_y + src_x];
+	src_x = (uint32_t)(((float)x / TILE) * tex->width);
+	src_y = (uint32_t)(((float)y / TILE) * tex->height);
+	ptr = &tex->pixels[(src_y * tex->width + src_x) * tex->bytes_per_pixel];
 	color = 0;
 	color |= *ptr << 24;
 	ptr++;
