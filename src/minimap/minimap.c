@@ -5,88 +5,107 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahentton <ahentton@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 13:13:43 by ahentton          #+#    #+#             */
-/*   Updated: 2025/03/12 13:13:44 by ahentton         ###   ########.fr       */
+/*   Created: 2025/03/20 13:24:26 by ahentton          #+#    #+#             */
+/*   Updated: 2025/03/20 13:24:33 by ahentton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42.h"
 #include "cube.h"
 
+#define RANGE 5
+#define MAP_HEIGHT 14
+#define MAP_WIDTH 33
+#define	ZOOM 2
+
 char	*map[14] = {
-	"1111111111111111111111111",
-        "1000000000110000000000001",
-        "1011000001110000000000001",
-        "1001000000000000000000001",
+"111111111111111111111111111111111",
+"111111111000000000110000000000001",
+"111111111011000001110000000000001",
+"111111111001000000000000000000001",
 "111111111011000001110000000000001",
 "100000000011000001110111111111111",
-"11110111111111011100000010001",
-"11110111111111011101010010001",
-"11000000110101011100000010001",
-"10000000000000001100000010001",
-"10000000000000001101010010001",
-"1100N00111010101111101111000111",
-"11110111 1110101   101111010001",
-"11111111 1111111   111111111111"
+"111101111111110111000000100011111",
+"111101111111110111010100100011111",
+"110000001101010111000000100011111",
+"100000000000000N11000000100011111",
+"100000000000000011010100100011111",
+"110000011101010111110111100011111",
+"111101111111010111110111101000111",
+"111111111111111111111111111111111"
 };
 
-//static	bool	init_textures(t_minimap *minimap)
-
-static	void	draw_minimap(mlx_t *mlx, char **map)
+static	void	draw_player_arrow(mlx_image_t *minimap)
 {
-	mlx_image_t	*minimap = mlx_new_image(mlx, 256, 256);
+	int	tile_size;
+	int	center_x;
+	int	center_y;
+	int	x;
+	int	y;
+
+	tile_size = 256 / (RANGE * 2 + 1);
+	center_x = 128;
+	center_y = 128;
+	mlx_put_pixel(minimap, center_x, center_y - tile_size / 2, 0x39FF14FF);
+
+	y = 1;
+	while (y < tile_size / 2)
+	{
+		x = -y;
+		while (x <= y)
+		{
+			mlx_put_pixel(minimap, center_x + x, center_y - tile_size / 2 + y, 0x39FF14FF);
+			x++;
+		}
+		y++;
+	}
+}
+
+static	void	draw_minimap(mlx_t *mlx, char **map, int player_x, int player_y)
+{
+	mlx_image_t	*minimap;
+	int		y;
+	int		x;
+	int		map_x;
+	int		map_y;
+	int		start_x;
+	int		start_y;
+	float		tile_size;
+
+	minimap = mlx_new_image(mlx, 256, 256);
 	if (!minimap)
 		return ;
-	uint32_t	wall_color = 0xFF0000FF;
-	uint32_t	base_color = 0x000000FF;
-	uint32_t	player_color = 0x00FF00FF;
 
-	int	map_width = 14;
-	int	map_height = 14;
-	int	player_x = -1;
-	int	player_y = -1;
-
-	for (int y = 0; y < map_height; y++)
+	tile_size = 256.0 / (RANGE * 2 + 1);
+	start_x = player_x - RANGE;
+	start_y = player_y - RANGE;
+	y = 0;
+	while (y < 256)
 	{
-		for (int x = 0; x < map_width; x++)
+		x = 0;
+		while (x < 256)
 		{
-			if (map[y][x] == 'N')
+			map_y = start_y + (y / tile_size);
+			map_x = start_x + (x / tile_size);
+			printf("map_y = %d, map_x = %d\n", map_y, map_x);
+			if (map_y >= 0 && map_y < MAP_HEIGHT && map_x >= 0 && map_x < MAP_WIDTH)
 			{
-				player_x = x;
-				player_y = y;
-				break ;
+				if (map_y > player_y + RANGE || map_x > player_x + RANGE)
+					mlx_put_pixel(minimap, x, y, 0xFFFFFFFF);
+				else if (map[map_y][map_x] == '1')
+					mlx_put_pixel(minimap, x, y, 0x000000FF);
+				else
+					mlx_put_pixel(minimap, x, y, 0xFF0000FF);
 			}
-		}
-	}
-	for (int y = 0; y < 256; y++)
-	{
-		for (int x = 0; x < 256; x++)
-		{
-			int	map_x = (x * map_width) / 256;
-			int	map_y = (y * map_height) / 256;
-
-			if (map[map_y][map_x] == '1')
-				mlx_put_pixel(minimap, x, y, wall_color);
 			else
-				mlx_put_pixel(minimap, x, y, base_color);
-		}
-	}
-	if (player_x != -1 && player_y != -1)
-	{
-		int px = (player_x * 256) / map_width;
-		int py = (player_y * 256) / map_height;
-		for (int dy = -2; dy <= 2; dy++)
-		{
-			for (int dx = -2; dx <= 2; dx++)
 			{
-				int	dot_x = px + dx;
-				int	dot_y = py + dy;
-				if (dot_x >= 0 && dot_x < 256 && dot_y >= 0 && dot_y < 256)
-					mlx_put_pixel(minimap, dot_x, dot_y, player_color);
+				mlx_put_pixel(minimap, x, y, 0x00000FF);
 			}
+			x++;
 		}
+		y++;
 	}
 	mlx_image_to_window(mlx, minimap, 10, 10);
+	draw_player_arrow(minimap);
 }
 
 int	main(void)
@@ -95,7 +114,7 @@ int	main(void)
 	if (!mlx)
 		return (1);
 
-	draw_minimap(mlx, map);
+	draw_minimap(mlx, map, 15, 9);
 
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
