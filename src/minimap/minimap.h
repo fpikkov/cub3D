@@ -15,15 +15,16 @@
 
 # include "cube.h"
 
-# define MAPTILE 8
-# define WIDTH 256
-# define HEIGTH 256
-
 typedef struct s_minimap
 {
-	mlx_t	*mlx;
-	char	**map;
-	mlx_image_t	*wall;
-	mlx_image_t	*floor;
+	mlx_image_t	*minimap;
+	int		player_x;
+	int		player_y;
+	int		start_x;
+	int		start_y;
+	int		map_x;
+	int		map_y;
+	float		tile_size;
+	int		range;
 }		t_minimap;
 #endif

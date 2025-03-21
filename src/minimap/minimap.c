@@ -67,15 +67,14 @@ static	void	draw_minimap(mlx_t *mlx, char **map, int player_x, int player_y)
 		{
 			map_y = start_y + (y / tile_size);
 			map_x = start_x + (x / tile_size);
-			printf("map_y = %d, map_x = %d\n", map_y, map_x);
 			if (map_y >= 0 && map_y < MAP_HEIGHT && map_x >= 0 && map_x < MAP_WIDTH)
 			{
 				if (map[map_y][map_x] == 'N')
 					mlx_put_pixel(minimap, x, y, 0x39FF14FF);
 				else if (map[map_y][map_x] == '1')
-					mlx_put_pixel(minimap, x, y, 0x000000FF);
+					mlx_put_pixel(minimap, x, y, 0x00008B30);
 				else
-					mlx_put_pixel(minimap, x, y, 0xFF0000FF);
+					mlx_put_pixel(minimap, x, y, 0xDC143CFF);
 			}
 			else
 			{
