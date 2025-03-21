@@ -94,7 +94,7 @@ typedef struct s_level
 	struct s_level	*next;
 }	t_level;
 
-typedef	struct s_player
+typedef struct s_player
 {
 	double	x;
 	double	y;

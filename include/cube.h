@@ -50,7 +50,6 @@ bool		is_wall(t_level	*lvl, int x, int y);
 void		key_hook(mlx_key_data_t keydata, void *param);
 void		game_hook(void *param);
 bool		game_tick(void);
-bool		input_tick(void);
 
 // Level handling
 
