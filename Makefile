@@ -62,6 +62,8 @@ SRCS =		parser.c \
 		movement.c \
 		rotation.c \
 		level_change.c \
+		init_minimap.c \
+		draw_minimap.c \
 		minimap.c \
 
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}
