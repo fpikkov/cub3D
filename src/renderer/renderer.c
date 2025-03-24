@@ -65,7 +65,7 @@ static void	draw_line(t_ray *ray, t_level *lvl, int x)
 	color = 0;
 	while (line.current <= line.end)
 	{
-		scaled_y = (int)floor(((line.end - line.current) * TILE) / line.delta);
+		scaled_y = (int)floor(((line.current - line.start) * TILE) / line.delta);
 		color = select_texture(ray, lvl, scaled_y);
 		mlx_put_pixel(lvl->imgs.fg, x, (int)line.current, color);
 		line.current++;

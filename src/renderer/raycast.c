@@ -102,8 +102,8 @@ static bool	hitscan(t_ray *r, t_level *lvl)
 }
 
 /**
- * TODO: Since the unit circle is flipped,
- * check that the wall textures are correct
+ * NOTE: Hit columns get reversed for all textures to flip the image
+ * on the x-axis.
  *
  * @brief Checks where on the wall the ray hit and selects a texture.
  */
@@ -118,18 +118,15 @@ static void	ray_texture_position(t_ray *ray, t_player *p)
 		wall_pos = p->x + ray->distance * ray->dir_x;
 	wall_pos -= floor(wall_pos);
 	ray->hit_column = (int)(wall_pos * (double)TILE);
-	if (ray->side == VERTICAL && ray->dir_x > 0)
-		ray->hit_column = TILE - ray->hit_column - 1;
-	if (ray->side == HORIZONTAL && ray->dir_y < 0)
-		ray->hit_column = TILE - ray->hit_column - 1;
+	ray->hit_column = TILE - ray->hit_column - 1;
 	if (ray->side == VERTICAL && ray->dir_x > 0)
 		ray->wall_type = EAST;
 	if (ray->side == VERTICAL && ray->dir_x <= 0)
 		ray->wall_type = WEST;
 	if (ray->side == HORIZONTAL && ray->dir_y < 0)
-		ray->wall_type = SOUTH;
-	if (ray->side == HORIZONTAL && ray->dir_y >= 0)
 		ray->wall_type = NORTH;
+	if (ray->side == HORIZONTAL && ray->dir_y >= 0)
+		ray->wall_type = SOUTH;
 }
 
 /**

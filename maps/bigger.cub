@@ -1,7 +1,7 @@
- NO ./textures/missing.png
- SO ./textures/missing.png
- WE ./textures/missing.png
- EA ./textures/missing.png
+ NO ./textures/cobblestone.png
+ SO ./textures/moss.png
+ WE ./textures/bloody.png
+ EA ./textures/skull.png
 
  F 150,130,110
  C 25,150,200
