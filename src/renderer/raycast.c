@@ -24,7 +24,7 @@
  */
 static void	ray_init(t_ray *r, t_player *p)
 {
-	r->map_x = (int)p->y;
+	r->map_x = (int)p->x;
 	r->map_y = (int)p->y;
 	r->plane_x = -sin(p->angle) * to_radian(FOV);
 	r->plane_y = cos(p->angle) * to_radian(FOV);

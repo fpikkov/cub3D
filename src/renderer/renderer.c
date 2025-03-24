@@ -16,11 +16,7 @@ static void	line_init(t_line *line, t_ray *ray)
 {
 	line->height = floor(W_HEIGHT / ray->distance);
 	line->start = (-line->height / 2) + (W_HEIGHT / 2);
-	if (line->start < 0)
-		line->start = 0;
 	line->end = (line->height / 2) + (W_HEIGHT / 2);
-	if (line->end >= W_HEIGHT)
-		line->end = W_HEIGHT - 1;
 	line->delta = line->end - line->start;
 	if (line->delta == 0)
 		line->delta++;
@@ -65,9 +61,13 @@ static void	draw_line(t_ray *ray, t_level *lvl, int x)
 	color = 0;
 	while (line.current <= line.end)
 	{
-		scaled_y = (int)floor(((line.current - line.start) * TILE) / line.delta);
-		color = select_texture(ray, lvl, scaled_y);
-		mlx_put_pixel(lvl->imgs.fg, x, (int)line.current, color);
+		if (line.current >= 0 && line.current < W_HEIGHT)
+		{
+			scaled_y = (int)floor(((line.current - line.start) \
+			* (TILE - 1)) / line.delta);
+			color = select_texture(ray, lvl, scaled_y);
+			mlx_put_pixel(lvl->imgs.fg, x, (int)line.current, color);
+		}
 		line.current++;
 	}
 }
