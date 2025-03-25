@@ -83,5 +83,7 @@ bool	parse_data(char **argv, t_data *data)
 			print_latest_map(data);
 		idx++;
 	}
+	if (!init_minimap(data))
+		return (false);
 	return (true);
 }

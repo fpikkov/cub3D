@@ -104,14 +104,13 @@ typedef struct s_player
 typedef struct s_minimap
 {
 	mlx_image_t	*img;
-	int		width;
-	int		height;
-	int		start_x;
-	int		start_y;
-	int		range;
+	int			width;
+	int			height;
+	int			start_x;
+	int			start_y;
 	float		tile_size;
 	char		**map;
-}		t_minimap;
+}	t_minimap;
 
 typedef struct s_data
 {

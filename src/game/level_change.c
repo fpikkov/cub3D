@@ -39,9 +39,15 @@ void	level_setup(t_level *lvl, t_player *p)
 	{
 		init_level_params(lvl, p);
 		if (lvl->imgs.bg)
+		{
 			mlx_image_to_window(*lvl->mlx, lvl->imgs.bg, 0, 0);
+			mlx_set_instance_depth(lvl->imgs.bg->instances, BG_DEPTH);
+		}
 		if (lvl->imgs.fg)
+		{
 			mlx_image_to_window(*lvl->mlx, lvl->imgs.fg, 0, 0);
+			mlx_set_instance_depth(lvl->imgs.fg->instances, FG_DEPTH);
+		}
 		lvl->loaded = true;
 	}
 }
