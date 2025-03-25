@@ -14,30 +14,18 @@
 
 void	move_forward(t_player *p, t_level *lvl)
 {
-	double	dir_x;
-	double	dir_y;
-
-	dir_x = cos(p->angle);
-	dir_y = sin(p->angle);
-	if (is_wall(lvl, (int)(p->x + (dir_x * (MOVE_SPEED + BOUNDARY))), \
-	(int)(p->y + (dir_y * (MOVE_SPEED + BOUNDARY)))))
-		return ;
-	p->x += dir_x * MOVE_SPEED;
-	p->y += dir_y * MOVE_SPEED;
+	if (!is_wall(lvl, p->x + (p->dir_x * (MOVE_SPEED + BOUNDARY)), p->y + (p->dir_y * MOVE_SPEED)))
+		p->x += p->dir_x * MOVE_SPEED;
+	if (!is_wall(lvl, p->x + (p->dir_x * MOVE_SPEED), p->y + (p->dir_y * (MOVE_SPEED + BOUNDARY))))
+		p->y += p->dir_y * MOVE_SPEED;
 }
 
 void	move_backward(t_player *p, t_level *lvl)
 {
-	double	dir_x;
-	double	dir_y;
-
-	dir_x = cos(p->angle);
-	dir_y = sin(p->angle);
-	if (is_wall(lvl, (int)(p->x - (dir_x * (MOVE_SPEED + BOUNDARY))), \
-	(int)(p->y - (dir_y * (MOVE_SPEED + BOUNDARY)))))
-		return ;
-	p->x -= dir_x * MOVE_SPEED;
-	p->y -= dir_y * MOVE_SPEED;
+	if (!is_wall(lvl, p->x - (p->dir_x * (MOVE_SPEED + BOUNDARY)), p->y - (p->dir_y * MOVE_SPEED)))
+		p->x -= p->dir_x * MOVE_SPEED;
+	if (!is_wall(lvl, p->x - (p->dir_x * MOVE_SPEED), p->y - (p->dir_y * (MOVE_SPEED + BOUNDARY))))
+		p->y -= p->dir_y * MOVE_SPEED;
 }
 
 void	move_left(t_player *p, t_level *lvl)
