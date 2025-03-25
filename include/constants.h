@@ -57,4 +57,13 @@
 # define LEFT PI
 # define RIGHT 0
 
+// Minimap constants
+# define RANGE 5
+# define MINIMAP_SIZE 256.0
+
+// Image depths
+# define BG_DEPTH 0
+# define FG_DEPTH 1
+# define MM_DEPTH 2
+
 #endif

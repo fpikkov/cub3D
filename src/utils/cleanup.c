@@ -36,6 +36,8 @@ void	terminate(t_data *data)
 		return ;
 	if (data->levels)
 		delete_levels(data);
+	if (data->minimap.img)
+		mlx_delete_image(data->mlx, data->minimap.img);
 	if (data->mlx)
 		mlx_terminate(data->mlx);
 }

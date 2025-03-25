@@ -29,28 +29,26 @@ void	draw_minimap(t_minimap *map)
 
 	y = 0;
 	while (y < 256)
+	{
+		x = 0;
+		while (x < 256)
 		{
-			x = 0;
-			while (x < 256)
+			map_y = map->start_y + (y / map->tile_size);
+			map_x = map->start_x + (x / map->tile_size);
+			if (map_y >= 0 && map_y < map->height && map_x >= 0 && map_x < map->width)
 			{
-				map_y = map->start_y + (y / map->tile_size);
-				map_x = map->start_x + (x / map->tile_size);
-				if (map_y >= 0 && map_y < map->height && map_x >= 0 && map_x < map->width)
-				{
-					if (map->map[map_y][map_x] == 'N')
-						mlx_put_pixel(map->img, x, y, 0x39FF14FF);
-					else if (map->map[map_y][map_x] == '1')
-						mlx_put_pixel(map->img, x, y, 0x00008B30);
-					else
-						mlx_put_pixel(map->img, x, y, 0xDC143CFF);
-				}
-				else //this is an else condition to draw white pixels when debugging
-					//remove when finished with miniamp development.
-				{
-					mlx_put_pixel(map->img, x, y, 0x00000FF);
-				}
-				x++;
+				if (map->map[map_y][map_x] == '1')
+					mlx_put_pixel(map->img, x, y, 0x00008B30);
+				else
+					mlx_put_pixel(map->img, x, y, 0xDC143CFF);
 			}
-			y++;
+			else //this is an else condition to draw white pixels when debugging
+				//remove when finished with miniamp development.
+			{
+				mlx_put_pixel(map->img, x, y, 0x00000FF);
+			}
+			x++;
 		}
+		y++;
+	}
 }
