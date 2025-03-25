@@ -108,6 +108,8 @@ typedef struct s_minimap
 	int			height;
 	int			start_x;
 	int			start_y;
+	int			player_x;
+	int			player_y;
 	float		tile_size;
 	char		**map;
 }	t_minimap;

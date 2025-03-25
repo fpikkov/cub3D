@@ -69,6 +69,7 @@ SRCS =		parser.c \
 		init_minimap.c \
 		draw_minimap.c \
 		minimap.c \
+		main.c \
 
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}
 

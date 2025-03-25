@@ -38,14 +38,11 @@ void	draw_minimap(t_minimap *map)
 			if (map_y >= 0 && map_y < map->height && map_x >= 0 && map_x < map->width)
 			{
 				if (map->map[map_y][map_x] == '1')
-					mlx_put_pixel(map->img, x, y, 0x00008B30);
+					mlx_put_pixel(map->img, x, y, WALL_COLOR);
+				else if (map_y == map->player_y && map_x == map->player_x)
+					mlx_put_pixel(map->img, x, y, PLAYER_COLOR);
 				else
-					mlx_put_pixel(map->img, x, y, 0xDC143CFF);
-			}
-			else //this is an else condition to draw white pixels when debugging
-				//remove when finished with miniamp development.
-			{
-				mlx_put_pixel(map->img, x, y, 0x00000FF);
+					mlx_put_pixel(map->img, x, y, FLOOR_COLOR);
 			}
 			x++;
 		}

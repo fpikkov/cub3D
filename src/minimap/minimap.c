@@ -22,16 +22,18 @@ static void	find_starting_tile(t_minimap *map, int player_x, int player_y)
 {
 	if (map->width - player_x < 5)
 		map->start_x = player_x - (RANGE * 2 - (map->width - player_x - 1));
-	else if (player_x - RANGE < 0)
-		map->start_x = RANGE + (player_x - RANGE - 1);
+	else if (player_x - RANGE <= 0)
+		map->start_x = 0;
 	else
 		map->start_x = player_x - RANGE;
-	if (map->height - player_y < 5)
+	if (map->height - player_y <= 5)
 		map->start_y = player_y - (RANGE * 2 - (map->height - player_y - 1));
-	else if (player_y - RANGE < 0)
-		map->start_y = RANGE + (player_x - RANGE - 1);
+	else if (player_y - RANGE <= 0)
+		map->start_y = 0;
 	else
 		map->start_y = player_y - RANGE;
+	map->player_x = player_x;
+	map->player_y = player_y;
 }
 
 void	update_minimap(t_data *data, t_level *lvl)
