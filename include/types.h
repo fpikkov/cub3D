@@ -101,12 +101,25 @@ typedef struct s_player
 	double	angle;
 }	t_player;
 
+typedef struct s_minimap
+{
+	mlx_image_t	*img;
+	int		width;
+	int		height;
+	int		start_x;
+	int		start_y;
+	int		range;
+	float		tile_size;
+	char		**map;
+}		t_minimap;
+
 typedef struct s_data
 {
 	mlx_t		*mlx;
 	size_t		lvl_idx;
 	t_level		*levels;
 	t_player	player;
+	t_minimap	minimap;
 }	t_data;
 
 typedef struct s_ray

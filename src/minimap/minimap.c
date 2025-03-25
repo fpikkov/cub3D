@@ -15,6 +15,6 @@
 void	load_minimap(t_data *data)
 {
 	init_minimap(data);
-	draw_minimap(data->minimap);
+	draw_minimap(&data->minimap);
 	mlx_image_to_window(data->mlx, data->minimap.img, 10, 10);
 }
