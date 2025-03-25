@@ -23,9 +23,7 @@ void	game_hook(void *param)
 	t_level	*instance;
 
 	data = (t_data *)param;
-	instance = data->levels;
-	while (instance->index != data->lvl_idx && instance->next)
-		instance = instance->next;
+	instance = current_level(data);
 	if (game_tick())
 		render_surfaces(instance, &data->player);
 }

@@ -8,7 +8,7 @@ CLEAR = \033[0m
 # --------	MAKE VARIABLES	--------
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-DBG_FLAGS = -fdiagnostics-color=always -g
+DBG_FLAGS = -fdiagnostics-color=always -g -DDEBUG=1
 INC_FLAGS = -I$(INCLUDE_DIR) -I$(LFT_DIR)/$(INCLUDE_DIR) -I$(MLX_INCLUDE)
 LIB_FLAGS = -L$(LFT_DIR) -l$(LFT) -L$(MLX_BUILD) -l$(LMLX)
 MLX_FLAGS = -ldl -lglfw -pthread -lm
@@ -52,16 +52,20 @@ SRCS =		parser.c \
 		parse_map_utils.c \
 		extract_map.c \
 		validate_map.c \
+		resize_map.c \
 		error.c \
 		cleanup.c \
 		keybinds.c \
 		hook.c \
 		tick.c \
 		renderer.c \
+		raycast.c \
 		refresh.c \
 		movement.c \
 		rotation.c \
 		level_change.c \
+		conversions.c \
+		interpolation.c \
 		init_minimap.c \
 		draw_minimap.c \
 		minimap.c \

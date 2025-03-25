@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void	space_to_zero(char **map)
+void	space_to_one(char **map)
 {
 	int		i;
 	int		j;
@@ -22,7 +22,7 @@ void	space_to_zero(char **map)
 		while (map[i][j])
 		{
 			if (map[i][j] == ' ')
-				map[i][j] = '0';
+				map[i][j] = '1';
 			j++;
 		}
 		i++;

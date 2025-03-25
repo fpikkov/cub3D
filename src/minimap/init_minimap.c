@@ -38,7 +38,7 @@ static	void	find_starting_tile(t_minimap *map, int player_x, int player_y)
 //Map width, map height, and player coordinates are crucial information.
 //Range and tile_size are subject to change later, when scaling is included.
 //TODO:: Make range and tile_size compatible for scaling of the minimap.
-static	void	init_minimap(t_data *data)
+void	init_minimap(t_data *data)
 {
 	ft_memset(&data->minimap, 0, sizeof(t_minimap));
 	data->minimap.height = data->levels->row_len;

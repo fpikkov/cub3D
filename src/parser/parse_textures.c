@@ -48,7 +48,8 @@ bool	parse_textures(char *filename, t_data *data)
 	close(fd);
 	if (ret == CRITICAL)
 		return (false);
-	if (!create_background(lvl) || !textures_exist(lvl))
+	if (!create_background(lvl) || !create_foreground(lvl) \
+	|| !textures_exist(lvl))
 		return (false);
 	return (true);
 }

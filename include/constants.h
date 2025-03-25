@@ -35,12 +35,26 @@
 # define FPS 60
 # define MSEC_PER_FRAME 16L
 # define FOV 60
-# define DOF 8
+# define DOF 16
 # define TILE 128
+
+// Raycasting
+# define VERTICAL 0
+# define HORIZONTAL 1
 
 // Movement and angles
 # define PI 3.14159265359
+# define PI2 6.28318530717
+# define PI_DIAGONAL 1.57079632679
+# define DEGREE 0.01745329251
 # define ROTATE_AMOUNT 0.1
-# define TRIG_MULTIPLIER 5
+# define MOVE_SPEED 0.1
+# define BOUNDARY 0.4
+
+// Unit circle angles (flipped when working with arrays)
+# define DOWN PI_DIAGONAL
+# define UP 4.71238898038
+# define LEFT PI
+# define RIGHT 0
 
 #endif

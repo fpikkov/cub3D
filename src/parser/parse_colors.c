@@ -79,3 +79,11 @@ bool	create_background(t_level *lvl)
 	}
 	return (true);
 }
+
+bool	create_foreground(t_level *lvl)
+{
+	lvl->imgs.fg = mlx_new_image(*lvl->mlx, W_WIDTH, W_HEIGHT);
+	if (!lvl->imgs.fg)
+		return (print_error(IMG_FAILURE, false));
+	return (true);
+}

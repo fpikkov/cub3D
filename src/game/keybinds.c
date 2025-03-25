@@ -13,46 +13,32 @@
 #include "cube.h"
 
 /**
- * @brief Checks if the current level instance has been loaded
- * @return true if loaded, otherwise false
- */
-static bool	is_loaded(t_data *data)
-{
-	t_level	*instance;
-
-	instance = data->levels;
-	while (instance->index != data->lvl_idx && instance->next)
-		instance = instance->next;
-	if (instance->loaded)
-		return (true);
-	return (false);
-}
-
-/**
  * TODO: Wall collision by checking if player is some units away from wall
  */
 void	key_hook(mlx_key_data_t keydata, void *param)
 {
-	t_data			*data;
+	t_data	*data;
+	t_level	*instance;
 
 	data = (t_data *)param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_RELEASE)
 		mlx_close_window(data->mlx);
-	if (!is_loaded(data))
+	instance = current_level(data);
+	if (!instance->loaded)
 		return ;
-	if (input_tick())
-	{
-		if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
-			move_forward(&data->player);
-		else if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
-			move_backward(&data->player);
-		else if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
-			move_right(&data->player);
-		else if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
-			move_left(&data->player);
-		else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
-			rotate_left(&data->player);
-		else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
-			rotate_right(&data->player);
-	}
+	if (keydata.key == MLX_KEY_W)
+		move_forward(&data->player, instance);
+	else if (keydata.key == MLX_KEY_S)
+		move_backward(&data->player, instance);
+	else if (keydata.key == MLX_KEY_D)
+		move_right(&data->player, instance);
+	else if (keydata.key == MLX_KEY_A)
+		move_left(&data->player, instance);
+	else if (keydata.key == MLX_KEY_LEFT)
+		rotate_left(&data->player);
+	else if (keydata.key == MLX_KEY_RIGHT)
+		rotate_right(&data->player);
+	if (DEBUG)
+		printf("pX:%.2f pY;%.2f | pA: %.2f\n", \
+		data->player.x, data->player.y, data->player.angle);
 }

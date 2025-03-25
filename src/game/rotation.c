@@ -18,8 +18,6 @@ void	rotate_left(t_player *p)
 	p->angle -= ROTATE_AMOUNT;
 	if (p->angle < 0)
 		p->angle += PI * 2.0;
-	p->delta_x = cos(p->angle) * TRIG_MULTIPLIER;
-	p->delta_y = sin(p->angle) * TRIG_MULTIPLIER;
 }
 
 // TODO: Collision checking
@@ -28,6 +26,4 @@ void	rotate_right(t_player *p)
 	p->angle += ROTATE_AMOUNT;
 	if (p->angle > PI * 2.0)
 		p->angle -= PI * 2.0;
-	p->delta_x = cos(p->angle) * TRIG_MULTIPLIER;
-	p->delta_y = sin(p->angle) * TRIG_MULTIPLIER;
 }
