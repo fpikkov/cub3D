@@ -26,6 +26,7 @@ void	game_hook(void *param)
 	instance = current_level(data);
 	if (game_tick())
 	{
+		movement_handler(data, instance);
 		render_surfaces(instance, &data->player);
 		update_minimap(data, instance);
 	}

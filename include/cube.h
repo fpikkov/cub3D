@@ -48,6 +48,7 @@ bool		is_wall(t_level	*lvl, int x, int y);
 // Game logic
 
 void		key_hook(mlx_key_data_t keydata, void *param);
+void		movement_handler(t_data *data, t_level *lvl);
 void		game_hook(void *param);
 bool		game_tick(void);
 
@@ -76,9 +77,9 @@ void		rotate_right(t_player *p);
 
 // Minimap
 
-bool	init_minimap(t_data *data);
-void	draw_minimap(t_minimap *map);
-void	update_minimap(t_data *data, t_level *lvl);
+bool		init_minimap(t_data *data);
+void		draw_minimap(t_minimap *map);
+void		update_minimap(t_data *data, t_level *lvl);
 
 // Cleanup functions
 
