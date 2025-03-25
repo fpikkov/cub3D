@@ -16,6 +16,7 @@
  * TODO: If exit is reached, draw the images from the next level node
  * TODO: Keep track of level changes and cleanup previous images
  * before changing the level
+ * TODO: Make movement frame independent by applying time delta
  */
 void	game_hook(void *param)
 {
