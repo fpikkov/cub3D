@@ -74,6 +74,12 @@ void		move_right(t_player *p, t_level *lvl);
 void		rotate_left(t_player *p);
 void		rotate_right(t_player *p);
 
+// Minimap
+
+void	init_minimap(t_data *data);
+void	draw_minimap(t_minimap *map);
+void	load_minimap(t_data *data);
+
 // Cleanup functions
 
 void		free_map(char **map);

@@ -41,6 +41,7 @@ VPATH = ${SRC_DIR}/main/ \
 		${SRC_DIR}/utils/ \
 		${SRC_DIR}/game/ \
 		${SRC_DIR}/renderer/ \
+		${SRC_DIR}/minimap/ \
 
 SRCS =	main.c \
 		parser.c \
@@ -66,6 +67,9 @@ SRCS =	main.c \
 		level_change.c \
 		conversions.c \
 		interpolation.c \
+		init_minimap.c \
+		draw_minimap.c \
+		minimap.c \
 
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}
 
