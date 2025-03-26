@@ -38,3 +38,25 @@ bool	game_tick(void)
 	}
 	return (false);
 }
+
+/**
+ * @brief Gives the count of how many frames could've been rendered
+ * since the last draw call.
+ * Used in decoupling movement speed from the framerate.
+ * @return How many frames we're lagging behind.
+ */
+float	frame_delay(void)
+{
+	static int64_t	last = 0;
+	int64_t			current;
+	float			delta;
+
+	if (last == 0)
+		last = get_time();
+	current = get_time();
+	delta = ((current - last) / MSEC_PER_FRAME);
+	last = current;
+	delta = powf(delta / 10.0f, 2.0f); // Move decimal point left, then take the square of the value
+	printf("%.3f\n", delta);
+	return (delta);
+}

@@ -43,23 +43,23 @@
 # define HORIZONTAL 1
 
 // Movement and angles
-# define PI 3.14159265359
-# define PI2 6.28318530717
-# define PI_DIAGONAL 1.57079632679
-# define DEGREE 0.01745329251
-# define ROTATE_AMOUNT 0.1
-# define MOVE_SPEED 0.1
-# define BOUNDARY 0.4
+# define PI 3.14159265359f
+# define PI2 6.28318530717f
+# define PI_DIAGONAL 1.57079632679f
+# define DEGREE 0.01745329251f
+# define ROTATE_AMOUNT 0.1f
+# define MOVE_SPEED 0.05f
+# define BOUNDARY 0.4f
 
 // Unit circle angles (flipped when working with arrays)
 # define DOWN PI_DIAGONAL
-# define UP 4.71238898038
+# define UP 4.71238898038f
 # define LEFT PI
 # define RIGHT 0
 
 // Minimap constants
 # define RANGE 5
-# define MINIMAP_SIZE 256.0
+# define MINIMAP_SIZE 256.0f
 # define PLAYER_COLOR 0x39FF14FF
 # define WALL_COLOR 0x00008B30
 # define FLOOR_COLOR 0xDC143CFF

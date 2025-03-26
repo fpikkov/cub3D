@@ -19,12 +19,14 @@
 static void	normalize_vectors(float	*x, float *y)
 {
 	float	magnitude;
+	float	delay;
 
-	magnitude = sqrtf((*x) * (*x) + (*y) * (*y));
+	magnitude = hypotf((*x), (*y));
+	delay = frame_delay();
 	if (magnitude > 0)
 	{
-		*x = ((*x) / magnitude) * MOVE_SPEED;
-		*y = ((*y) / magnitude) * MOVE_SPEED;
+		*x = ((*x) / magnitude) * (MOVE_SPEED + delay); // Adding small increment to the original speed
+		*y = ((*y) / magnitude) * (MOVE_SPEED + delay);
 	}
 }
 
