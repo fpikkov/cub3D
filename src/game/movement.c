@@ -12,54 +12,82 @@
 
 #include "cube.h"
 
-void	move_forward(t_player *p, t_level *lvl)
+// TODO: Apply delta_time to magnitude which will enable smoother
+// frame-independent movement.
+// Additionally cap delta_time with fminf(delta_time, MOVE_SPEED)
+// to avoid large jumps when frame pacing slows down.
+static void	normalize_vectors(float	*x, float *y)
 {
-	if (!is_wall(lvl, p->x + (p->dir_x * (MOVE_SPEED + BOUNDARY)), p->y + (p->dir_y * MOVE_SPEED)))
-		p->x += p->dir_x * MOVE_SPEED;
-	if (!is_wall(lvl, p->x + (p->dir_x * MOVE_SPEED), p->y + (p->dir_y * (MOVE_SPEED + BOUNDARY))))
-		p->y += p->dir_y * MOVE_SPEED;
+	float	magnitude;
+
+	magnitude = sqrtf((*x) * (*x) + (*y) * (*y));
+	if (magnitude > 0)
+	{
+		*x = ((*x) / magnitude) * MOVE_SPEED;
+		*y = ((*y) / magnitude) * MOVE_SPEED;
+	}
 }
 
-void	move_backward(t_player *p, t_level *lvl)
+static void	apply_movement(t_player *p, t_level *lvl, float x, float y)
 {
-	if (!is_wall(lvl, p->x - (p->dir_x * (MOVE_SPEED + BOUNDARY)), p->y - (p->dir_y * MOVE_SPEED)))
-		p->x -= p->dir_x * MOVE_SPEED;
-	if (!is_wall(lvl, p->x - (p->dir_x * MOVE_SPEED), p->y - (p->dir_y * (MOVE_SPEED + BOUNDARY))))
-		p->y -= p->dir_y * MOVE_SPEED;
+	float	target_x;
+	float	target_y;
+
+	target_x = p->x + x + BOUNDARY;
+	if (x < 0)
+		target_x = p->x + x - BOUNDARY;
+	target_y = p->y + y + BOUNDARY;
+	if (y < 0)
+		target_y = p->y + y - BOUNDARY;
+	if (!is_wall(lvl, target_x, p->y))
+		p->x += x;
+	if (!is_wall(lvl, p->x, target_y))
+		p->y += y;
 }
 
-void	move_left(t_player *p, t_level *lvl)
+static void	sum_direction_vectors(t_data *data, float *x, float *y)
 {
-	float	delta;
-	float	dir_x;
-	float	dir_y;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
+	{
+		*x += data->player.dir_x;
+		*y += data->player.dir_y;
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
+	{
+		*x -= data->player.dir_x;
+		*y -= data->player.dir_y;
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
+	{
+		*x += data->player.right_x;
+		*y += data->player.right_y;
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
+	{
+		*x -= data->player.right_x;
+		*y -= data->player.right_y;
+	}
+}
 
-	delta = p->angle - PI_DIAGONAL;
-	if (delta < 0)
-		delta += PI2;
-	dir_x = -cosf(delta);
-	dir_y = -sinf(delta);
-	if (is_wall(lvl, (int)(p->x - (dir_x * (MOVE_SPEED + BOUNDARY))), \
-	(int)(p->y - (dir_y * (MOVE_SPEED + BOUNDARY)))))
+/**
+ * @brief Will normalize the sum of all directional vectors,
+ * then check if the intended direction is not a wall before
+ * applying the movement to the player.
+ */
+void	movement_handler(t_data *data, t_level *lvl)
+{
+	float	total_x;
+	float	total_y;
+
+	if (!lvl->loaded)
 		return ;
-	p->x -= dir_x * MOVE_SPEED;
-	p->y -= dir_y * MOVE_SPEED;
-}
-
-void	move_right(t_player *p, t_level *lvl)
-{
-	float	delta;
-	float	dir_x;
-	float	dir_y;
-
-	delta = p->angle + PI_DIAGONAL;
-	if (delta > PI2)
-		delta -= PI2;
-	dir_x = cosf(delta);
-	dir_y = sinf(delta);
-	if (is_wall(lvl, (int)(p->x + (dir_x * (MOVE_SPEED + BOUNDARY))), \
-	(int)(p->y + (dir_y * (MOVE_SPEED + BOUNDARY)))))
-		return ;
-	p->x += dir_x * MOVE_SPEED;
-	p->y += dir_y * MOVE_SPEED;
+	total_x = 0;
+	total_y = 0;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
+		rotate_left(&data->player);
+	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+		rotate_right(&data->player);
+	sum_direction_vectors(data, &total_x, &total_y);
+	normalize_vectors(&total_x, &total_y);
+	apply_movement(&data->player, lvl, total_x, total_y);
 }

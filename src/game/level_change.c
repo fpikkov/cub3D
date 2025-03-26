@@ -29,6 +29,8 @@ void	init_level_params(t_level *level, t_player *player)
 		player->angle = LEFT;
 	player->dir_x = cosf(player->angle);
 	player->dir_y = sinf(player->angle);
+	player->right_x = cosf(player->angle + PI_DIAGONAL);
+	player->right_y = sinf(player->angle + PI_DIAGONAL);
 }
 
 /**

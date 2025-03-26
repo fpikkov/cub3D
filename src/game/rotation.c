@@ -19,6 +19,8 @@ void	rotate_left(t_player *p)
 		p->angle += PI * 2.0;
 	p->dir_x = cosf(p->angle);
 	p->dir_y = sinf(p->angle);
+	p->right_x = cosf(p->angle + PI_DIAGONAL);
+	p->right_y = sinf(p->angle + PI_DIAGONAL);
 }
 
 void	rotate_right(t_player *p)
@@ -28,4 +30,6 @@ void	rotate_right(t_player *p)
 		p->angle -= PI * 2.0;
 	p->dir_x = cosf(p->angle);
 	p->dir_y = sinf(p->angle);
+	p->right_x = cosf(p->angle + PI_DIAGONAL);
+	p->right_y = sinf(p->angle + PI_DIAGONAL);
 }

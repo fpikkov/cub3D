@@ -97,6 +97,8 @@ typedef struct s_player
 	float	angle;
 	float	dir_x;
 	float	dir_y;
+	float	right_x;
+	float	right_y;
 }	t_player;
 
 typedef struct s_minimap
