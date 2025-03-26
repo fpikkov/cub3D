@@ -12,21 +12,15 @@
 
 #include "cube.h"
 
-// TODO: Apply delta_time to magnitude which will enable smoother
-// frame-independent movement.
-// Additionally cap delta_time with fminf(delta_time, MOVE_SPEED)
-// to avoid large jumps when frame pacing slows down.
-static void	normalize_vectors(float	*x, float *y)
+static void	normalize_vectors(float	*x, float *y, float delay)
 {
 	float	magnitude;
-	float	delay;
 
 	magnitude = hypotf((*x), (*y));
-	delay = frame_delay();
 	if (magnitude > 0)
 	{
-		*x = ((*x) / magnitude) * (MOVE_SPEED + delay); // Adding small increment to the original speed
-		*y = ((*y) / magnitude) * (MOVE_SPEED + delay);
+		*x = ((*x) / magnitude) * MOVE_SPEED * delay;
+		*y = ((*y) / magnitude) * MOVE_SPEED * delay;
 	}
 }
 
@@ -80,16 +74,18 @@ void	movement_handler(t_data *data, t_level *lvl)
 {
 	float	total_x;
 	float	total_y;
+	float	delta_time;
 
 	if (!lvl->loaded)
 		return ;
 	total_x = 0;
 	total_y = 0;
+	delta_time = frame_delay();
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
-		rotate_left(&data->player);
+		rotate_left(&data->player, delta_time);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-		rotate_right(&data->player);
+		rotate_right(&data->player, delta_time);
 	sum_direction_vectors(data, &total_x, &total_y);
-	normalize_vectors(&total_x, &total_y);
+	normalize_vectors(&total_x, &total_y, delta_time);
 	apply_movement(&data->player, lvl, total_x, total_y);
 }

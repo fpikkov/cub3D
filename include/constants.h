@@ -42,13 +42,15 @@
 # define VERTICAL 0
 # define HORIZONTAL 1
 
-// Movement and angles
+// Euler angles
 # define PI 3.14159265359f
 # define PI2 6.28318530717f
 # define PI_DIAGONAL 1.57079632679f
 # define DEGREE 0.01745329251f
-# define ROTATE_AMOUNT 0.1f
-# define MOVE_SPEED 0.05f
+
+// Movement constants
+# define MOVE_SPEED 1.4f
+# define ROTATE_AMOUNT MOVE_SPEED
 # define BOUNDARY 0.4f
 
 // Unit circle angles (flipped when working with arrays)

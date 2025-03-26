@@ -12,9 +12,9 @@
 
 #include "cube.h"
 
-void	rotate_left(t_player *p)
+void	rotate_left(t_player *p, float delay)
 {
-	p->angle -= ROTATE_AMOUNT;
+	p->angle -= ROTATE_AMOUNT * delay;
 	if (p->angle < 0)
 		p->angle += PI * 2.0;
 	p->dir_x = cosf(p->angle);
@@ -23,9 +23,9 @@ void	rotate_left(t_player *p)
 	p->right_y = sinf(p->angle + PI_DIAGONAL);
 }
 
-void	rotate_right(t_player *p)
+void	rotate_right(t_player *p, float delay)
 {
-	p->angle += ROTATE_AMOUNT;
+	p->angle += ROTATE_AMOUNT * delay;
 	if (p->angle > PI * 2.0)
 		p->angle -= PI * 2.0;
 	p->dir_x = cosf(p->angle);

@@ -69,8 +69,8 @@ uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y);
 // Player position
 
 void		movement_handler(t_data *data, t_level *lvl);
-void		rotate_left(t_player *p);
-void		rotate_right(t_player *p);
+void		rotate_left(t_player *p, float delay);
+void		rotate_right(t_player *p, float delay);
 
 // Minimap
 

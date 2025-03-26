@@ -40,10 +40,8 @@ bool	game_tick(void)
 }
 
 /**
- * @brief Gives the count of how many frames could've been rendered
- * since the last draw call.
+ * @brief Gives the normalized time since the last call to this function.
  * Used in decoupling movement speed from the framerate.
- * @return How many frames we're lagging behind.
  */
 float	frame_delay(void)
 {
@@ -51,12 +49,9 @@ float	frame_delay(void)
 	int64_t			current;
 	float			delta;
 
-	if (last == 0)
-		last = get_time();
 	current = get_time();
-	delta = ((current - last) / MSEC_PER_FRAME);
+	if (last != 0)
+		delta = ((current - last) / 1000.0f);
 	last = current;
-	delta = powf(delta / 10.0f, 2.0f); // Move decimal point left, then take the square of the value
-	printf("%.3f\n", delta);
-	return (delta);
+	return (fminf(delta, 0.1f));
 }
