@@ -48,7 +48,6 @@ bool		is_wall(t_level	*lvl, int x, int y);
 // Game logic
 
 void		key_hook(mlx_key_data_t keydata, void *param);
-void		movement_handler(t_data *data, t_level *lvl);
 void		game_hook(void *param);
 bool		game_tick(void);
 
@@ -68,10 +67,7 @@ uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y);
 
 // Player position
 
-void		move_forward(t_player *p, t_level *lvl);
-void		move_backward(t_player *p, t_level *lvl);
-void		move_left(t_player *p, t_level *lvl);
-void		move_right(t_player *p, t_level *lvl);
+void		movement_handler(t_data *data, t_level *lvl);
 void		rotate_left(t_player *p);
 void		rotate_right(t_player *p);
 
