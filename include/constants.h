@@ -16,7 +16,7 @@
 // Window configuration
 # define W_WIDTH 1920
 # define W_HEIGHT 1080
-# define TITLE "John Carmero"
+# define TITLE "Out-of-Bounds"
 
 // ANSI color macros
 # define RED "\033[1;31m"

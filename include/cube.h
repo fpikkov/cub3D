@@ -48,6 +48,7 @@ bool		is_wall(t_level	*lvl, int x, int y);
 // Game logic
 
 void		key_hook(mlx_key_data_t keydata, void *param);
+void		cursor_hook(double xpos, double ypos, void *param);
 void		game_hook(void *param);
 bool		game_tick(void);
 float		frame_delay(void);

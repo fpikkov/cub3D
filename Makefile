@@ -43,7 +43,7 @@ VPATH = ${SRC_DIR}/main/ \
 		${SRC_DIR}/renderer/ \
 		${SRC_DIR}/minimap/ \
 
-SRCS =		parser.c \
+SRCS =	parser.c \
 		parse_textures.c \
 		parse_texture_utils.c \
 		parse_colors.c \
@@ -55,7 +55,6 @@ SRCS =		parser.c \
 		resize_map.c \
 		error.c \
 		cleanup.c \
-		keybinds.c \
 		hook.c \
 		tick.c \
 		renderer.c \

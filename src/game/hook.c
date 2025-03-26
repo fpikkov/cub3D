@@ -16,7 +16,6 @@
  * TODO: If exit is reached, draw the images from the next level node
  * TODO: Keep track of level changes and cleanup previous images
  * before changing the level
- * TODO: Make movement frame independent by applying time delta
  */
 void	game_hook(void *param)
 {
@@ -31,4 +30,13 @@ void	game_hook(void *param)
 		render_surfaces(instance, &data->player);
 		update_minimap(data, instance);
 	}
+}
+
+void	key_hook(mlx_key_data_t keydata, void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_RELEASE)
+		mlx_close_window(data->mlx);
 }
