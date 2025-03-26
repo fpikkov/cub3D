@@ -40,7 +40,7 @@ char		**resize_to_rectangular(char **map);
 
 // Utility functions
 
-double		to_radian(int degrees);
+float		to_radian(int degrees);
 void		space_to_one(char **map);
 bool		print_error(t_errors error, bool warning);
 bool		is_wall(t_level	*lvl, int x, int y);

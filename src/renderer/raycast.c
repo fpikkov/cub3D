@@ -26,10 +26,10 @@ static void	ray_init(t_ray *r, t_player *p)
 {
 	r->map_x = (int)p->x;
 	r->map_y = (int)p->y;
-	r->plane_x = -sin(p->angle) * to_radian(FOV);
-	r->plane_y = cos(p->angle) * to_radian(FOV);
-	r->dir_x = cos(p->angle) + r->plane_x * r->camera_x;
-	r->dir_y = sin(p->angle) + r->plane_y * r->camera_x;
+	r->plane_x = -sinf(p->angle) * to_radian(FOV);
+	r->plane_y = cosf(p->angle) * to_radian(FOV);
+	r->dir_x = cosf(p->angle) + r->plane_x * r->camera_x;
+	r->dir_y = sinf(p->angle) + r->plane_y * r->camera_x;
 	r->step_x = 1;
 	if (r->dir_x < 0)
 		r->step_x = -1;
@@ -38,10 +38,10 @@ static void	ray_init(t_ray *r, t_player *p)
 		r->step_y = -1;
 	r->delta_dist_x = INFINITY;
 	if (r->dir_x != 0)
-		r->delta_dist_x = fabs(1 / r->dir_x);
+		r->delta_dist_x = fabsf(1 / r->dir_x);
 	r->delta_dist_y = INFINITY;
 	if (r->dir_y != 0)
-		r->delta_dist_y = fabs(1 / r->dir_y);
+		r->delta_dist_y = fabsf(1 / r->dir_y);
 	r->side_dist_x = (r->map_x + 1.0 - p->x) * r->delta_dist_x;
 	if (r->dir_x < 0)
 		r->side_dist_x = (p->x - r->map_x) * r->delta_dist_x;
@@ -98,15 +98,15 @@ static bool	hitscan(t_ray *r, t_level *lvl)
  */
 static void	ray_texture_position(t_ray *ray, t_player *p)
 {
-	double	wall_pos;
+	float	wall_pos;
 
 	wall_pos = 0.0;
 	if (ray->side == VERTICAL)
 		wall_pos = p->y + ray->distance * ray->dir_y;
 	else
 		wall_pos = p->x + ray->distance * ray->dir_x;
-	wall_pos -= floor(wall_pos);
-	ray->hit_column = (int)(wall_pos * (double)TILE);
+	wall_pos -= floorf(wall_pos);
+	ray->hit_column = (int)(wall_pos * (float)TILE);
 	if (ray->side == VERTICAL && ray->dir_x < 0)
 		ray->hit_column = TILE - ray->hit_column - 1;
 	if (ray->side == HORIZONTAL && ray->dir_y > 0)
@@ -133,14 +133,14 @@ static void	ray_texture_position(t_ray *ray, t_player *p)
  */
 bool	raycast(t_ray *ray, t_level *lvl, t_player *p, int x)
 {
-	ray->camera_x = (2 * x) / (double)W_WIDTH - 1;
+	ray->camera_x = (2 * x) / (float)W_WIDTH - 1;
 	ray_init(ray, p);
 	if (hitscan(ray, lvl))
 	{
 		if (ray->side == VERTICAL)
-			ray->distance = fabs(ray->side_dist_x - ray->delta_dist_x);
+			ray->distance = fabsf(ray->side_dist_x - ray->delta_dist_x);
 		else
-			ray->distance = fabs(ray->side_dist_y - ray->delta_dist_y);
+			ray->distance = fabsf(ray->side_dist_y - ray->delta_dist_y);
 		ray_texture_position(ray, p);
 		return (true);
 	}

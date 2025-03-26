@@ -57,10 +57,6 @@ typedef struct s_color
 	uint8_t	alpha;
 }	t_color;
 
-/**
- * TODO: Ignore the wall images, color data will be fetched from textures.
- * Wall pixel data will be placed onto a foreground image.
- */
 typedef struct s_imgs
 {
 	mlx_image_t	*fg;
@@ -96,11 +92,11 @@ typedef struct s_level
 
 typedef struct s_player
 {
-	double	x;
-	double	y;
-	double	angle;
-	double	dir_x;
-	double	dir_y;
+	float	x;
+	float	y;
+	float	angle;
+	float	dir_x;
+	float	dir_y;
 }	t_player;
 
 typedef struct s_minimap
@@ -128,22 +124,22 @@ typedef struct s_data
 typedef struct s_ray
 {
 	t_direction	wall_type;
-	double		distance;
-	double		hit_column;
-	double		dir_x;
-	double		dir_y;
-	double		plane_x;
-	double		plane_y;
-	double		side_dist_x;
-	double		side_dist_y;
-	double		delta_dist_x;
-	double		delta_dist_y;
+	float		distance;
+	float		hit_column;
+	float		dir_x;
+	float		dir_y;
+	float		plane_x;
+	float		plane_y;
+	float		side_dist_x;
+	float		side_dist_y;
+	float		delta_dist_x;
+	float		delta_dist_y;
 	int			map_x;
 	int			map_y;
 	int			step_x;
 	int			step_y;
 	int			side;
-	double		camera_x;
+	float		camera_x;
 }	t_ray;
 
 typedef struct s_line

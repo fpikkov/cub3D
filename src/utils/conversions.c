@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-double	to_radian(int degrees)
+float	to_radian(int degrees)
 {
-	return ((double)(degrees * DEGREE));
+	return ((float)(degrees * DEGREE));
 }
