@@ -108,8 +108,6 @@ typedef struct s_minimap
 	int			height;
 	int			start_x;
 	int			start_y;
-	int			player_pix_x;
-	int			player_pix_y;
 	double			player_x;
 	double			player_y;
 	double			player_angle;
@@ -117,15 +115,19 @@ typedef struct s_minimap
 	char		**map;
 }	t_minimap;
 
-typedef	struct	s_pixels
+typedef struct	s_arrow
 {
-	int		draw_y;
-	int		draw_x;
-	int		player_y;
-	int		player_x;
-	int		tip_y;
+	int		center_x;
+	int		center_y;
 	int		tip_x;
-}	t_pixels;
+	int		tip_y;
+	int		left_x;
+	int		left_y;
+	int		right_x;
+	int		right_y;
+	int		back_x;
+	int		back_y;
+}	t_arrow;
 
 typedef struct	s_bresenham
 {
