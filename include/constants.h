@@ -48,11 +48,11 @@
 # define PI_DIAGONAL 1.57079632679f
 # define DEGREE 0.01745329251f
 
-// Movement constants
+// Movement and rotation constants
 # define MOVE_SPEED 1.4f
 # define ROTATE_AMOUNT MOVE_SPEED
 # define BOUNDARY 0.4f
-# define DPI 20
+# define DPI 100
 
 // Unit circle angles (flipped when working with arrays)
 # define DOWN PI_DIAGONAL
