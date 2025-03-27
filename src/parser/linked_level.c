@@ -54,7 +54,7 @@ void	delete_levels(t_data *data)
 	while (ptr)
 	{
 		nptr = ptr->next;
-		delete_images(ptr, true);
+		delete_level_images(ptr);
 		delete_textures(ptr);
 		if (ptr->map)
 			free_map(ptr->map);

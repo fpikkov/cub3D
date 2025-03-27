@@ -69,3 +69,22 @@ t_level	*current_level(t_data *data)
 		instance = instance->next;
 	return (instance);
 }
+
+/**
+ * @brief Quits the game if no next level exists, otherwise
+ * will increase the current level index in data and delete previous
+ * level's foreground and background images.
+ */
+void	next_level(t_data *data)
+{
+	t_level	*previous;
+
+	previous = current_level(data);
+	if (!previous->next)
+		mlx_close_window(data->mlx);
+	else
+	{
+		data->lvl_idx++;
+		delete_level_images(previous);
+	}
+}

@@ -42,4 +42,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	if ((keydata.key == MLX_KEY_M || keydata.key == MLX_KEY_TAB) \
 	&& keydata.action == MLX_RELEASE)
 		data->minimap.img->enabled = !data->minimap.img->enabled;
+	if (keydata.key == MLX_KEY_N && keydata.action == MLX_RELEASE \
+	&& keydata.modifier == MLX_CONTROL)
+		next_level(data);
 }

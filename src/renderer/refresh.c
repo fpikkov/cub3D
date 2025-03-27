@@ -12,16 +12,16 @@
 
 #include "cube.h"
 
-void	delete_images(t_level *lvl, bool all)
+void	delete_level_images(t_level *lvl)
 {
 	if (!lvl)
 		return ;
-	if (all && lvl->imgs.bg)
+	if (lvl->imgs.bg)
 	{
 		mlx_delete_image(*lvl->mlx, lvl->imgs.bg);
 		lvl->imgs.bg = NULL;
 	}
-	if (all && lvl->imgs.fg)
+	if (lvl->imgs.fg)
 	{
 		mlx_delete_image(*lvl->mlx, lvl->imgs.fg);
 		lvl->imgs.fg = NULL;
