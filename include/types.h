@@ -37,6 +37,7 @@ typedef enum e_errors
 	MAP_TOO_MANY_PLAYERS,
 	MAP_NOT_CLOSED,
 	SYS_MALLOC,
+	LAUNCH_PATH,
 }	t_errors;
 
 typedef enum e_direction

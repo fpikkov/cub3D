@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-static char	*g_message[19] = {
+static char	*g_message[20] = {
 	"missing argument to map file(s)",
 	"invalid file extension",
 	"unable to open file",
@@ -30,7 +30,8 @@ static char	*g_message[19] = {
 	"unknown characters detected in the given map",
 	"too many player positions detected in the given map",
 	"the given map is not closed properly",
-	"allocation failure"
+	"allocation failure",
+	"the launch argument should be used from the root directory"
 };
 
 /**

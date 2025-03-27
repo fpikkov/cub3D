@@ -23,6 +23,7 @@
 
 // Parsing functions
 
+bool		launch_parser(char **argv, t_data *data);
 bool		parse_data(char **argv, t_data *data);
 bool		parse_textures(char *filename, t_data *data);
 int			parse_color_data(int fd, t_level *lvl);

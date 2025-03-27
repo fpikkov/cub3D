@@ -37,11 +37,8 @@ int	main(int argc, char **argv)
 	ft_memset(&data, 0, sizeof(t_data));
 	if (!init_window(&data))
 		return (EXIT_FAILURE);
-	if (!parse_data(argv, &data))
-	{
-		terminate(&data);
+	if (!launch_parser(argv, &data))
 		return (EXIT_FAILURE);
-	}
 	mlx_key_hook(data.mlx, key_hook, &data);
 	init_mouse(&data);
 	mlx_loop_hook(data.mlx, game_hook, &data);
