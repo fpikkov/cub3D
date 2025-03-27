@@ -39,4 +39,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	data = (t_data *)param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_RELEASE)
 		mlx_close_window(data->mlx);
+	if ((keydata.key == MLX_KEY_M || keydata.key == MLX_KEY_TAB) \
+	&& keydata.action == MLX_RELEASE)
+		data->minimap.img->enabled = !data->minimap.img->enabled;
 }
