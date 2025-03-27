@@ -81,10 +81,7 @@ void	movement_handler(t_data *data, t_level *lvl)
 	total_x = 0;
 	total_y = 0;
 	delta_time = frame_delay();
-	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
-		rotate_left(&data->player, delta_time);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-		rotate_right(&data->player, delta_time);
+	rotation_handler(data, delta_time);
 	sum_direction_vectors(data, &total_x, &total_y);
 	normalize_vectors(&total_x, &total_y, delta_time);
 	apply_movement(&data->player, lvl, total_x, total_y);

@@ -48,7 +48,6 @@ bool		is_wall(t_level	*lvl, int x, int y);
 // Game logic
 
 void		key_hook(mlx_key_data_t keydata, void *param);
-void		cursor_hook(double xpos, double ypos, void *param);
 void		game_hook(void *param);
 bool		game_tick(void);
 float		frame_delay(void);
@@ -70,8 +69,7 @@ uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y);
 // Player position
 
 void		movement_handler(t_data *data, t_level *lvl);
-void		rotate_left(t_player *p, float delay);
-void		rotate_right(t_player *p, float delay);
+void		rotation_handler(t_data *data, float delay);
 
 // Minimap
 

@@ -52,6 +52,7 @@
 # define MOVE_SPEED 1.4f
 # define ROTATE_AMOUNT MOVE_SPEED
 # define BOUNDARY 0.4f
+# define DPI 20
 
 // Unit circle angles (flipped when working with arrays)
 # define DOWN PI_DIAGONAL

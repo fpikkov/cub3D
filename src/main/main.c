@@ -22,6 +22,12 @@ static bool	init_window(t_data *data)
 	return (true);
 }
 
+static void	init_mouse(t_data *data)
+{
+	mlx_set_mouse_pos(data->mlx, W_WIDTH / 2, W_HEIGHT / 2);
+	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -37,6 +43,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	mlx_key_hook(data.mlx, key_hook, &data);
+	init_mouse(&data);
 	mlx_loop_hook(data.mlx, game_hook, &data);
 	mlx_loop(data.mlx);
 	terminate(&data);
