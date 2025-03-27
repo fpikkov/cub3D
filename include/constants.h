@@ -67,9 +67,15 @@
 # define WALL_COLOR 0x00008B30
 # define FLOOR_COLOR 0xDC143CFF
 
+// Flashlight constants
+# define SHADE_COLOR 0x000000CC
+# define TRANSPARENCY 0x000000A0
+# define CIRCLE_RADIUS 420
+
 // Image depths
 # define BG_DEPTH 0
 # define FG_DEPTH 1
-# define MM_DEPTH 2
+# define FL_DEPTH 2
+# define MM_DEPTH 3
 
 #endif

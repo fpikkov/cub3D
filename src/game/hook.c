@@ -14,8 +14,6 @@
 
 /**
  * TODO: If exit is reached, draw the images from the next level node
- * TODO: Keep track of level changes and cleanup previous images
- * before changing the level
  */
 void	game_hook(void *param)
 {
@@ -45,4 +43,22 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	if (keydata.key == MLX_KEY_N && keydata.action == MLX_RELEASE \
 	&& keydata.modifier == MLX_CONTROL)
 		next_level(data);
+	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_RELEASE)
+	{
+		data->torch.dark->enabled = !data->torch.dark->enabled;
+		data->torch.light->enabled = !data->torch.light->enabled;
+	}
+}
+
+void	mouse_hook(mouse_key_t b, action_t a, modifier_key_t m, void* p)
+{
+	t_data	*data;
+
+	data = (t_data *)p;
+	(void)m;
+	if (b == MLX_MOUSE_BUTTON_LEFT && a == MLX_RELEASE)
+	{
+		data->torch.dark->enabled = !data->torch.dark->enabled;
+		data->torch.light->enabled = !data->torch.light->enabled;
+	}
 }

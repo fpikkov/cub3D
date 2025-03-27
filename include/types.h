@@ -115,6 +115,12 @@ typedef struct s_minimap
 	char		**map;
 }	t_minimap;
 
+typedef struct s_torch
+{
+	mlx_image_t	*dark;
+	mlx_image_t	*light;
+}	t_torch;
+
 typedef struct s_data
 {
 	mlx_t		*mlx;
@@ -122,6 +128,7 @@ typedef struct s_data
 	t_level		*levels;
 	t_player	player;
 	t_minimap	minimap;
+	t_torch		torch;
 }	t_data;
 
 typedef struct s_ray

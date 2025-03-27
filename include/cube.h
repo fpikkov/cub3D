@@ -49,6 +49,7 @@ bool		is_wall(t_level	*lvl, int x, int y);
 // Game logic
 
 void		key_hook(mlx_key_data_t keydata, void *param);
+void		mouse_hook(mouse_key_t b, action_t a, modifier_key_t m, void* param);
 void		game_hook(void *param);
 bool		game_tick(void);
 float		frame_delay(void);
@@ -67,6 +68,7 @@ void		reset_foreground(t_level *lvl);
 void		render_surfaces(t_level *lvl, t_player *p);
 bool		raycast(t_ray *ray, t_level *lvl, t_player *p, int x);
 uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y);
+bool		create_screen_images(t_data *data);
 
 // Player position
 
