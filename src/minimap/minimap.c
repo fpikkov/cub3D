@@ -32,8 +32,13 @@ static void	find_starting_tile(t_minimap *map, int player_x, int player_y)
 		map->start_y = 0;
 	else
 		map->start_y = player_y - RANGE;
-	map->player_x = player_x;
-	map->player_y = player_y;
+}
+
+static	void	inherit_player_data(t_minimap *map, t_player *player)
+{
+	map->player_x = player->x;
+	map->player_y = player->y;
+	map->player_angle = player->angle;
 }
 
 void	update_minimap(t_data *data, t_level *lvl)
@@ -42,5 +47,6 @@ void	update_minimap(t_data *data, t_level *lvl)
 	data->minimap.width = lvl->col_len;
 	data->minimap.map = lvl->map;
 	find_starting_tile(&data->minimap, data->player.x, data->player.y);
+	inherit_player_data(&data->minimap, &data->player);
 	draw_minimap(&data->minimap);
 }
