@@ -50,6 +50,7 @@ float	frame_delay(void)
 	float			delta;
 
 	current = get_time();
+	delta = 0.1f;
 	if (last != 0)
 		delta = ((current - last) / 1000.0f);
 	last = current;
