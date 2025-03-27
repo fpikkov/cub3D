@@ -119,8 +119,8 @@ typedef struct s_minimap
 
 typedef	struct	s_pixels
 {
-	int		y;
-	int		x;
+	int		draw_y;
+	int		draw_x;
 	int		player_y;
 	int		player_x;
 	int		tip_y;
