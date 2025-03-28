@@ -12,24 +12,6 @@
 
 #include "cube.h"
 
-static void	image_fill(mlx_image_t *img, uint32_t color)
-{
-	uint32_t	x;
-	uint32_t	y;
-
-	y = 0;
-	while (y < img->height)
-	{
-		x = 0;
-		while (x < img->width)
-		{
-			mlx_put_pixel(img, x, y, color);
-			x++;
-		}
-		y++;
-	}
-}
-
 // TODO: Use draw_circle to create differently shaded rings around the light circle
 /* static void	circle_line(mlx_image_t *img ,uint32_t x, uint32_t y, uint32_t col)
 {
@@ -73,24 +55,27 @@ static void	draw_circle(mlx_image_t *img, uint32_t color)
 	}
 } */
 
-// TODO: Polish up the light
-static void	fill_circle(mlx_image_t *img, uint32_t color)
+/**
+ * TODO: Light should have a warm tone
+ */
+static void	fill_circle(mlx_image_t *img, uint32_t radius, uint32_t color)
 {
 	uint32_t	cx;
 	uint32_t	cy;
 	uint32_t	x;
 	uint32_t	y;
 
-	cx = W_WIDTH / 2;
-	cy = W_HEIGHT / 2;
-	y = cy - CIRCLE_RADIUS;
-	while (y <= cy + CIRCLE_RADIUS)
+	cx = (W_WIDTH / 2) - (W_WIDTH / 24); // Circle middle X is sllightly off-center towards the left
+	cy = (W_HEIGHT / 2); // Circle middle Y is the center of the screen
+	y = cy - radius;
+	while (y <= cy + radius)
 	{
-		x = cx - CIRCLE_RADIUS;
-		while (x <= cx + CIRCLE_RADIUS)
+		x = cx - radius;
+		while (x <= cx + radius)
 		{
-			if (((x - cx) * (x - cx) + (y - cy) * (y - cy)) \
-			<= CIRCLE_RADIUS * CIRCLE_RADIUS)
+			if ((((x - cx) * (x - cx) + (y - cy) * (y - cy)) \
+			<= radius * radius) && (x >= 0 && x < img->width) \
+			&& (y >= 0 && y < img->height))
 				mlx_put_pixel(img, x, y, color);
 			x++;
 		}
@@ -99,23 +84,67 @@ static void	fill_circle(mlx_image_t *img, uint32_t color)
 }
 
 /**
- * TODO: Draw a circle in the middle of dark image and fill it with TRANSPARENCY
+ * TODO: Refactor code
  */
-bool	create_screen_images(t_data *data)
+static float	average_distance(t_player *p, t_level *lvl, uint32_t radius, uint32_t size, uint32_t cx)
 {
-	data->torch.dark = mlx_new_image(data->mlx, W_WIDTH, W_HEIGHT);
-	if (!data->torch.dark)
-		return (print_error(IMG_FAILURE, false));
-	data->torch.light = mlx_new_image(data->mlx, W_WIDTH, W_HEIGHT);
-	if (!data->torch.light)
-		return (print_error(IMG_FAILURE, false));
-	image_fill(data->torch.dark, SHADE_COLOR);
+	t_ray		ray;
+	uint32_t	sample_x;
+	uint32_t	sample_size;
+	float		average;
+	float		count;
+
+	ft_memset(&ray, 0, sizeof(t_ray));
+	count = 0.0f;
+	average = 0.0f;
+	sample_size = size / SAMPLE_SIZE; // How much to increment x
+	sample_x = cx + radius - size;
+	while (sample_x <= cx + radius)
+	{
+		raycast(&ray, lvl, p, sample_x);
+		average += ray.distance;
+		raycast(&ray, lvl, p, radius - sample_x);
+		average += ray.distance;
+		count += 2.0f;
+		sample_x += sample_size;
+	}
+	average /= count;
+	return (average);
+}
+
+/**
+ * NOTE: Circle step defines how many light circles to draw
+ *
+ * TODO: Refactor code
+ * TODO: Create a color manager which will attenuate the light intensity level
+ * based on how far the circle is from the edge of the max radius and how far
+ * the ray hit the wall.
+ *
+ * NOTE: increase in distance = decrease in brightness
+ * NOTE: decrease in radius = increase in brightness
+ */
+void	render_light(t_data *data, t_level *lvl)
+{
+	uint32_t	radius;
+	uint32_t	scaled;
+	uint32_t	step_size;
+	uint32_t	cx;
+	float		distance;
+	uint32_t	color;
+	uint32_t	color_step;
+
+	color = SHADE_COLOR;
+	color_step = SHADE_COLOR / CIRCLE_STEP;
+	cx = (W_WIDTH / 2) - (W_WIDTH / 24);
 	image_fill(data->torch.light, SHADE_COLOR);
-	fill_circle(data->torch.light, TRANSPARENCY);
-	mlx_image_to_window(data->mlx, data->torch.dark, 0, 0);
-	mlx_image_to_window(data->mlx, data->torch.light, 0, 0);
-	data->torch.light->enabled = false;
-	mlx_set_instance_depth(data->torch.dark->instances, FL_DEPTH);
-	mlx_set_instance_depth(data->torch.light->instances, FL_DEPTH);
-	return (true);
+	radius = CIRCLE_RADIUS; // First circle
+	step_size = CIRCLE_RADIUS / CIRCLE_STEP; // How many circles to draw
+	while (radius >= step_size)
+	{
+		distance = average_distance(&data->player, lvl, radius, step_size, cx);
+		scaled = distance * (float)radius;
+		fill_circle(data->torch.light, scaled, color);
+		color -= color_step;
+		radius -= step_size;
+	}
 }

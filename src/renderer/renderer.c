@@ -61,6 +61,10 @@ static void	draw_line(t_ray *ray, t_level *lvl, int x)
 	color = 0;
 	while (line.current <= line.end)
 	{
+		if (line.current < 0)
+			line.current = 0;
+		if (line.current >= W_HEIGHT)
+			break ;
 		if (line.current >= 0 && line.current < W_HEIGHT)
 		{
 			scaled_y = (int)floor(((line.current - line.start) \

@@ -36,3 +36,24 @@ void	reset_foreground(t_level *lvl)
 		lvl->imgs.fg->width * lvl->imgs.fg->height * sizeof(int32_t));
 	}
 }
+
+/**
+ * @brief Fills the whole given image with a single color
+ */
+void	image_fill(mlx_image_t *img, uint32_t color)
+{
+	uint32_t	x;
+	uint32_t	y;
+
+	y = 0;
+	while (y < img->height)
+	{
+		x = 0;
+		while (x < img->width)
+		{
+			mlx_put_pixel(img, x, y, color);
+			x++;
+		}
+		y++;
+	}
+}

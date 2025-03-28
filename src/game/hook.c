@@ -26,6 +26,7 @@ void	game_hook(void *param)
 	{
 		movement_handler(data, instance);
 		render_surfaces(instance, &data->player);
+		render_light(data, instance);
 		update_minimap(data, instance);
 	}
 }
