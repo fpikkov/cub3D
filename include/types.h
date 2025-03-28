@@ -132,6 +132,10 @@ typedef struct	s_arrow
 
 typedef struct	s_bresenham
 {
+	int		start_x;
+	int		start_y;
+	int		target_x;
+	int		target_y;
 	int		delta_x;
 	int		delta_y;
 	int		step_x;
