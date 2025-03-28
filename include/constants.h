@@ -63,9 +63,9 @@
 // Minimap constants
 # define RANGE 5
 # define MINIMAP_SIZE 256.0f
-# define PLAYER_COLOR 0x39FF14FF
-# define WALL_COLOR 0x00008B30
-# define FLOOR_COLOR 0xDC143CFF
+# define PLAYER_COLOR 0xff0023FF
+# define WALL_COLOR 0x000000b8
+# define FLOOR_COLOR 0x666666d6
 
 // Image depths
 # define BG_DEPTH 0
