@@ -41,3 +41,36 @@ uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y)
 	color |= *ptr;
 	return (color);
 }
+
+/**
+ * TODDO: pre-compute shader based on distance / DOF
+ *
+ * @brief Applies shading to a texture based on the ray hit distance.
+ * Alpha channel is preserved as the original value.
+ */
+uint32_t	apply_shading(uint32_t color, float distance)
+{
+	uint32_t	shaded;
+	float		factor[DOF] = {1.0f, 0.71f, 0.58f, 0.50f, 0.45f, 0.41f, 0.38f, 0.35f, 0.33f, 0.32f, 0.30f, 0.29f, 0.28f, 0.27f, 0.26f};
+	int			idx;
+/* 	if (distance < 0.1f)
+		distance = 0.1f;
+	else if (distance > (float)DOF)
+		distance = (float)DOF;
+	factor = 1.0f / sqrtf(distance);
+	if (factor < 0.0f)
+		factor = 0.0f;
+	else if (factor > 1.0f)
+		factor = 1.0f; */
+	idx = 0;
+	if (distance > 0.0f && distance <= (float)DOF)
+		idx = distance;
+	else if (distance > (float)DOF)
+		idx = (float)DOF;
+	shaded = 0;
+	shaded |= (uint8_t)(((color >> 24) & 0xFF) * factor[idx]) << 24;
+	shaded |= (uint8_t)(((color >> 16) & 0xFF) * factor[idx]) << 16;
+	shaded |= (uint8_t)(((color >> 8) & 0xFF) * factor[idx]) << 8;
+	shaded |= (uint8_t)(color & 0xFF);
+	return (shaded);
+}

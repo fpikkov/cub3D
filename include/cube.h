@@ -69,6 +69,7 @@ void		reset_foreground(t_level *lvl);
 void		render_surfaces(t_level *lvl, t_player *p);
 bool		raycast(t_ray *ray, t_level *lvl, t_player *p, int x);
 uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y);
+uint32_t	apply_shading(uint32_t color, float distance);
 void		image_fill(mlx_image_t *img, uint32_t color);
 void		render_light(t_data *data, t_level *lvl);
 
