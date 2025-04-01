@@ -41,9 +41,15 @@ static int	attenuation_factor(int level, float distance)
 }
 
 /**
- * TODO: Make the scanline effect less noticeable.
- * Option 1: Interpolate the colors on similar walls
- * 	This may require fetchhing the hit_column start and end values
+ * TODO: Figure out how to light up the ground surface.
+ * This may be achieved by drawing lines from the min and max
+ * light radii to the player position (center bottom of screen)
+ * and interpolating the inner color values.
+ *
+ * @brief Draws lighter columns on the lighting layer which simulate
+ * the light of a flashight. Light varies in intensity based
+ * on the radius of the light and the distance from the player
+ * to the wall.
 */
 void	draw_light(t_level *lvl, t_line *line, int x, float distance)
 {
