@@ -69,7 +69,7 @@
 
 // Flashlight constants
 # define SHADE_COLOR 0x000000C8
-# define TRANSPARENCY 0x000000A0
+# define TRANSPARENCY 0x00000000
 # define CIRCLE_RADIUS 270U
 # define CIRCLE_STEP 16U
 # define SAMPLE_SIZE 2U

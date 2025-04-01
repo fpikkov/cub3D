@@ -26,7 +26,6 @@ void	game_hook(void *param)
 	{
 		movement_handler(data, instance);
 		render_surfaces(instance, &data->player);
-		render_light(data, instance);
 		update_minimap(data, instance);
 	}
 }
@@ -46,6 +45,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		next_level(data);
 	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_RELEASE)
 	{
+		data->torch.enabled = !data->torch.enabled;
 		data->torch.dark->enabled = !data->torch.dark->enabled;
 		data->torch.light->enabled = !data->torch.light->enabled;
 	}
@@ -59,6 +59,7 @@ void	mouse_hook(mouse_key_t b, action_t a, modifier_key_t m, void* p)
 	(void)m;
 	if (b == MLX_MOUSE_BUTTON_LEFT && a == MLX_RELEASE)
 	{
+		data->torch.enabled = !data->torch.enabled;
 		data->torch.dark->enabled = !data->torch.dark->enabled;
 		data->torch.light->enabled = !data->torch.light->enabled;
 	}

@@ -12,9 +12,9 @@
 
 #include "cube.h"
 
-static void	line_init(t_line *line, t_ray *ray)
+static void	line_init(t_line *line, float distance)
 {
-	line->height = floor(W_HEIGHT / ray->distance);
+	line->height = W_HEIGHT / distance;
 	line->start = (-line->height / 2) + (W_HEIGHT / 2);
 	line->end = (line->height / 2) + (W_HEIGHT / 2);
 	line->delta = line->end - line->start;
@@ -57,7 +57,7 @@ static void	draw_line(t_ray *ray, t_level *lvl, int x)
 	uint32_t	color;
 
 	ft_memset(&line, 0, sizeof(t_line));
-	line_init(&line, ray);
+	line_init(&line, ray->distance);
 	color = 0;
 	while (line.current <= line.end)
 	{
@@ -65,14 +65,10 @@ static void	draw_line(t_ray *ray, t_level *lvl, int x)
 			line.current = 0;
 		if (line.current >= W_HEIGHT)
 			break ;
-		if (line.current >= 0 && line.current < W_HEIGHT)
-		{
-			scaled_y = (int)floorf(((line.current - line.start) \
-			* (TILE - 1)) / line.delta);
-			color = select_texture(ray, lvl, scaled_y);
-			color = apply_shading(color, ray->distance);
-			mlx_put_pixel(lvl->imgs.fg, x, (int)line.current, color);
-		}
+		scaled_y = ((line.current - line.start) * (TILE - 1)) / line.delta;
+		color = select_texture(ray, lvl, scaled_y);
+		mlx_put_pixel(lvl->imgs.fg, x, line.current, color);
+		draw_light(lvl, &line, x);
 		line.current++;
 	}
 }

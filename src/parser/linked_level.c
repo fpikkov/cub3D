@@ -77,6 +77,7 @@ static t_level	*init_level_node(t_data *data)
 	new->index = idx;
 	idx++;
 	new->mlx = &data->mlx;
+	new->data = data;
 	return (new);
 }
 

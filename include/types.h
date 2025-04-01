@@ -88,6 +88,7 @@ typedef struct s_level
 	t_imgs			imgs;
 	t_textures		textures;
 	mlx_t			**mlx;
+	struct s_data	*data;
 	struct s_level	*next;
 }	t_level;
 
@@ -117,6 +118,7 @@ typedef struct s_minimap
 
 typedef struct s_torch
 {
+	bool		enabled;
 	mlx_image_t	*dark;
 	mlx_image_t	*light;
 }	t_torch;

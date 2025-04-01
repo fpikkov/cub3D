@@ -35,6 +35,8 @@ void	reset_foreground(t_level *lvl)
 		ft_memset(lvl->imgs.fg->pixels, 0, \
 		lvl->imgs.fg->width * lvl->imgs.fg->height * sizeof(int32_t));
 	}
+	if (lvl->data->torch.light)
+		image_fill(lvl->data->torch.light, SHADE_COLOR);
 }
 
 /**
