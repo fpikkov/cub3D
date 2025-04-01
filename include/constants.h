@@ -68,11 +68,10 @@
 # define FLOOR_COLOR 0xDC143CFF
 
 // Flashlight constants
-# define SHADE_COLOR 0x000000C8
+# define SHADE_COLOR 0x000000D8
 # define TRANSPARENCY 0x00000000
-# define CIRCLE_RADIUS 270U
-# define CIRCLE_STEP 16U
-# define SAMPLE_SIZE 2U
+# define LIGHT_RADIUS 270
+# define LIGHT_LOD 64
 
 // Image depths
 # define BG_DEPTH 0

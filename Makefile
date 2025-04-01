@@ -7,7 +7,7 @@ CLEAR = \033[0m
 
 # --------	MAKE VARIABLES	--------
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Ofast
 DBG_FLAGS = -fdiagnostics-color=always -g -DDEBUG=1
 INC_FLAGS = -I$(INCLUDE_DIR) -I$(LFT_DIR)/$(INCLUDE_DIR) -I$(MLX_INCLUDE)
 LIB_FLAGS = -L$(LFT_DIR) -l$(LFT) -L$(MLX_BUILD) -l$(LMLX)

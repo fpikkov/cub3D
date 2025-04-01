@@ -68,7 +68,7 @@ static void	draw_line(t_ray *ray, t_level *lvl, int x)
 		scaled_y = ((line.current - line.start) * (TILE - 1)) / line.delta;
 		color = select_texture(ray, lvl, scaled_y);
 		mlx_put_pixel(lvl->imgs.fg, x, line.current, color);
-		draw_light(lvl, &line, x);
+		draw_light(lvl, &line, x, ray->distance);
 		line.current++;
 	}
 }
