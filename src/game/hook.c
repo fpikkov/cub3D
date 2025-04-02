@@ -51,7 +51,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	}
 }
 
-void	mouse_hook(mouse_key_t b, action_t a, modifier_key_t m, void* p)
+void	mouse_hook(mouse_key_t b, action_t a, modifier_key_t m, void *p)
 {
 	t_data	*data;
 

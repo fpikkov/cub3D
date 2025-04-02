@@ -46,11 +46,13 @@ float		to_radian(int degrees);
 void		space_to_one(char **map);
 bool		print_error(t_errors error, bool warning);
 bool		is_wall(t_level	*lvl, int x, int y);
+int			pack_shorts(uint16_t x, uint16_t y);
+void		unpack_shorts(int *x, int *y, int package);
 
 // Game logic
 
 void		key_hook(mlx_key_data_t keydata, void *param);
-void		mouse_hook(mouse_key_t b, action_t a, modifier_key_t m, void* p);
+void		mouse_hook(mouse_key_t b, action_t a, modifier_key_t m, void *p);
 void		game_hook(void *param);
 bool		game_tick(void);
 float		frame_delay(void);
@@ -70,7 +72,14 @@ void		render_surfaces(t_level *lvl, t_player *p);
 bool		raycast(t_ray *ray, t_level *lvl, t_player *p, int x);
 uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y);
 void		image_fill(mlx_image_t *img, uint32_t color);
+
+// Lighting
+
 void		draw_light(t_level *lvl, t_line *line, int x, float distance);
+void 		light_floor(t_level *lvl, t_line *line, int x, float distance);
+uint32_t	light_level(uint32_t shade, uint32_t bright, int level);
+int			attenuation_factor(int level, float distance);
+int			light_step(int x, int size);
 
 // Player position
 

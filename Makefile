@@ -62,6 +62,7 @@ SRCS =	parser.c \
 		raycast.c \
 		refresh.c \
 		light.c \
+		light_floor.c \
 		movement.c \
 		rotation.c \
 		level_change.c \
