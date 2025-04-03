@@ -76,10 +76,10 @@ void		image_fill(mlx_image_t *img, uint32_t color);
 // Lighting
 
 void		draw_light(t_level *lvl, t_line *line, int x, float distance);
-void 		light_floor(t_level *lvl, t_line *line, int x, float distance);
+void 		light_floor(t_level *lvl, t_line *line, int x);
 uint32_t	light_level(uint32_t shade, uint32_t bright, int level);
 int			attenuation_factor(int level, float distance);
-int			light_step(int x, t_shade shader);
+int			light_step(int x, t_shade shader, int amount);
 
 // Player position
 

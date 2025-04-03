@@ -43,10 +43,11 @@ int	attenuation_factor(int level, float distance)
 /**
  * @brief  Calculates the current step from the edge of the light radius.
 */
-int	light_step(int x, t_shade shader)
+int	light_step(int x, t_shade shader, int amount)
 {
 	int	step_size;
 	int	step;
+	int iter;
 
 	step_size = (LIGHT_RADIUS * 2) / LIGHT_LOD;
 	step = 0;
@@ -56,47 +57,19 @@ int	light_step(int x, t_shade shader)
 		step = LIGHT_LOD - step;
 	if (step <= 0)
 		step = 1;
-	if (shader == INCREASE && step + 1 <= (LIGHT_LOD / 2))
-		step++;
-	else if (shader == DECREASE && step - 1 > 1)
-		step--;
+	iter = 0;
+	if (shader == INCREASE)
+	{
+		while (step + 1 <= (LIGHT_LOD / 2) && iter++ < amount)
+			step++;
+	}
+	else if (shader == DECREASE)
+	{
+		while (step - 1 > 1 && iter++ < amount)
+			step--;
+	}
 	return (step);
 }
-
-/**
- * NOTE: I had to pack x and y screnspace co-ordinates into a single value
- * to work around the norm.
- *
- * @brief Draws light onto the floor while making it fade out towards
-*/
-/* static void	light_floor(t_level *lvl, int packed_axis, int size, int intensity)
-{
-	int			x;
-	int			y;
-	int			step_y;
-	int			step_size_y;
-	uint32_t	brightness;
-
-	printf("hell-o\n");
-	unpack_shorts(&x, &y, packed_axis);
-	step_size_y = (W_HEIGHT - y) / size;
-	step_y = 0;
-	brightness = light_level(SHADE_COLOR, TRANSPARENCY, intensity);
-	while (y < W_HEIGHT)
-	{
-		if (y >= (W_HEIGHT - y) + (step_size_y * (step_y + 1)) \
-		&& intensity - size >= 0)
-		{
-			//intensity -= size;
-			//brightness = light_level(SHADE_COLOR, TRANSPARENCY, intensity);
-			step_y++;
-		}
-		//if (brightness == SHADE_COLOR)
-		//	break ;
-		mlx_put_pixel(lvl->data->torch.light, x, y, brightness);
-		y++;
-	}
-} */
 
 /**
  * TODO: Figure out how to light up the ground surface.
@@ -117,7 +90,7 @@ void	draw_light(t_level *lvl, t_line *line, int x, float distance)
 	if ((x < W_WIDTH / 2 - LIGHT_RADIUS || x > W_WIDTH / 2 + LIGHT_RADIUS) \
 	|| lvl->data->torch.enabled == false)
 		return ;
-	intensity = attenuation_factor(light_step(x, NONE), distance);
+	intensity = attenuation_factor(light_step(x, NONE, 0), distance);
 	brightness = light_level(SHADE_COLOR, TRANSPARENCY, intensity);
 	if (line->current < W_HEIGHT)
 		mlx_put_pixel(lvl->data->torch.light, x, line->current, brightness);

@@ -71,7 +71,7 @@ static void	draw_line(t_ray *ray, t_level *lvl, int x)
 		draw_light(lvl, &line, x, ray->distance);
 		line.current++;
 	}
-	light_floor(lvl, &line, x, ray->distance);
+	light_floor(lvl, &line, x);
 }
 
 /**
