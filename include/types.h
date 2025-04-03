@@ -47,8 +47,26 @@ typedef enum e_direction
 	SOUTH,
 	WEST,
 	FLOOR,
-	CEILING
+	CEILING,
+	DOOR1,
+	DOOR2,
+	DOOR3,
+	DOOR4,
+	DOOR5,
+	DOOR6,
+	DOOR7
 }	t_direction;
+
+typedef enum e_door_status
+{
+	CLOSED = 0,
+	OPENING1,
+	OPENING2,
+	OPENING3,
+	OPENING4,
+	OPENING5,
+	OPEN
+}	t_door_status;
 
 typedef struct s_color
 {
@@ -72,12 +90,28 @@ typedef struct s_textures
 	mlx_texture_t	*east;
 	mlx_texture_t	*south;
 	mlx_texture_t	*west;
+	mlx_texture_t	*door1;
+	mlx_texture_t	*door2;
+	mlx_texture_t	*door3;
+	mlx_texture_t	*door4;
+	mlx_texture_t	*door5;
+	mlx_texture_t	*door6;
+	mlx_texture_t	*door7;
 }	t_textures;
+
+typedef	struct	t_door
+{
+	int		y;
+	int		x;
+	int		status;
+	uint64_t	time;
+}	t_door;
 
 typedef struct s_level
 {
 	size_t			index;
 	bool			loaded;
+	bool			doored;
 	char			**map;
 	char			**map_copy;
 	int				row_len;
@@ -87,6 +121,7 @@ typedef struct s_level
 	int32_t			player_y;
 	t_imgs			imgs;
 	t_textures		textures;
+	t_door			door;
 	mlx_t			**mlx;
 	struct s_level	*next;
 }	t_level;
@@ -166,12 +201,17 @@ typedef struct s_ray
 	float		side_dist_y;
 	float		delta_dist_x;
 	float		delta_dist_y;
+	float		door_dist;
+	float		door_column;
 	int			map_x;
 	int			map_y;
 	int			step_x;
 	int			step_y;
 	int			side;
 	float		camera_x;
+	bool		doors;
+	int		door_x;
+	int		door_y;
 }	t_ray;
 
 typedef struct s_line

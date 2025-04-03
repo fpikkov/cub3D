@@ -12,10 +12,22 @@
 
 #include "cube.h"
 
+static	bool	door_textures_exist(t_level *lvl)
+{
+	if (!lvl->textures.door1 || !lvl->textures.door2
+	|| !lvl->textures.door3 || !lvl->textures.door4
+	|| !lvl->textures.door5 || !lvl->textures.door6
+	|| !lvl->textures.door7)
+		return (false);
+	return (true);
+}
+
 static bool	textures_exist(t_level *lvl)
 {
 	if (!lvl->textures.north || !lvl->textures.south \
 	|| !lvl->textures.east || !lvl->textures.west)
+		return (print_error(FILE_MISSING_PARAMS, false));
+	else if (lvl->doored && !door_textures_exist(lvl))
 		return (print_error(FILE_MISSING_PARAMS, false));
 	return (true);
 }

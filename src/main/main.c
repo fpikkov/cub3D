@@ -39,6 +39,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (!launch_parser(argv, &data))
 		return (EXIT_FAILURE);
+	ft_memset(&data.levels->door, 0, sizeof(t_door));
 	mlx_key_hook(data.mlx, key_hook, &data);
 	init_mouse(&data);
 	mlx_loop_hook(data.mlx, game_hook, &data);

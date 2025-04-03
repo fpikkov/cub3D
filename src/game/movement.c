@@ -35,10 +35,26 @@ static void	apply_movement(t_player *p, t_level *lvl, float x, float y)
 	target_y = p->y + y + BOUNDARY;
 	if (y < 0)
 		target_y = p->y + y - BOUNDARY;
-	if (!is_wall(lvl, target_x, p->y))
+	if (!is_wall(lvl, target_x, p->y) || get_door_type(lvl, target_x, p->y) == 8)
 		p->x += x;
-	if (!is_wall(lvl, p->x, target_y))
+	if (!is_wall(lvl, p->x, target_y) || get_door_type(lvl, p->x, target_y) == 8)
 		p->y += y;
+	if (get_door_type(lvl, target_x, p->y) == 2)
+	{
+		printf("door hit at  y = %d x = %d\n", (int)p->y, (int)target_x);
+		lvl->door.x = (int)target_x;
+		lvl->door.y = (int)p->y;
+		lvl->door.status = OPENING1;
+		lvl->door.time = get_time();
+	}
+	else if (get_door_type(lvl, p->x, target_y) == 2)
+	{
+		printf("door hit at  y = %d x = %d\n", (int)target_y, (int)p->x);
+		lvl->door.y = (int)target_y;
+		lvl->door.x = (int)p->x;
+		lvl->door.status = OPENING1;
+		lvl->door.time = get_time();
+	}
 }
 
 static void	sum_direction_vectors(t_data *data, float *x, float *y)

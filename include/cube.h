@@ -41,10 +41,12 @@ char		**resize_to_rectangular(char **map);
 
 // Utility functions
 
+int64_t		get_time(void);
 float		to_radian(int degrees);
 void		space_to_one(char **map);
 bool		print_error(t_errors error, bool warning);
 bool		is_wall(t_level	*lvl, int x, int y);
+int			get_door_type(t_level *lvl, int x, int y);
 
 // Game logic
 
@@ -67,6 +69,17 @@ void		reset_foreground(t_level *lvl);
 void		render_surfaces(t_level *lvl, t_player *p);
 bool		raycast(t_ray *ray, t_level *lvl, t_player *p, int x);
 uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y);
+
+// Renderer utils
+
+float	calc_door_pos(t_ray *r, t_player *p);
+void	line_init(t_line *line, float distance);
+
+// Render door
+
+uint32_t	pick_door_texture(t_ray *ray, t_level *lvl, int y);
+void	save_door_data(t_ray *r, t_level *lvl, t_player *p);
+void	draw_door(t_ray *ray, t_level *lvl, int x);
 
 // Player position
 

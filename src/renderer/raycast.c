@@ -51,21 +51,9 @@ static void	ray_init(t_ray *r, t_player *p)
 }
 
 /**
- * @brief Checks if the given co-ordinates reached a wall or out of bounds
- */
-bool	is_wall(t_level	*lvl, int x, int y)
-{
-	if (y <= 0 || x <= 0 || y >= lvl->row_len || x >= lvl->col_len)
-		return (true);
-	if (lvl->map[y][x] == '1')
-		return (true);
-	return (false);
-}
-
-/**
  * @brief Increases the ray's distance until the ray hits a wall
  */
-static bool	hitscan(t_ray *r, t_level *lvl)
+static bool	hitscan(t_ray *r, t_level *lvl, t_player *p)
 {
 	bool	hit;
 	int		depth;
@@ -85,7 +73,9 @@ static bool	hitscan(t_ray *r, t_level *lvl)
 			r->side_dist_y += r->delta_dist_y;
 			r->map_y += r->step_y;
 			r->side = HORIZONTAL;
-		}
+		}	
+		if (get_door_type(lvl, r->map_x, r->map_y))
+			save_door_data(r, lvl, p);
 		if (is_wall(lvl, r->map_x, r->map_y))
 			hit = true;
 		depth++;
@@ -121,6 +111,7 @@ static void	ray_texture_position(t_ray *ray, t_player *p)
 		ray->wall_type = SOUTH;
 }
 
+
 /**
  * NOTE: The raycaster is using Digital Differential Analysis
  *
@@ -135,7 +126,7 @@ bool	raycast(t_ray *ray, t_level *lvl, t_player *p, int x)
 {
 	ray->camera_x = (2 * x) / (float)W_WIDTH - 1;
 	ray_init(ray, p);
-	if (hitscan(ray, lvl))
+	if (hitscan(ray, lvl, p))
 	{
 		if (ray->side == VERTICAL)
 			ray->distance = fabsf(ray->side_dist_x - ray->delta_dist_x);

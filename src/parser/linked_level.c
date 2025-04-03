@@ -37,6 +37,17 @@ static void	delete_textures(t_level *lvl)
 		mlx_delete_texture(lvl->textures.west);
 		lvl->textures.west = NULL;
 	}
+	if (lvl->doored)
+	{
+		mlx_delete_texture(lvl->textures.door1);
+		lvl->textures.door1 = NULL;
+		mlx_delete_texture(lvl->textures.door2);
+		lvl->textures.door2 = NULL;
+		mlx_delete_texture(lvl->textures.door3);
+		lvl->textures.door3 = NULL;
+		mlx_delete_texture(lvl->textures.door4);
+		lvl->textures.door4 = NULL;
+	}
 }
 
 /**

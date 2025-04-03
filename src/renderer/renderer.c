@@ -12,9 +12,9 @@
 
 #include "cube.h"
 
-static void	line_init(t_line *line, t_ray *ray)
+void	line_init(t_line *line, float distance)
 {
-	line->height = floor(W_HEIGHT / ray->distance);
+	line->height = floor(W_HEIGHT / distance);
 	line->start = (-line->height / 2) + (W_HEIGHT / 2);
 	line->end = (line->height / 2) + (W_HEIGHT / 2);
 	line->delta = line->end - line->start;
@@ -22,7 +22,6 @@ static void	line_init(t_line *line, t_ray *ray)
 		line->delta++;
 	line->current = line->start;
 }
-
 /**
  * @brief Returns the color data for the current wall we're drawing
  */
@@ -57,7 +56,7 @@ static void	draw_line(t_ray *ray, t_level *lvl, int x)
 	uint32_t	color;
 
 	ft_memset(&line, 0, sizeof(t_line));
-	line_init(&line, ray);
+	line_init(&line, ray->distance);
 	color = 0;
 	while (line.current <= line.end)
 	{
@@ -71,7 +70,6 @@ static void	draw_line(t_ray *ray, t_level *lvl, int x)
 		line.current++;
 	}
 }
-
 /**
  * @brief Draws walls line by line to the foreground image
  */
@@ -86,6 +84,8 @@ static void	draw_foreground(t_level *lvl, t_player *p)
 		ft_memset(&ray, 0, sizeof(t_ray));
 		if (raycast(&ray, lvl, p, x))
 			draw_line(&ray, lvl, x);
+		if (ray.doors)
+			draw_door(&ray, lvl, x);
 		x++;
 	}
 }

@@ -23,7 +23,7 @@ static	bool	check_unknown_characters(char **map)
 		j = 0;
 		while (map[i][j])
 		{
-			if (!ft_strchr("01NSEW", map[i][j]))
+			if (!ft_strchr("01234567NSEW", map[i][j]))
 				return (false);
 			else
 				j++;

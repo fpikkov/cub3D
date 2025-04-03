@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-static int64_t	get_time(void)
+int64_t	get_time(void)
 {
 	struct timeval	tv;
 

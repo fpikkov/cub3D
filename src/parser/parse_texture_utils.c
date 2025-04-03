@@ -71,6 +71,20 @@ static bool	load_texture(char *buffer, t_level *lvl, int direction)
 		lvl->textures.south = texture;
 	else if (direction == WEST && !lvl->textures.west)
 		lvl->textures.west = texture;
+	else if (direction == DOOR1 && !lvl->textures.door1)
+		lvl->textures.door1 = texture;
+	else if (direction == DOOR2 && !lvl->textures.door2)
+		lvl->textures.door2 = texture;
+	else if (direction == DOOR3 && !lvl->textures.door3)
+		lvl->textures.door3 = texture;
+	else if (direction == DOOR4 && !lvl->textures.door4)
+		lvl->textures.door4 = texture;
+	else if (direction == DOOR5 && !lvl->textures.door5)
+		lvl->textures.door5 = texture;
+	else if (direction == DOOR6 && !lvl->textures.door6)
+		lvl->textures.door6 = texture;
+	else if (direction == DOOR7 && !lvl->textures.door7)
+		lvl->textures.door7 = texture;
 	else
 		mlx_delete_texture(texture);
 	return (true);
@@ -86,6 +100,20 @@ static bool	is_texture_or_color(char *buffer, int idx, t_level *lvl)
 		return (load_texture(buffer + idx + 2, lvl, SOUTH));
 	else if (ft_strncmp(buffer + idx, "WE", 2) == 0)
 		return (load_texture(buffer + idx + 2, lvl, WEST));
+	else if (ft_strncmp(buffer + idx, "D1", 2) == 0)
+		return (load_texture(buffer + idx + 2, lvl, DOOR1));
+	else if (ft_strncmp(buffer + idx, "D2", 2) == 0)
+		return (load_texture(buffer + idx + 2, lvl, DOOR2));
+	else if (ft_strncmp(buffer + idx, "D3", 2) == 0)
+		return (load_texture(buffer + idx + 2, lvl, DOOR3));
+	else if (ft_strncmp(buffer + idx, "D4", 2) == 0)
+		return (load_texture(buffer + idx + 2, lvl, DOOR4));
+	else if (ft_strncmp(buffer + idx, "D5", 2) == 0)
+		return (load_texture(buffer + idx + 2, lvl, DOOR5));
+	else if (ft_strncmp(buffer + idx, "D6", 2) == 0)
+		return (load_texture(buffer + idx + 2, lvl, DOOR6));
+	else if (ft_strncmp(buffer + idx, "D7", 2) == 0)
+		return (load_texture(buffer + idx + 2, lvl, DOOR7));
 	else if (ft_strncmp(buffer + idx, "F", 1) == 0)
 		lvl->imgs.floor = fetch_color(buffer + idx + 1);
 	else if (ft_strncmp(buffer + idx, "C", 1) == 0)
