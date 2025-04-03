@@ -19,8 +19,10 @@ uint32_t	light_level(uint32_t shade, uint32_t bright, int level)
 
 	step = (shade - bright) / (LIGHT_LOD / 2);
 	color = shade - (step * level);
-	if (color < 0x0)
-		color = 0x0;
+	if (color < bright)
+		color = bright;
+	else if (color > shade)
+		color = shade;
 	return (color);
 }
 
@@ -33,8 +35,8 @@ int	attenuation_factor(int level, float distance)
 	if (scaled <= 0)
 		scaled = 1;
 	factor = level - scaled;
-	if (factor <= 0)
-		factor = 1;
+	if (factor < 0)
+		factor = 0;
 	else if (factor > LIGHT_LOD / 2)
 		factor = LIGHT_LOD / 2;
 	return (factor);
@@ -65,18 +67,13 @@ int	light_step(int x, t_shade shader, int amount)
 	}
 	else if (shader == DECREASE)
 	{
-		while (step - 1 > 1 && iter++ < amount)
+		while (step - 1 >= 0 && iter++ < amount)
 			step--;
 	}
 	return (step);
 }
 
 /**
- * TODO: Figure out how to light up the ground surface.
- * This may be achieved by drawing lines from the min and max
- * light radii to the player position (center bottom of screen)
- * and interpolating the inner color values.
- *
  * @brief Draws lighter columns on the lighting layer which simulate
  * the light of a flashight. Light varies in intensity based
  * on the radius of the light and the distance from the player

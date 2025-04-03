@@ -46,8 +46,6 @@ float		to_radian(int degrees);
 void		space_to_one(char **map);
 bool		print_error(t_errors error, bool warning);
 bool		is_wall(t_level	*lvl, int x, int y);
-int			pack_shorts(uint16_t x, uint16_t y);
-void		unpack_shorts(int *x, int *y, int package);
 
 // Game logic
 

@@ -12,12 +12,20 @@
 
 #include "cube.h"
 
+/**
+ * TODO: How much to attentuate based on y location. Currently it does not scale
+ * even linearly. Ideally intensity_y would scale inversely to the step_y.
+ *
+ * TODO: Fix cone not being rendered when the raycaster hits DOF limit.
+*/
 static void	shade_floor(t_level *lvl, int x, int y)
 {
 	int			step_y;
 	int			step_x;
 	int			step_size_y;
+	float		intensity_y;
 	uint32_t	brightness;
+	int			average;
 
 	step_size_y = W_HEIGHT / LIGHT_LOD;
 	step_y = 0;
@@ -27,11 +35,13 @@ static void	shade_floor(t_level *lvl, int x, int y)
 		while (y >= W_HEIGHT - (step_size_y * (LIGHT_LOD / 2 - step_y)))
 		{
 			step_y++;
-			step_x = light_step(x, DECREASE, step_y);
+			step_x = light_step(x, DECREASE, step_y / 2);
 		}
+		intensity_y = step_size_y / (1 + (2 * step_y)); // TODO: How much to attentuate based on y location
+		average = (step_x + intensity_y) / 2;
 		if (brightness == SHADE_COLOR)
 			break ;
-		brightness = light_level(SHADE_COLOR, TRANSPARENCY, step_x);
+		brightness = light_level(SHADE_COLOR, TRANSPARENCY, average);
 		mlx_put_pixel(lvl->data->torch.light, x, y, brightness);
 		y++;
 	}
