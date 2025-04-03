@@ -43,17 +43,23 @@ int	attenuation_factor(int level, float distance)
 /**
  * @brief  Calculates the current step from the edge of the light radius.
 */
-int	light_step(int x, int size)
+int	light_step(int x, t_shade shader)
 {
 	int	step_size;
 	int	step;
 
-	step_size = size;
+	step_size = (LIGHT_RADIUS * 2) / LIGHT_LOD;
 	step = 0;
 	while (x > (W_WIDTH / 2 - LIGHT_RADIUS) + (step_size * (step + 1)))
 		step++;
 	if (step >= LIGHT_LOD / 2)
-		step = (LIGHT_LOD / 2 - step) + (LIGHT_LOD / 2);
+		step = LIGHT_LOD - step;
+	if (step <= 0)
+		step = 1;
+	if (shader == INCREASE && step + 1 <= (LIGHT_LOD / 2))
+		step++;
+	else if (shader == DECREASE && step - 1 > 1)
+		step--;
 	return (step);
 }
 
@@ -105,17 +111,13 @@ int	light_step(int x, int size)
 */
 void	draw_light(t_level *lvl, t_line *line, int x, float distance)
 {
-	int			step_size;
-	int			step;
 	int			intensity;
 	uint32_t	brightness;
 
 	if ((x < W_WIDTH / 2 - LIGHT_RADIUS || x > W_WIDTH / 2 + LIGHT_RADIUS) \
 	|| lvl->data->torch.enabled == false)
 		return ;
-	step_size = (LIGHT_RADIUS * 2) / LIGHT_LOD;
-	step = light_step(x, step_size);
-	intensity = attenuation_factor(step, distance);
+	intensity = attenuation_factor(light_step(x, NONE), distance);
 	brightness = light_level(SHADE_COLOR, TRANSPARENCY, intensity);
 	if (line->current < W_HEIGHT)
 		mlx_put_pixel(lvl->data->torch.light, x, line->current, brightness);

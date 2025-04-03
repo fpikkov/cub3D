@@ -51,43 +51,41 @@
 	}
 } */
 
-static void	shade_floor(t_level *lvl, int packed_axis, int size, float distance)
+static void	shade_floor(t_level *lvl, int packed_axis,float distance)
 {
 	int			x;
 	int			y;
+	int			min_y;
 	int			step_y;
 	int			step_size_y;
-	int			intensity;
+	int			i_x;
 	uint32_t	brightness;
 
-	unpack_shorts(&x, &y, packed_axis);
-	step_size_y = (W_HEIGHT - y) / LIGHT_LOD;
-	step_y = 0;
-	while (y < W_HEIGHT)
+	unpack_shorts(&x, &min_y, packed_axis);
+	step_size_y = W_HEIGHT / LIGHT_LOD;
+	step_y = LIGHT_LOD / 2;
+	y = W_HEIGHT - 1;
+	(void)distance;
+	i_x = light_step(x, NONE);
+	while (y > min_y)
 	{
-		intensity = attenuation_factor(light_step(x + (step_y / LIGHT_LOD), size), distance + (step_y / LIGHT_LOD));
-		if (intensity < 0)
-			intensity = 0;
-		brightness = light_level(SHADE_COLOR, TRANSPARENCY, intensity);
-		if (y >= (W_HEIGHT - y) + (step_size_y * (step_y + 1)))
-			step_y++;
+		brightness = light_level(SHADE_COLOR, TRANSPARENCY, i_x - 1);
+		if (y <= W_HEIGHT - (step_size_y * (step_y - LIGHT_LOD / 2)))
+			step_y--;
 		if (brightness == SHADE_COLOR)
 			break ;
 		mlx_put_pixel(lvl->data->torch.light, x, y, brightness);
-		y++;
+		y--;
 	}
 }
 
 void light_floor(t_level *lvl, t_line *line, int x, float distance)
 {
-	int			step_size;
-
 	if ((x < W_WIDTH / 2 - LIGHT_RADIUS || x > W_WIDTH / 2 + LIGHT_RADIUS) \
 	|| lvl->data->torch.enabled == false)
 		return ;
 	if (line->current != line->end && line->current >= W_HEIGHT)
 		return ;
-	step_size = (LIGHT_RADIUS * 2) / LIGHT_LOD;
-	shade_floor(lvl, pack_shorts(x, line->current), step_size, distance);
+	shade_floor(lvl, pack_shorts(x, line->current), distance);
 
 }

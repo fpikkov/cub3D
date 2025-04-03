@@ -50,6 +50,13 @@ typedef enum e_direction
 	CEILING
 }	t_direction;
 
+typedef enum e_shade
+{
+	NONE = 0,
+	INCREASE,
+	DECREASE
+}	t_shade;
+
 typedef struct s_color
 {
 	uint8_t	red;
