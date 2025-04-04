@@ -87,3 +87,21 @@ bool	create_foreground(t_level *lvl)
 		return (print_error(IMG_FAILURE, false));
 	return (true);
 }
+
+bool	create_screen_images(t_data *data)
+{
+	data->torch.dark = mlx_new_image(data->mlx, W_WIDTH, W_HEIGHT);
+	if (!data->torch.dark)
+		return (print_error(IMG_FAILURE, false));
+	data->torch.light = mlx_new_image(data->mlx, W_WIDTH, W_HEIGHT);
+	if (!data->torch.light)
+		return (print_error(IMG_FAILURE, false));
+	image_fill(data->torch.dark, SHADE_COLOR);
+	image_fill(data->torch.light, SHADE_COLOR);
+	mlx_image_to_window(data->mlx, data->torch.dark, 0, 0);
+	mlx_image_to_window(data->mlx, data->torch.light, 0, 0);
+	data->torch.light->enabled = false;
+	mlx_set_instance_depth(data->torch.dark->instances, FL_DEPTH);
+	mlx_set_instance_depth(data->torch.light->instances, FL_DEPTH);
+	return (true);
+}

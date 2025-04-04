@@ -12,9 +12,9 @@
 
 #include "cube.h"
 
-void	line_init(t_line *line, float distance)
+static void	line_init(t_line *line, float distance)
 {
-	line->height = floor(W_HEIGHT / distance);
+	line->height = W_HEIGHT / distance;
 	line->start = (-line->height / 2) + (W_HEIGHT / 2);
 	line->end = (line->height / 2) + (W_HEIGHT / 2);
 	line->delta = line->end - line->start;
@@ -22,9 +22,6 @@ void	line_init(t_line *line, float distance)
 		line->delta++;
 	line->current = line->start;
 }
-/**
- * @brief Returns the color data for the current wall we're drawing
- */
 
 static uint32_t	select_texture(t_ray *ray, t_level *lvl, int y)
 {
@@ -61,20 +58,22 @@ static void	draw_line(t_ray *ray, t_level *lvl, int x)
 	color = 0;
 	while (line.current <= line.end)
 	{
-		if (line.current >= 0 && line.current < W_HEIGHT)
-		{
-			scaled_y = (int)floor(((line.current - line.start) \
-			* (TILE - 1)) / line.delta);
-			color = select_texture(ray, lvl, scaled_y);
-			mlx_put_pixel(lvl->imgs.fg, x, (int)line.current, color);
-		}
+		if (line.current < 0)
+			line.current = 0;
+		if (line.current >= W_HEIGHT)
+			break ;
+		scaled_y = ((line.current - line.start) * (TILE - 1)) / line.delta;
+		color = select_texture(ray, lvl, scaled_y);
+		mlx_put_pixel(lvl->imgs.fg, x, line.current, color);
+		draw_light(lvl, &line, x, ray->distance);
 		line.current++;
 	}
+	light_floor(lvl, &line, x);
 }
+
 /**
  * @brief Draws walls line by line to the foreground image
  */
-
 static void	draw_foreground(t_level *lvl, t_player *p)
 {
 	t_ray	ray;

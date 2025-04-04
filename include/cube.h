@@ -33,6 +33,7 @@ int			parse_color_data(int fd, t_level *lvl);
 uint32_t	fetch_color(char *buffer);
 bool		create_background(t_level *lvl);
 bool		create_foreground(t_level *lvl);
+bool		create_screen_images(t_data *data);
 bool		new_level_node(t_data *data);
 
 bool		parse_map(char *filename, t_data *data);
@@ -55,6 +56,7 @@ int			get_door_type(t_level *lvl, int x, int y);
 // Game logic
 
 void		key_hook(mlx_key_data_t keydata, void *param);
+void		mouse_hook(mouse_key_t b, action_t a, modifier_key_t m, void *p);
 void		game_hook(void *param);
 bool		game_tick(void);
 float		frame_delay(void);
@@ -78,6 +80,15 @@ void		reset_foreground(t_level *lvl);
 void		render_surfaces(t_level *lvl, t_player *p);
 bool		raycast(t_ray *ray, t_level *lvl, t_player *p, int x);
 uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y);
+void		image_fill(mlx_image_t *img, uint32_t color);
+
+// Lighting
+
+void		draw_light(t_level *lvl, t_line *line, int x, float distance);
+void		light_floor(t_level *lvl, t_line *line, int x);
+uint32_t	light_level(uint32_t shade, uint32_t bright, int level);
+int			attenuation_factor(int level, float distance);
+int			light_step(int x, t_shade shader, int amount);
 
 // Renderer utils
 

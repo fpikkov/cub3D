@@ -68,6 +68,13 @@ typedef enum e_door_status
 	OPEN
 }	t_door_status;
 
+typedef enum e_shade
+{
+	NONE = 0,
+	INCREASE,
+	DECREASE
+}	t_shade;
+
 typedef struct s_color
 {
 	uint8_t	red;
@@ -101,9 +108,9 @@ typedef struct s_textures
 
 typedef	struct	t_door
 {
-	int		y;
-	int		x;
-	int		status;
+	int			y;
+	int			x;
+	int			status;
 	uint64_t	time;
 }	t_door;
 
@@ -123,6 +130,7 @@ typedef struct s_level
 	t_textures		textures;
 	t_door			door;
 	mlx_t			**mlx;
+	struct s_data	*data;
 	struct s_level	*next;
 }	t_level;
 
@@ -144,9 +152,9 @@ typedef struct s_minimap
 	int			height;
 	int			start_x;
 	int			start_y;
-	double			player_x;
-	double			player_y;
-	double			player_angle;
+	double		player_x;
+	double		player_y;
+	double		player_angle;
 	float		tile_size;
 	char		**map;
 }	t_minimap;
@@ -179,6 +187,13 @@ typedef struct	s_bresenham
 	int		err2;
 }	t_bresenham;
 
+typedef struct s_torch
+{
+	bool		enabled;
+	mlx_image_t	*dark;
+	mlx_image_t	*light;
+}	t_torch;
+
 typedef struct s_data
 {
 	mlx_t		*mlx;
@@ -186,15 +201,16 @@ typedef struct s_data
 	t_level		*levels;
 	t_player	player;
 	t_minimap	minimap;
+	t_torch		torch;
 }	t_data;
 
 typedef	struct	s_door_data
 {
-	float		door_column;
-	float		door_dist;
+	float	door_column;
+	float	door_dist;
 	int		door_x;
 	int		door_y;
-}			t_door_data;
+}	t_door_data;
 
 typedef struct s_ray
 {
@@ -216,7 +232,7 @@ typedef struct s_ray
 	int			side;
 	float		camera_x;
 	t_door_data	doors[10];
-	int		door_count;
+	int			door_count;
 }	t_ray;
 
 typedef struct s_line

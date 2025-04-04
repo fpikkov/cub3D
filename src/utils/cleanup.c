@@ -38,6 +38,10 @@ void	terminate(t_data *data)
 		delete_levels(data);
 	if (data->minimap.img)
 		mlx_delete_image(data->mlx, data->minimap.img);
+	if (data->torch.dark)
+		mlx_delete_image(data->mlx, data->torch.dark);
+	if (data->torch.light)
+		mlx_delete_image(data->mlx, data->torch.light);
 	if (data->mlx)
 		mlx_terminate(data->mlx);
 }
