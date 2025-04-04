@@ -75,7 +75,7 @@ static bool	hitscan(t_ray *r, t_level *lvl, t_player *p)
 			r->side = HORIZONTAL;
 		}	
 		if (get_door_type(lvl, r->map_x, r->map_y))
-			save_door_data(r, lvl, p);
+			save_door_data(r, p);
 		if (is_wall(lvl, r->map_x, r->map_y))
 			hit = true;
 		depth++;

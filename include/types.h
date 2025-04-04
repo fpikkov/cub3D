@@ -99,13 +99,12 @@ typedef struct s_textures
 	mlx_texture_t	*door7;
 }	t_textures;
 
-typedef	struct	s_door
+typedef	struct	t_door
 {
 	int		y;
 	int		x;
 	int		status;
 	uint64_t	time;
-	struct t_door		*next;
 }	t_door;
 
 typedef struct s_level
@@ -189,6 +188,14 @@ typedef struct s_data
 	t_minimap	minimap;
 }	t_data;
 
+typedef	struct	s_door_data
+{
+	float		door_column;
+	float		door_dist;
+	int		door_x;
+	int		door_y;
+}			t_door_data;
+
 typedef struct s_ray
 {
 	t_direction	wall_type;
@@ -202,17 +209,14 @@ typedef struct s_ray
 	float		side_dist_y;
 	float		delta_dist_x;
 	float		delta_dist_y;
-	float		door_dist;
-	float		door_column;
 	int			map_x;
 	int			map_y;
 	int			step_x;
 	int			step_y;
 	int			side;
 	float		camera_x;
-	bool		doors;
-	int		door_x;
-	int		door_y;
+	t_door_data	doors[10];
+	int		door_count;
 }	t_ray;
 
 typedef struct s_line

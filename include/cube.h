@@ -72,14 +72,14 @@ uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y);
 
 // Renderer utils
 
-float	calc_door_pos(t_ray *r, t_player *p);
+float	calc_door_pos(t_door_data *door, t_ray *r, t_player *p);
 void	line_init(t_line *line, float distance);
 
 // Render door
 
-uint32_t	pick_door_texture(t_ray *ray, t_level *lvl, int y);
-void	save_door_data(t_ray *r, t_level *lvl, t_player *p);
-void	draw_door(t_ray *ray, t_level *lvl, int x);
+uint32_t	pick_door_texture(t_door_data *door, t_level *lvl, int y);
+void	save_door_data(t_ray *r, t_player *p);
+void	draw_doors(t_ray *ray, t_level *lvl, int x);
 
 // Player position
 

@@ -84,8 +84,8 @@ static void	draw_foreground(t_level *lvl, t_player *p)
 		ft_memset(&ray, 0, sizeof(t_ray));
 		if (raycast(&ray, lvl, p, x))
 			draw_line(&ray, lvl, x);
-		if (ray.doors)
-			draw_door(&ray, lvl, x);
+		if (ray.door_count > 0)
+			draw_doors(&ray, lvl, x);
 		x++;
 	}
 }
