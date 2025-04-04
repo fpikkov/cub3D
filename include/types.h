@@ -99,12 +99,13 @@ typedef struct s_textures
 	mlx_texture_t	*door7;
 }	t_textures;
 
-typedef	struct	t_door
+typedef	struct	s_door
 {
 	int		y;
 	int		x;
 	int		status;
 	uint64_t	time;
+	struct t_door		*next;
 }	t_door;
 
 typedef struct s_level

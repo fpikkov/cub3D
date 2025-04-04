@@ -12,6 +12,9 @@
 
 #include "cube.h"
 
+//TODO: Try to queue up door data from all the doors in the same ray hit on current x-axis,
+//	Maybe you can make door.next without it being a pointer, that would be something
+//	also make sure the lvl->doored bool is initialized correctly. very important for safety
 void	save_door_data(t_ray *r, t_level *lvl, t_player *p)
 {
 	float	door_pos;
