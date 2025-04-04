@@ -25,6 +25,7 @@ void	line_init(t_line *line, float distance)
 /**
  * @brief Returns the color data for the current wall we're drawing
  */
+
 static uint32_t	select_texture(t_ray *ray, t_level *lvl, int y)
 {
 	uint32_t	color;
@@ -73,6 +74,7 @@ static void	draw_line(t_ray *ray, t_level *lvl, int x)
 /**
  * @brief Draws walls line by line to the foreground image
  */
+
 static void	draw_foreground(t_level *lvl, t_player *p)
 {
 	t_ray	ray;

@@ -24,15 +24,22 @@ bool	is_wall(t_level	*lvl, int x, int y)
 	return (false);
 }
 
+bool	is_closed_door(t_level *lvl, int x, int y)
+{
+	if (y <= 0 || x <= 0 || y >= lvl->row_len || x >= lvl->col_len)
+		return (true);
+	else if (lvl->map[y][x] >= '2' && lvl->map[y][x] <= '7')
+		return (true);
+	return (false);
+}
+
 int	get_door_type(t_level *lvl, int x, int y)
 {
 	if (y <= 0 || x <= 0 || y >= lvl->row_len || x >= lvl->col_len)
-	{
 		return (0);
-	}
 	if (lvl->map[y][x] == '2')
 		return (2);
-	if( lvl->map[y][x] == '3')
+	if (lvl->map[y][x] == '3')
 		return (3);
 	if (lvl->map[y][x] == '4')
 		return (4);

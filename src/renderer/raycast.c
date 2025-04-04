@@ -59,8 +59,8 @@ static bool	hitscan(t_ray *r, t_level *lvl, t_player *p)
 	int		depth;
 
 	hit = false;
-	depth = 0;
-	while (!hit && depth < DOF)
+	depth = -1;
+	while (!hit && ++depth < DOF)
 	{
 		if (r->side_dist_x < r->side_dist_y)
 		{
@@ -78,7 +78,6 @@ static bool	hitscan(t_ray *r, t_level *lvl, t_player *p)
 			save_door_data(r, p);
 		if (is_wall(lvl, r->map_x, r->map_y))
 			hit = true;
-		depth++;
 	}
 	return (hit);
 }
@@ -110,7 +109,6 @@ static void	ray_texture_position(t_ray *ray, t_player *p)
 	if (ray->side == HORIZONTAL && ray->dir_y >= 0)
 		ray->wall_type = SOUTH;
 }
-
 
 /**
  * NOTE: The raycaster is using Digital Differential Analysis

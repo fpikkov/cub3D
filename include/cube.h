@@ -26,6 +26,9 @@
 bool		launch_parser(char **argv, t_data *data);
 bool		parse_data(char **argv, t_data *data);
 bool		parse_textures(char *filename, t_data *data);
+bool		is_door_texture(char *buffer, int idx, t_level *lvl);
+bool		load_texture(char *buffer, t_level *lvl, int direction);
+void		load_door_texture(mlx_texture_t *tex, t_level *lvl, int type);
 int			parse_color_data(int fd, t_level *lvl);
 uint32_t	fetch_color(char *buffer);
 bool		create_background(t_level *lvl);
@@ -46,6 +49,7 @@ float		to_radian(int degrees);
 void		space_to_one(char **map);
 bool		print_error(t_errors error, bool warning);
 bool		is_wall(t_level	*lvl, int x, int y);
+bool		is_closed_door(t_level *lvl, int x, int y);
 int			get_door_type(t_level *lvl, int x, int y);
 
 // Game logic
@@ -61,6 +65,11 @@ void		next_level(t_data *data);
 void		init_level_params(t_level *level, t_player *player);
 void		level_setup(t_level *lvl, t_player *p);
 t_level		*current_level(t_data *data);
+
+// Door actions
+
+void	door_action(t_data *data);
+void	move_door(t_level *instance);
 
 // Renderer
 

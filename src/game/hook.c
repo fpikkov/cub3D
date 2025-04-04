@@ -18,33 +18,6 @@
  * before changing the level
  */
 
-void	move_door(t_level *instance)
-{
-	if (get_time() - instance->door.time >= 200)
-	{
-		if (instance->door.status == OPENING1)
-			instance->map[instance->door.y][instance->door.x] = '3';
-		else if (instance->door.status == OPENING2)
-			instance->map[instance->door.y][instance->door.x] = '4';
-		else if (instance->door.status == OPENING3)
-			instance->map[instance->door.y][instance->door.x] = '5';
-		else if (instance->door.status == OPENING4)
-			instance->map[instance->door.y][instance->door.x] = '6';
-		else if (instance->door.status == OPENING5)
-			instance->map[instance->door.y][instance->door.x] = '7';
-		if (instance->door.status == OPEN)
-		{
-			instance->map[instance->door.y][instance->door.x] = '8';
-			ft_memset(&instance->door, 0, sizeof(t_door));
-		}
-		else
-		{
-			instance->door.status++;
-			instance->door.time = get_time();
-		}
-	}
-}
-
 void	game_hook(void *param)
 {
 	t_data	*data;
@@ -75,4 +48,6 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	if (keydata.key == MLX_KEY_N && keydata.action == MLX_RELEASE \
 	&& keydata.modifier == MLX_CONTROL)
 		next_level(data);
+	if (keydata.key == MLX_KEY_E && keydata.action == MLX_RELEASE)
+		door_action(data);
 }

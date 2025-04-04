@@ -49,27 +49,7 @@ static char	*texture_path(char *buffer)
 	return (path);
 }
 
-static	void	load_door_texture(mlx_texture_t *texture, t_level *lvl, int door_type)
-{
-	if (door_type == DOOR1 && !lvl->textures.door1)
-		lvl->textures.door1 = texture;
-	else if (door_type == DOOR2 && !lvl->textures.door2)
-		lvl->textures.door2 = texture;
-	else if (door_type == DOOR3 && !lvl->textures.door3)
-		lvl->textures.door3 = texture;
-	else if (door_type == DOOR4 && !lvl->textures.door4)
-		lvl->textures.door4 = texture;
-	else if (door_type == DOOR5 && !lvl->textures.door5)
-		lvl->textures.door5 = texture;
-	else if (door_type == DOOR6 && !lvl->textures.door6)
-		lvl->textures.door6 = texture;
-	else if (door_type == DOOR7 && !lvl->textures.door7)
-		lvl->textures.door7 = texture;
-	else
-		mlx_delete_texture(texture);
-}
-
-static bool	load_texture(char *buffer, t_level *lvl, int direction)
+bool	load_texture(char *buffer, t_level *lvl, int direction)
 {
 	mlx_texture_t	*texture;
 	char			*path;
@@ -91,29 +71,10 @@ static bool	load_texture(char *buffer, t_level *lvl, int direction)
 		lvl->textures.south = texture;
 	else if (direction == WEST && !lvl->textures.west)
 		lvl->textures.west = texture;
-	else if (direction > CEILING && direction <= DOOR7)
-			load_door_texture(texture, lvl, direction);
+	else if (direction >= DOOR1 && direction <= DOOR7)
+		load_door_texture(texture, lvl, direction);
 	else
 		mlx_delete_texture(texture);
-	return (true);
-}
-
-static	bool	is_door_texture(char *buffer, int idx, t_level *lvl)
-{
-	if (ft_strncmp(buffer + idx, "D1", 2) == 0)
-		return (load_texture(buffer + idx + 2, lvl, DOOR1));
-	else if (ft_strncmp(buffer + idx, "D2", 2) == 0)
-		return (load_texture(buffer + idx + 2, lvl, DOOR2));
-	else if (ft_strncmp(buffer + idx, "D3", 2) == 0)
-		return (load_texture(buffer + idx + 2, lvl, DOOR3));
-	else if (ft_strncmp(buffer + idx, "D4", 2) == 0)
-		return (load_texture(buffer + idx + 2, lvl, DOOR4));
-	else if (ft_strncmp(buffer + idx, "D5", 2) == 0)
-		return (load_texture(buffer + idx + 2, lvl, DOOR5));
-	else if (ft_strncmp(buffer + idx, "D6", 2) == 0)
-		return (load_texture(buffer + idx + 2, lvl, DOOR6));
-	else if (ft_strncmp(buffer + idx, "D7", 2) == 0)
-		return (load_texture(buffer + idx + 2, lvl, DOOR7));
 	return (true);
 }
 

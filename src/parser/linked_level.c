@@ -15,38 +15,31 @@
 /**
  * @brief Deletes all textures in a single level struct
  */
-static void	delete_textures(t_level *lvl)
+
+static	void	delete_texture(mlx_texture_t *texture)
 {
-	if (lvl->textures.north)
+	if (texture)
 	{
-		mlx_delete_texture(lvl->textures.north);
-		lvl->textures.north = NULL;
+		mlx_delete_texture(texture);
+		texture = NULL;
 	}
-	if (lvl->textures.east)
-	{
-		mlx_delete_texture(lvl->textures.east);
-		lvl->textures.east = NULL;
-	}
-	if (lvl->textures.south)
-	{
-		mlx_delete_texture(lvl->textures.south);
-		lvl->textures.south = NULL;
-	}
-	if (lvl->textures.west)
-	{
-		mlx_delete_texture(lvl->textures.west);
-		lvl->textures.west = NULL;
-	}
+}
+
+static void	delete_all_textures(t_level *lvl)
+{
+	delete_texture(lvl->textures.north);
+	delete_texture(lvl->textures.east);
+	delete_texture(lvl->textures.south);
+	delete_texture(lvl->textures.west);
 	if (lvl->doored)
 	{
-		mlx_delete_texture(lvl->textures.door1);
-		lvl->textures.door1 = NULL;
-		mlx_delete_texture(lvl->textures.door2);
-		lvl->textures.door2 = NULL;
-		mlx_delete_texture(lvl->textures.door3);
-		lvl->textures.door3 = NULL;
-		mlx_delete_texture(lvl->textures.door4);
-		lvl->textures.door4 = NULL;
+		delete_texture(lvl->textures.door1);
+		delete_texture(lvl->textures.door2);
+		delete_texture(lvl->textures.door3);
+		delete_texture(lvl->textures.door4);
+		delete_texture(lvl->textures.door5);
+		delete_texture(lvl->textures.door6);
+		delete_texture(lvl->textures.door7);
 	}
 }
 
@@ -66,7 +59,7 @@ void	delete_levels(t_data *data)
 	{
 		nptr = ptr->next;
 		delete_level_images(ptr);
-		delete_textures(ptr);
+		delete_all_textures(ptr);
 		if (ptr->map)
 			free_map(ptr->map);
 		if (ptr->map_copy)
