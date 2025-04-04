@@ -49,7 +49,7 @@ int	light_step(int x, t_shade shader, int amount)
 {
 	int	step_size;
 	int	step;
-	int iter;
+	int	iter;
 
 	step_size = (LIGHT_RADIUS * 2) / LIGHT_LOD;
 	step = 0;
