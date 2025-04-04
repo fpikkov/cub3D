@@ -30,6 +30,22 @@ void	free_map(char **map)
 	map = NULL;
 }
 
+void	delete_level_images(t_level *lvl)
+{
+	if (!lvl)
+		return ;
+	if (lvl->imgs.bg)
+	{
+		mlx_delete_image(*lvl->mlx, lvl->imgs.bg);
+		lvl->imgs.bg = NULL;
+	}
+	if (lvl->imgs.fg)
+	{
+		mlx_delete_image(*lvl->mlx, lvl->imgs.fg);
+		lvl->imgs.fg = NULL;
+	}
+}
+
 void	terminate(t_data *data)
 {
 	if (!data)

@@ -41,3 +41,8 @@ uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y)
 	color |= *ptr;
 	return (color);
 }
+
+int	scale_texture_height(t_line *line)
+{
+	return (((line->current - line->start) * (TILE - 1)) / line->delta);
+}

@@ -68,16 +68,18 @@ void	draw_doors(t_ray *ray, t_level *lvl, int x)
 	{
 		ft_memset(&line, 0, sizeof(t_line));
 		line_init(&line, ray->doors[ray->door_count].door_dist);
-		while (line.current <= line.end)
+		while (line.current <= line.end && line.current < W_HEIGHT)
 		{
-			if (line.current >= 0 && line.current < W_HEIGHT)
+			if (line.current < 0)
+				line.current = 0;
+			scaled_y = scale_texture_height(&line);
+			color = pick_door_texture(&ray->doors[ray->door_count], \
+			lvl, scaled_y);
+			if (color)
 			{
-				scaled_y = (int)floor(((line.current - line.start) \
-				* (TILE - 1)) / line.delta);
-				color = pick_door_texture(&ray->doors[ray->door_count], \
-				lvl, scaled_y);
-				if (color)
-					mlx_put_pixel(lvl->imgs.fg, x, (int)line.current, color);
+				mlx_put_pixel(lvl->imgs.fg, x, (int)line.current, color);
+				draw_light(lvl, &line, x, \
+				ray->doors[ray->door_count].door_dist);
 			}
 			line.current++;
 		}

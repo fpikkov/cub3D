@@ -80,7 +80,9 @@ void		reset_foreground(t_level *lvl);
 void		render_surfaces(t_level *lvl, t_player *p);
 bool		raycast(t_ray *ray, t_level *lvl, t_player *p, int x);
 uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y);
+int			scale_texture_height(t_line *line);
 void		image_fill(mlx_image_t *img, uint32_t color);
+void		draw_fog(t_ray *ray, t_level *lvl, int x);
 
 // Lighting
 

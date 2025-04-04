@@ -56,13 +56,11 @@ static void	draw_line(t_ray *ray, t_level *lvl, int x)
 	ft_memset(&line, 0, sizeof(t_line));
 	line_init(&line, ray->distance);
 	color = 0;
-	while (line.current <= line.end)
+	while (line.current <= line.end && line.current < W_HEIGHT)
 	{
 		if (line.current < 0)
 			line.current = 0;
-		if (line.current >= W_HEIGHT)
-			break ;
-		scaled_y = ((line.current - line.start) * (TILE - 1)) / line.delta;
+		scaled_y = scale_texture_height(&line);
 		color = select_texture(ray, lvl, scaled_y);
 		mlx_put_pixel(lvl->imgs.fg, x, line.current, color);
 		draw_light(lvl, &line, x, ray->distance);
@@ -85,6 +83,8 @@ static void	draw_foreground(t_level *lvl, t_player *p)
 		ft_memset(&ray, 0, sizeof(t_ray));
 		if (raycast(&ray, lvl, p, x))
 			draw_line(&ray, lvl, x);
+		else
+			draw_fog(&ray, lvl, x);
 		if (ray.door_count > 0)
 			draw_doors(&ray, lvl, x);
 		x++;

@@ -67,7 +67,8 @@
 # define WALL_COLOR 0x000000b8
 # define FLOOR_COLOR 0x666666d6
 
-// Flashlight constants
+// Light constants
+# define FOG_COLOR 0x000000F0
 # define SHADE_COLOR 0x000000E5
 # define TRANSPARENCY 0x00000000
 # define LIGHT_RADIUS 400

@@ -133,5 +133,12 @@ bool	raycast(t_ray *ray, t_level *lvl, t_player *p, int x)
 		ray_texture_position(ray, p);
 		return (true);
 	}
+	else
+	{
+		if (ray->side == VERTICAL)
+			ray->distance = fabsf(ray->side_dist_x - ray->delta_dist_x);
+		else
+			ray->distance = fabsf(ray->side_dist_y - ray->delta_dist_y);
+	}
 	return (false);
 }
