@@ -106,7 +106,7 @@ typedef struct s_textures
 	mlx_texture_t	*door7;
 }	t_textures;
 
-typedef	struct	t_door
+typedef struct t_door
 {
 	int			y;
 	int			x;
@@ -159,7 +159,7 @@ typedef struct s_minimap
 	char		**map;
 }	t_minimap;
 
-typedef struct	s_arrow
+typedef struct s_arrow
 {
 	int		center_x;
 	int		center_y;
@@ -173,7 +173,7 @@ typedef struct	s_arrow
 	int		back_y;
 }	t_arrow;
 
-typedef struct	s_bresenham
+typedef struct s_bresenham
 {
 	int		start_x;
 	int		start_y;
@@ -204,7 +204,7 @@ typedef struct s_data
 	t_torch		torch;
 }	t_data;
 
-typedef	struct	s_door_data
+typedef struct s_door_data
 {
 	float	door_column;
 	float	door_dist;

@@ -70,8 +70,8 @@ t_level		*current_level(t_data *data);
 
 // Door actions
 
-void	door_action(t_data *data);
-void	move_door(t_level *instance);
+void		door_action(t_data *data);
+void		move_door(t_level *instance);
 
 // Renderer
 
@@ -92,14 +92,14 @@ int			light_step(int x, t_shade shader, int amount);
 
 // Renderer utils
 
-float	calc_door_pos(t_door_data *door, t_ray *r, t_player *p);
-void	line_init(t_line *line, float distance);
+float		calc_door_pos(t_door_data *door, t_ray *r, t_player *p);
+void		line_init(t_line *line, float distance);
 
 // Render door
 
 uint32_t	pick_door_texture(t_door_data *door, t_level *lvl, int y);
-void	save_door_data(t_ray *r, t_player *p);
-void	draw_doors(t_ray *ray, t_level *lvl, int x);
+void		save_door_data(t_ray *r, t_player *p);
+void		draw_doors(t_ray *ray, t_level *lvl, int x);
 
 // Player position
 

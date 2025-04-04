@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-static void	line_init(t_line *line, float distance)
+void	line_init(t_line *line, float distance)
 {
 	line->height = W_HEIGHT / distance;
 	line->start = (-line->height / 2) + (W_HEIGHT / 2);
