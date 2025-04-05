@@ -15,11 +15,9 @@
 void	draw_fog(t_ray *ray, t_level *lvl, int x)
 {
 	t_line		line;
-	uint32_t	color;
 
 	ft_memset(&line, 0, sizeof(t_line));
 	line_init(&line, ray->distance);
-	color = 0;
 	while (line.current <= line.end)
 	{
 		if (line.current < 0)
