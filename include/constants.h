@@ -68,6 +68,7 @@
 # define FLOOR_COLOR 0x666666d6
 
 // Light constants
+# define LIGHT_SPRITES 7
 # define FOG_COLOR 0x000000F0
 # define SHADE_COLOR 0x000000E5
 # define TRANSPARENCY 0x00000000

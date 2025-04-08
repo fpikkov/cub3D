@@ -36,6 +36,7 @@ uint32_t	fetch_color(char *buffer);
 bool		create_background(t_level *lvl);
 bool		create_foreground(t_level *lvl);
 bool		create_screen_images(t_data *data);
+bool		create_torch_images(t_data *data);
 bool		new_level_node(t_data *data);
 
 bool		parse_map(char *filename, t_data *data);

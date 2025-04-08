@@ -83,9 +83,8 @@ bool	parse_data(char **argv, t_data *data)
 			print_latest_map(data);
 		idx++;
 	}
-	if (!init_minimap(data))
-		return (false);
-	if (!create_screen_images(data))
+	if (!init_minimap(data) || !create_screen_images(data) \
+	|| !create_torch_images(data))
 		return (false);
 	return (true);
 }

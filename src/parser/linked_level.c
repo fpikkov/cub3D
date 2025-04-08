@@ -16,7 +16,7 @@
  * @brief Deletes all textures in a single level struct
  */
 
-static	void	delete_texture(mlx_texture_t *texture)
+static void	delete_texture(mlx_texture_t *texture)
 {
 	if (texture)
 	{

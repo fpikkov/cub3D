@@ -193,12 +193,12 @@ typedef struct s_torch
 	bool		enabled;
 	mlx_image_t	*dark;
 	mlx_image_t	*light;
-	mlx_image_t	*light_off;
-	mlx_image_t	*light_one;
-	mlx_image_t	*light_two;
-	mlx_image_t	*light_three;
-	mlx_image_t	*light_four;
-	mlx_image_t	*light_five;
+	mlx_image_t	*off;
+	mlx_image_t	*one;
+	mlx_image_t	*two;
+	mlx_image_t	*three;
+	mlx_image_t	*four;
+	mlx_image_t	*five;
 }	t_torch;
 
 typedef struct s_file

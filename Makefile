@@ -49,6 +49,7 @@ SRCS =	parser.c \
 		parse_textures.c \
 		parse_door_textures.c \
 		parse_texture_utils.c \
+		flashlight_images.c \
 		texture_path.c \
 		parse_colors.c \
 		linked_level.c \
