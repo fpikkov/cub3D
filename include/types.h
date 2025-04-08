@@ -54,7 +54,8 @@ typedef enum e_direction
 	DOOR4,
 	DOOR5,
 	DOOR6,
-	DOOR7
+	DOOR7,
+	MONSTER
 }	t_direction;
 
 typedef enum e_door_status
@@ -104,9 +105,10 @@ typedef struct s_textures
 	mlx_texture_t	*door5;
 	mlx_texture_t	*door6;
 	mlx_texture_t	*door7;
+	mlx_texture_t	*monster;
 }	t_textures;
 
-typedef struct t_door
+typedef struct s_door
 {
 	int			y;
 	int			x;
@@ -114,11 +116,20 @@ typedef struct t_door
 	uint64_t	time;
 }	t_door;
 
+typedef	struct	s_monster
+{
+	bool	active;
+	int		idx;
+	int		x;
+	int		y;
+}			t_monster;
+
 typedef struct s_level
 {
 	size_t			index;
 	bool			loaded;
 	bool			doored;
+	bool			monsters;
 	char			**map;
 	char			**map_copy;
 	int				row_len;
@@ -129,6 +140,7 @@ typedef struct s_level
 	t_imgs			imgs;
 	t_textures		textures;
 	t_door			door;
+	t_monster		monster[20];
 	mlx_t			**mlx;
 	struct s_data	*data;
 	struct s_level	*next;
@@ -204,13 +216,13 @@ typedef struct s_data
 	t_torch		torch;
 }	t_data;
 
-typedef struct s_door_data
+typedef struct s_sprite_data
 {
-	float	door_column;
-	float	door_dist;
-	int		door_x;
-	int		door_y;
-}	t_door_data;
+	float	hit_column;
+	float	dist;
+	int		x;
+	int		y;
+}	t_sprite_data;
 
 typedef struct s_ray
 {
@@ -231,8 +243,8 @@ typedef struct s_ray
 	int			step_y;
 	int			side;
 	float		camera_x;
-	t_door_data	doors[10];
-	int			door_count;
+	t_sprite_data	sprites[30];
+	int			sprite_count;
 }	t_ray;
 
 typedef struct s_line

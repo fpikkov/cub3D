@@ -43,6 +43,28 @@ static	bool	find_player_pos(t_level *lvl)
 *  and memorize the player direction and the position
 *  via the find_player_pos function
 */
+
+void	check_for_sprites(t_level *lvl)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (lvl->map[i])
+	{
+		j = 0;
+		while (lvl->map[j])
+		{
+			if (lvl->map[i][j] == '2')
+				lvl->doored = true;
+			else if (lvl->map[i][j] == 'm')
+				lvl->monsters = true;
+			j++;
+		}
+		i++;
+	}
+}
+
 bool	parse_map(char *filename, t_data *data)
 {
 	t_level	*lvl;
@@ -56,6 +78,7 @@ bool	parse_map(char *filename, t_data *data)
 		return (false);
 	lvl->map = resize_to_rectangular(map);
 	lvl->map_copy = resize_to_rectangular(map);
+	check_for_sprites(lvl);
 	free_map(map);
 	if (!lvl->map || !lvl->map_copy)
 		return (false);

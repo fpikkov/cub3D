@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_door_textures.c                              :+:      :+:    :+:   */
+/*   parse_sprite_textures.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahentton <ahentton@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -29,6 +29,15 @@ void	load_door_texture(mlx_texture_t *tex, t_level *lvl, int type)
 		lvl->textures.door6 = tex;
 	else if (type == DOOR7 && !lvl->textures.door7)
 		lvl->textures.door7 = tex;
+	else
+		mlx_delete_texture(tex);
+}
+
+void	load_monster_texture(mlx_texture_t *tex, t_level *lvl, int type)
+{
+	lvl->monsters = true;
+	if (type == MONSTER && !lvl->textures.monster)
+		lvl->textures.monster = tex;
 	else
 		mlx_delete_texture(tex);
 }
