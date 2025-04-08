@@ -31,7 +31,7 @@ static char	*g_message[20] = {
 	"too many player positions detected in the given map",
 	"the given map is not closed properly",
 	"allocation failure",
-	"the launch argument should be used from the root directory"
+	"failed to fetch root directory of the project"
 };
 
 /**

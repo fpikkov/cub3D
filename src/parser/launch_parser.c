@@ -19,28 +19,67 @@ static char	*g_default_levels[5] = {
 	"maps/level_one.cub"
 };
 
+static void	argument_failure(char **args, size_t idx)
+{
+	while (idx > 0)
+	{
+		if (args[idx])
+			free(args[idx]);
+		args[idx] = NULL;
+		idx--;
+	}
+	if (args[idx])
+		free(args[idx]);
+	args[idx] = NULL;
+	if (args)
+		free(args);
+	args = NULL;
+}
+
+static char	**construct_launch_args(t_data *data)
+{
+	char	**args;
+	size_t	count;
+	size_t	idx;
+
+	args = NULL;
+	count = map_row_len(g_default_levels);
+	args = ft_calloc(count + 1, sizeof(char *));
+	if (!args)
+		return (NULL);
+	args[0] = ft_strdup(g_default_levels[0]);
+	idx = 1;
+	while (idx < count)
+	{
+		args[idx] = ft_strjoin(data->file.root, g_default_levels[idx]);
+		if (!args[idx])
+		{
+			argument_failure(args, idx - 1);
+			return (NULL);
+		}
+		idx++;
+	}
+	return (args);
+}
+
 bool	launch_parser(char **argv, t_data *data)
 {
+	char	**args;
+
+	args = argv;
+	if (build_path(argv[0], data) == CRITICAL)
+		return (print_error(PATH_FAILURE, false));
 	if (!ft_strncmp(argv[1], "--launch", 9))
 	{
-		if (ft_strncmp(argv[0], g_default_levels[0], 14))
-		{
-			terminate(data);
-			return (print_error(LAUNCH_PATH, true));
-		}
-		if (!parse_data(g_default_levels, data))
-		{
-			terminate(data);
-			return (false);
-		}
+		if (!data->file.build)
+			args = g_default_levels;
+		else
+			args = construct_launch_args(data);
 	}
-	else
+	if (!parse_data(args, data))
 	{
-		if (!parse_data(argv, data))
-		{
-			terminate(data);
-			return (false);
-		}
+		terminate(data);
+		return (false);
 	}
 	return (true);
 }

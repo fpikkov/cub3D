@@ -24,7 +24,7 @@ static bool	verify_png(char *filepath)
 	return (true);
 }
 
-static char	*texture_path(char *buffer)
+static char	*texture_path(char *buffer, t_file *info)
 {
 	char	*path;
 	size_t	start;
@@ -38,7 +38,7 @@ static char	*texture_path(char *buffer)
 	end = start;
 	while (buffer[end] && ft_strchr(SEPARATOR, buffer[end]) == NULL)
 		end++;
-	path = ft_substr(buffer, start, end - start);
+	path = tex_join_path(buffer, start, end - start, info);
 	if (!path)
 		return ((void *)print_error(SYS_MALLOC, false));
 	if (!verify_png(path))
@@ -56,7 +56,7 @@ bool	load_texture(char *buffer, t_level *lvl, int direction)
 
 	if (!buffer)
 		return (true);
-	path = texture_path(buffer);
+	path = texture_path(buffer, &lvl->data->file);
 	if (!path)
 		return (false);
 	texture = mlx_load_png(path);

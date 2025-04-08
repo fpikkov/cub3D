@@ -45,9 +45,11 @@ VPATH = ${SRC_DIR}/main/ \
 
 SRCS =	parser.c \
 		launch_parser.c \
+		path_builder.c \
 		parse_textures.c \
 		parse_door_textures.c \
 		parse_texture_utils.c \
+		texture_path.c \
 		parse_colors.c \
 		linked_level.c \
 		parse_map.c \

@@ -37,7 +37,7 @@ typedef enum e_errors
 	MAP_TOO_MANY_PLAYERS,
 	MAP_NOT_CLOSED,
 	SYS_MALLOC,
-	LAUNCH_PATH,
+	PATH_FAILURE,
 }	t_errors;
 
 typedef enum e_direction
@@ -187,12 +187,25 @@ typedef struct s_bresenham
 	int		err2;
 }	t_bresenham;
 
+// TODO: Parse flashlight images
 typedef struct s_torch
 {
 	bool		enabled;
 	mlx_image_t	*dark;
 	mlx_image_t	*light;
+	mlx_image_t	*light_off;
+	mlx_image_t	*light_one;
+	mlx_image_t	*light_two;
+	mlx_image_t	*light_three;
+	mlx_image_t	*light_four;
+	mlx_image_t	*light_five;
 }	t_torch;
+
+typedef struct s_file
+{
+	bool	build;
+	char	*root;
+}	t_file;
 
 typedef struct s_data
 {
@@ -202,6 +215,7 @@ typedef struct s_data
 	t_player	player;
 	t_minimap	minimap;
 	t_torch		torch;
+	t_file		file;
 }	t_data;
 
 typedef struct s_door_data

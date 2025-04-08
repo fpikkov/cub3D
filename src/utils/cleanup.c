@@ -50,6 +50,11 @@ void	terminate(t_data *data)
 {
 	if (!data)
 		return ;
+	if (data->file.build == true && data->file.root)
+	{
+		free(data->file.root);
+		data->file.root = NULL;
+	}
 	if (data->levels)
 		delete_levels(data);
 	if (data->minimap.img)
