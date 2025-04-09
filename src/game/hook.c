@@ -24,9 +24,13 @@ void	game_hook(void *param)
 	instance = current_level(data);
 	if (game_tick())
 	{
-		movement_handler(data, instance);
-		if (instance->door.status > CLOSED)
+		if (instance->has_monsters)
+			monster_action(instance);
+		if (instance->has_doors)
 			move_door(instance);
+		if (instance->has_exit)
+			move_exit(instance);
+		movement_handler(data, instance);
 		render_surfaces(instance, &data->player);
 		update_minimap(data, instance);
 	}

@@ -31,7 +31,7 @@ static void	delete_all_textures(t_level *lvl)
 	delete_texture(lvl->textures.east);
 	delete_texture(lvl->textures.south);
 	delete_texture(lvl->textures.west);
-	if (lvl->doored)
+	if (lvl->has_doors)
 	{
 		delete_texture(lvl->textures.door1);
 		delete_texture(lvl->textures.door2);
@@ -41,6 +41,18 @@ static void	delete_all_textures(t_level *lvl)
 		delete_texture(lvl->textures.door6);
 		delete_texture(lvl->textures.door7);
 	}
+	if (lvl->has_exit)
+	{
+		delete_texture(lvl->textures.exit1);
+		delete_texture(lvl->textures.exit2);
+		delete_texture(lvl->textures.exit3);
+		delete_texture(lvl->textures.exit4);
+		delete_texture(lvl->textures.exit5);
+		delete_texture(lvl->textures.exit6);
+		delete_texture(lvl->textures.exit7);
+	}
+	if (lvl->has_monsters)
+		delete_texture(lvl->textures.monster);
 }
 
 /**

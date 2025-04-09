@@ -55,6 +55,13 @@ typedef enum e_direction
 	DOOR5,
 	DOOR6,
 	DOOR7,
+	EXIT1,
+	EXIT2,
+	EXIT3,
+	EXIT4,
+	EXIT5,
+	EXIT6,
+	EXIT7,
 	MONSTER
 }	t_direction;
 
@@ -105,6 +112,13 @@ typedef struct s_textures
 	mlx_texture_t	*door5;
 	mlx_texture_t	*door6;
 	mlx_texture_t	*door7;
+	mlx_texture_t	*exit1;
+	mlx_texture_t	*exit2;
+	mlx_texture_t	*exit3;
+	mlx_texture_t	*exit4;
+	mlx_texture_t	*exit5;
+	mlx_texture_t	*exit6;
+	mlx_texture_t	*exit7;
 	mlx_texture_t	*monster;
 }	t_textures;
 
@@ -116,30 +130,45 @@ typedef struct s_door
 	uint64_t	time;
 }	t_door;
 
+typedef struct s_exit
+{
+	int			y;
+	int			x;
+	int			status;
+	uint64_t	time;
+}	t_exit;
+
 typedef	struct	s_monster
 {
-	bool	active;
-	int		idx;
-	int		x;
 	int		y;
+	int		x;
+	uint64_t	time;
+	bool		active;
+	bool		move_down;
+	bool		move_up;
+	bool		move_right;
+	bool		move_left;
 }			t_monster;
 
 typedef struct s_level
 {
 	size_t			index;
 	bool			loaded;
-	bool			doored;
-	bool			monsters;
+	bool			has_doors;
+	bool			has_monsters;
+	bool			has_exit;
 	char			**map;
 	char			**map_copy;
 	int				row_len;
 	int				col_len;
+	int				monster_count;
 	char			direction;
 	int32_t			player_x;
 	int32_t			player_y;
 	t_imgs			imgs;
 	t_textures		textures;
 	t_door			door;
+	t_exit			exit;
 	t_monster		monster[20];
 	mlx_t			**mlx;
 	struct s_data	*data;

@@ -12,13 +12,29 @@
 
 #include "cube.h"
 
-static	bool	door_textures_exist(t_level *lvl)
+static	bool	sprite_textures_exist(t_level *lvl)
 {
-	if (!lvl->textures.door1 || !lvl->textures.door2
-		|| !lvl->textures.door3 || !lvl->textures.door4
-		|| !lvl->textures.door5 || !lvl->textures.door6
-		|| !lvl->textures.door7)
-		return (false);
+	if (lvl->has_doors)
+	{
+		if (!lvl->textures.door1 || !lvl->textures.door2
+			|| !lvl->textures.door3 || !lvl->textures.door4
+			|| !lvl->textures.door5 || !lvl->textures.door6
+			|| !lvl->textures.door7)
+			return (false);
+	}
+	if (lvl->has_monsters)
+	{
+		if (!lvl->textures.monster)
+			return (false);
+	}
+	if (lvl->has_exit)
+	{
+		if (!lvl->textures.exit1 || !lvl->textures.exit2
+			|| !lvl->textures.exit3 || !lvl->textures.exit4
+			|| !lvl->textures.exit5 || !lvl->textures.exit6
+			|| !lvl->textures.exit7)
+			return (false);
+	}
 	return (true);
 }
 
@@ -27,7 +43,7 @@ static bool	textures_exist(t_level *lvl)
 	if (!lvl->textures.north || !lvl->textures.south \
 		|| !lvl->textures.east || !lvl->textures.west)
 		return (print_error(FILE_MISSING_PARAMS, false));
-	else if (lvl->doored && !door_textures_exist(lvl))
+	else if (!sprite_textures_exist(lvl))
 		return (print_error(FILE_MISSING_PARAMS, false));
 	return (true);
 }

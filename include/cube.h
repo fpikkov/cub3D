@@ -26,9 +26,10 @@
 bool		launch_parser(char **argv, t_data *data);
 bool		parse_data(char **argv, t_data *data);
 bool		parse_textures(char *filename, t_data *data);
-bool		is_door_texture(char *buffer, int idx, t_level *lvl);
+bool		is_sprite_texture(char *buffer, int idx, t_level *lvl);
 bool		load_texture(char *buffer, t_level *lvl, int direction);
 void		load_door_texture(mlx_texture_t *tex, t_level *lvl, int type);
+void		load_exit_texture(mlx_texture_t *tex, t_level *lvl, int type);
 void		load_monster_texture(mlx_texture_t *tex, t_level *lvl, int type);
 int			parse_color_data(int fd, t_level *lvl);
 uint32_t	fetch_color(char *buffer);
@@ -73,6 +74,11 @@ t_level		*current_level(t_data *data);
 
 void		door_action(t_data *data);
 void		move_door(t_level *instance);
+void		move_exit(t_level *lvl);
+
+// Monster actions
+
+void	monster_action(t_level *lvl);
 
 // Renderer
 

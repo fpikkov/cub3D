@@ -76,6 +76,7 @@ SRCS =	parser.c \
 		init_minimap.c \
 		draw_minimap.c \
 		door_actions.c \
+		monster_actions.c \
 		minimap.c \
 		main.c \
 

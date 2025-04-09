@@ -50,8 +50,22 @@ uint32_t	pick_sprite_texture(t_sprite_data *sprite, t_level *lvl, int y)
 		color = nearest_neighbor(lvl->textures.door6, sprite->hit_column, y);
 	else if (lvl->map[sprite->y][sprite->x] == '8')
 		color = nearest_neighbor(lvl->textures.door7, sprite->hit_column, y);
-	else if (lvl->map[sprite->y][sprite->x] == 'm')
+	else if (lvl->map[sprite->y][sprite->x] == 'M')
 		color = nearest_neighbor(lvl->textures.monster, sprite->hit_column, y);
+	else if (lvl->map[sprite->y][sprite->x] == 'R')
+		color = nearest_neighbor(lvl->textures.exit1, sprite->hit_column, y);
+	else if (lvl->map[sprite->y][sprite->x] == 'T')
+		color = nearest_neighbor(lvl->textures.exit2, sprite->hit_column, y);
+	else if (lvl->map[sprite->y][sprite->x] == 'Y')
+		color = nearest_neighbor(lvl->textures.exit3, sprite->hit_column, y);
+	else if (lvl->map[sprite->y][sprite->x] == 'U')
+		color = nearest_neighbor(lvl->textures.exit4, sprite->hit_column, y);
+	else if (lvl->map[sprite->y][sprite->x] == 'I')
+		color = nearest_neighbor(lvl->textures.exit5, sprite->hit_column, y);
+	else if (lvl->map[sprite->y][sprite->x] == 'O')
+		color = nearest_neighbor(lvl->textures.exit6, sprite->hit_column, y);
+	else if (lvl->map[sprite->y][sprite->x] == 'P')
+		color = nearest_neighbor(lvl->textures.exit7, sprite->hit_column, y);
 	return (color);
 }
 
