@@ -68,6 +68,8 @@
 # define FLOOR_COLOR 0x666666d6
 
 // Light constants
+# define BATTERY_LIFE 100
+# define BATTERY_MAX 5
 # define FL_IMG_SIZE 320U
 # define LIGHT_SPRITES 7
 # define FOG_COLOR 0x000000F0

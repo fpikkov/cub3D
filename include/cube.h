@@ -77,6 +77,12 @@ t_level		*current_level(t_data *data);
 void		door_action(t_data *data);
 void		move_door(t_level *instance);
 
+// Flashlight logic
+
+void		flashlight_switch(t_torch *torch);
+void		flashlight_state(t_torch *torch);
+void		flashlight_battery(t_torch *torch);
+
 // Renderer
 
 void		delete_level_images(t_level *lvl);

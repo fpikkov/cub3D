@@ -191,7 +191,7 @@ typedef struct s_bresenham
 typedef struct s_torch
 {
 	bool		enabled;
-	int			timer;
+	int			battery;
 	mlx_image_t	*dark;
 	mlx_image_t	*light;
 	mlx_image_t	*off;

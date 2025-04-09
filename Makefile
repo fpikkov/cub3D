@@ -64,6 +64,7 @@ SRCS =	parser.c \
 		location_utils.c \
 		hook.c \
 		tick.c \
+		flashlight.c \
 		renderer.c \
 		render_doors.c \
 		render_utils.c \

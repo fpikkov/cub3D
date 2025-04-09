@@ -34,4 +34,5 @@ void	fl_sprite_setup(t_data *data)
 	sprite_init(data->mlx, data->torch.three, false, TO_DEPTH);
 	sprite_init(data->mlx, data->torch.four, false, TO_DEPTH);
 	sprite_init(data->mlx, data->torch.five, false, TO_DEPTH);
+	data->torch.battery = BATTERY_MAX;
 }
