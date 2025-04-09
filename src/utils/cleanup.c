@@ -61,6 +61,12 @@ void	terminate(t_data *data)
 	delete_image(data->mlx, data->minimap.img);
 	delete_image(data->mlx, data->torch.dark);
 	delete_image(data->mlx, data->torch.light);
+	delete_image(data->mlx, data->torch.off);
+	delete_image(data->mlx, data->torch.one);
+	delete_image(data->mlx, data->torch.two);
+	delete_image(data->mlx, data->torch.three);
+	delete_image(data->mlx, data->torch.four);
+	delete_image(data->mlx, data->torch.five);
 	if (data->mlx)
 		mlx_terminate(data->mlx);
 }

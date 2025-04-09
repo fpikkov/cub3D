@@ -68,6 +68,7 @@
 # define FLOOR_COLOR 0x666666d6
 
 // Light constants
+# define FL_IMG_SIZE 320U
 # define LIGHT_SPRITES 7
 # define FOG_COLOR 0x000000F0
 # define SHADE_COLOR 0x000000E5
@@ -78,7 +79,8 @@
 // Image depths
 # define BG_DEPTH 0
 # define FG_DEPTH 1
-# define FL_DEPTH 2
-# define MM_DEPTH 3
+# define TO_DEPTH 2
+# define FL_DEPTH 3
+# define MM_DEPTH 4
 
 #endif

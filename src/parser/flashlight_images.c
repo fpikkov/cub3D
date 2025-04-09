@@ -56,7 +56,7 @@ static mlx_texture_t	*fl_load_tex(char *filename, t_file *info)
 	else
 		tex = mlx_load_png(path);
 	if (!tex)
-			return ((void *)print_error(TEXTURE_FAILURE, false));
+		return ((void *)print_error(TEXTURE_FAILURE, false));
 	return (tex);
 }
 
@@ -76,8 +76,9 @@ bool	create_torch_images(t_data *data)
 		tex = NULL;
 		idx++;
 	}
-	if(!data->torch.off || !data->torch.one || !data->torch.two \
+	if (!data->torch.off || !data->torch.one || !data->torch.two \
 	|| !data->torch.three || !data->torch.four || !data->torch.five)
 		return (print_error(IMG_FAILURE, false));
+	fl_sprite_setup(data);
 	return (true);
 }

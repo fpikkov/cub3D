@@ -38,6 +38,7 @@ typedef enum e_errors
 	MAP_NOT_CLOSED,
 	SYS_MALLOC,
 	PATH_FAILURE,
+	IMG_RESIZE_FAILURE,
 }	t_errors;
 
 typedef enum e_direction
@@ -187,10 +188,10 @@ typedef struct s_bresenham
 	int		err2;
 }	t_bresenham;
 
-// TODO: Parse flashlight images
 typedef struct s_torch
 {
 	bool		enabled;
+	int			timer;
 	mlx_image_t	*dark;
 	mlx_image_t	*light;
 	mlx_image_t	*off;
