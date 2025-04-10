@@ -82,7 +82,7 @@ void		move_exit(t_level *lvl);
 
 // Monster actions
 
-void	monster_action(t_level *lvl);
+void		monster_action(t_level *lvl);
 
 // Flashlight logic
 

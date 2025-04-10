@@ -139,17 +139,17 @@ typedef struct s_exit
 	uint64_t	time;
 }	t_exit;
 
-typedef	struct	s_monster
+typedef struct s_monster
 {
-	int		y;
-	int		x;
+	int			y;
+	int			x;
 	uint64_t	time;
 	bool		active;
 	bool		move_down;
 	bool		move_up;
 	bool		move_right;
 	bool		move_left;
-}			t_monster;
+}	t_monster;
 
 typedef struct s_level
 {
@@ -270,25 +270,25 @@ typedef struct s_sprite_data
 
 typedef struct s_ray
 {
-	t_direction	wall_type;
-	float		distance;
-	float		hit_column;
-	float		dir_x;
-	float		dir_y;
-	float		plane_x;
-	float		plane_y;
-	float		side_dist_x;
-	float		side_dist_y;
-	float		delta_dist_x;
-	float		delta_dist_y;
-	int			map_x;
-	int			map_y;
-	int			step_x;
-	int			step_y;
-	int			side;
-	float		camera_x;
+	t_direction		wall_type;
+	float			distance;
+	float			hit_column;
+	float			dir_x;
+	float			dir_y;
+	float			plane_x;
+	float			plane_y;
+	float			side_dist_x;
+	float			side_dist_y;
+	float			delta_dist_x;
+	float			delta_dist_y;
+	int				map_x;
+	int				map_y;
+	int				step_x;
+	int				step_y;
+	int				side;
+	float			camera_x;
 	t_sprite_data	sprites[30];
-	int			sprite_count;
+	int				sprite_count;
 }	t_ray;
 
 typedef struct s_line
