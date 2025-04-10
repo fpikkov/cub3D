@@ -12,15 +12,15 @@
 
 #include "cube.h"
 
-float	calc_door_pos(t_door_data *door, t_ray *r, t_player *p)
+float	calc_sprite_pos(t_sprite_data *sprite, t_ray *r, t_player *p)
 {
-	float	door_pos;
+	float	sprite_pos;
 
-	door_pos = 0.0;
+	sprite_pos = 0.0;
 	if (r->side == VERTICAL)
-		door_pos = p->y + door->door_dist * r->dir_y;
+		sprite_pos = p->y + sprite->dist * r->dir_y;
 	else
-		door_pos = p->x + door->door_dist * r->dir_x;
-	door_pos -= floorf(door_pos);
-	return (door_pos);
+		sprite_pos = p->x + sprite->dist * r->dir_x;
+	sprite_pos -= floorf(sprite_pos);
+	return (sprite_pos);
 }

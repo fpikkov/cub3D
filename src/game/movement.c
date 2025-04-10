@@ -39,6 +39,8 @@ static void	apply_movement(t_player *p, t_level *lvl, float x, float y)
 		p->x += x;
 	if (!is_wall(lvl, p->x, target_y) && !is_closed_door(lvl, p->x, target_y))
 		p->y += y;
+	lvl->player_y = p->y;
+	lvl->player_x = p->x;
 }
 
 static void	sum_direction_vectors(t_data *data, float *x, float *y)

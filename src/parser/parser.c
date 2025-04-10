@@ -73,11 +73,11 @@ bool	parse_data(char **argv, t_data *data)
 	{
 		if (!new_level_node(data))
 			return (false);
-		if (!parse_textures(argv[idx], data))
-			return (false);
 		if (!parse_map(argv[idx], data))
 			return (false);
 		if (!validate_map(data))
+			return (false);
+		if (!parse_textures(argv[idx], data))
 			return (false);
 		if (DEBUG)
 			print_latest_map(data);

@@ -24,12 +24,20 @@ void	game_hook(void *param)
 	instance = current_level(data);
 	if (game_tick())
 	{
-		movement_handler(data, instance);
-		if (instance->door.status > CLOSED)
+		level_setup(data->levels, &data->player);
+		if (instance->has_monsters)
+			monster_action(instance);
+		if (instance->has_doors)
 			move_door(instance);
+		if (instance->has_exit)
+			move_exit(instance);
+		movement_handler(data, instance);
 		render_surfaces(instance, &data->player);
 		update_minimap(data, instance);
 		flashlight_battery(&data->torch);
+		if (instance->map[instance->player_y][instance->player_x] == 'P'
+			&& instance->exit.status == OPEN)
+			next_level(data);
 	}
 }
 

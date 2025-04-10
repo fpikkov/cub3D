@@ -28,12 +28,13 @@ bool	is_closed_door(t_level *lvl, int x, int y)
 {
 	if (y <= 0 || x <= 0 || y >= lvl->row_len || x >= lvl->col_len)
 		return (true);
-	else if (lvl->map[y][x] >= '2' && lvl->map[y][x] <= '7')
+	else if ((lvl->map[y][x] >= '2' && lvl->map[y][x] <= '7') \
+	|| (lvl->map[y][x] == 'P' && lvl->exit.status != OPEN))
 		return (true);
 	return (false);
 }
 
-int	get_door_type(t_level *lvl, int x, int y)
+int	get_sprite_type(t_level *lvl, int x, int y)
 {
 	if (y <= 0 || x <= 0 || y >= lvl->row_len || x >= lvl->col_len)
 		return (0);
@@ -51,5 +52,9 @@ int	get_door_type(t_level *lvl, int x, int y)
 		return (7);
 	if (lvl->map[y][x] == '8')
 		return (8);
+	if (lvl->map[y][x] == 'M')
+		return (9);
+	if (lvl->map[y][x] == 'P')
+		return (10);
 	return (0);
 }
