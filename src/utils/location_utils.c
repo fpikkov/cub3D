@@ -28,8 +28,8 @@ bool	is_closed_door(t_level *lvl, int x, int y)
 {
 	if (y <= 0 || x <= 0 || y >= lvl->row_len || x >= lvl->col_len)
 		return (true);
-	else if ((lvl->map[y][x] >= '2' && lvl->map[y][x] <= '7') 
-			|| (lvl->map[y][x] == 'P' && lvl->exit.status != OPEN))
+	else if ((lvl->map[y][x] >= '2' && lvl->map[y][x] <= '7') \
+	|| (lvl->map[y][x] == 'P' && lvl->exit.status != OPEN))
 		return (true);
 	return (false);
 }

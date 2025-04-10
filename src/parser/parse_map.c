@@ -135,7 +135,6 @@ bool	parse_map(char *filename, t_data *data)
 		init_monsters(lvl);
 	if (lvl->has_exit)
 		find_exit(lvl);
-
 	lvl->col_len = map_col_len(lvl->map);
 	lvl->row_len = map_row_len(lvl->map);
 	if (!find_player_pos(lvl))

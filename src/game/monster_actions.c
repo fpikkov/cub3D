@@ -26,11 +26,7 @@ static	void	decide_dir(t_monster *monster, int player_x, int player_y)
 
 static	void	move_monster(t_level *lvl, t_monster *monster)
 {
-	int		old_y;
-	int		old_x;
-
-	old_y = monster->y;
-	old_x = monster->x;
+	lvl->map[monster->y][monster->x] = '0';
 	if (monster->move_down && !is_wall(lvl, monster->x, monster->y + 1)
 		&& !is_closed_door(lvl, monster->x, monster->y + 1))
 		monster->y++;
@@ -43,11 +39,7 @@ static	void	move_monster(t_level *lvl, t_monster *monster)
 	else if (monster->move_left && !is_wall(lvl, monster->x - 1, monster->y)
 		&& !is_closed_door(lvl, monster->x - 1, monster->y))
 		monster->x--;
-	if (monster->x != old_x || monster->y != old_y)
-	{
-		lvl->map[monster->y][monster->x] = 'M';
-		lvl->map[old_y][old_x] = '0';
-	}
+	lvl->map[monster->y][monster->x] = 'M';
 	monster->move_down = false;
 	monster->move_up = false;
 	monster->move_right = false;
@@ -62,7 +54,8 @@ void	monster_action(t_level *lvl)
 	while (id < lvl->monster_count)
 	{
 		lvl->monster[id].active = true;
-		if (lvl->monster[id].active && get_time () - lvl->monster[id].time > 2000)
+		if (lvl->monster[id].active \
+		&& get_time () - lvl->monster[id].time > 2000)
 		{
 			decide_dir(&lvl->monster[id], lvl->player_x, lvl->player_y);
 			move_monster(lvl, &lvl->monster[id]);

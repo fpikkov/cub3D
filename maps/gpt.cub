@@ -1,0 +1,38 @@
+NO ./textures/cobblestone.png
+SO ./textures/cobblestone.png
+WE ./textures/moss.png
+EA ./textures/moss.png
+MO ./textures/monster.png
+D1 ./textures/door1.png
+D2 ./textures/door2.png
+D3 ./textures/door3.png
+D4 ./textures/door4.png
+D5 ./textures/door5.png
+D6 ./textures/door6.png
+D7 ./textures/door7.png
+E1 ./textures/exit1.png
+E2 ./textures/exit2.png
+E3 ./textures/exit3.png
+E4 ./textures/exit4.png
+E5 ./textures/exit5.png
+E6 ./textures/exit6.png
+E7 ./textures/exit7.png
+
+F 150,130,110
+C 25,150,200
+
+1111111111111111111111111
+1000000000000000000000001
+1022110000000000000010001
+1000010000000000000010M01
+1000010111111111100010001
+1000010100000000100010001
+100001010M1111010100010001
+1000000101000010100000001
+1011111101001010111111101
+1000000001000010000000001
+1011101111011111011111101
+10M0001000000P00000000001
+1011101001111111111111101
+100000000M0000000000000N1
+1111111111111111111111111

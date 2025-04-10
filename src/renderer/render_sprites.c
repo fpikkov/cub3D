@@ -14,8 +14,8 @@
 
 void	save_sprite_data(t_ray *r, t_player *p)
 {
-	float		sprite_pos;
-	t_sprite_data	*sprite;
+	float				sprite_pos;
+	t_sprite_data		*sprite;
 
 	if (r->sprite_count >= 30)
 		return ;
@@ -48,7 +48,6 @@ static	mlx_texture_t	*pick_exit_texture(t_level *lvl, int status)
 	else if (status == OPEN)
 		return (lvl->textures.exit7);
 	return (NULL);
-
 }
 /*
 mlx_texture_t	*pick_door_texture(t_level *lvl, int status)
@@ -73,7 +72,7 @@ mlx_texture_t	*pick_door_texture(t_level *lvl, int status)
 
 uint32_t	pick_sprite_texture(t_sprite_data *sprite, t_level *lvl, int y)
 {
-	uint32_t	color;
+	uint32_t		color;
 	mlx_texture_t	*tex;
 
 	color = 0x0;

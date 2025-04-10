@@ -57,13 +57,15 @@ void	door_action(t_data *data)
 
 void	move_exit(t_level *lvl)
 {
-	if (lvl->exit.status > CLOSED && lvl->exit.status < OPEN && get_time() - lvl->door.time >= 200)
+	if (lvl->exit.status > CLOSED \
+	&& lvl->exit.status < OPEN \
+	&& get_time() - lvl->door.time >= 200)
 	{
 		lvl->exit.status++;
 		lvl->exit.time = get_time();
 	}
-
 }
+
 void	move_door(t_level *lvl)
 {
 	if (lvl->door.status > CLOSED && get_time() - lvl->door.time >= 200)

@@ -24,6 +24,7 @@ void	game_hook(void *param)
 	instance = current_level(data);
 	if (game_tick())
 	{
+		level_setup(data->levels, &data->player);
 		if (instance->has_monsters)
 			monster_action(instance);
 		if (instance->has_doors)
@@ -33,6 +34,9 @@ void	game_hook(void *param)
 		movement_handler(data, instance);
 		render_surfaces(instance, &data->player);
 		update_minimap(data, instance);
+		if (instance->map[instance->player_y][instance->player_x] == 'P'
+			&& instance->exit.status == OPEN)
+			next_level(data);
 	}
 }
 

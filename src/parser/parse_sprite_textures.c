@@ -98,6 +98,7 @@ bool	is_exit_texture(char *buffer, int idx, t_level *lvl)
 	return (true);
 }
 */
+
 bool	is_sprite_texture(char *buffer, int idx, t_level *lvl)
 {
 	if (ft_strncmp(buffer + idx, "D1", 2) == 0)
@@ -131,5 +132,4 @@ bool	is_sprite_texture(char *buffer, int idx, t_level *lvl)
 	else if (ft_strncmp(buffer + idx, "MO", 2) == 0)
 		return (load_texture(buffer + idx + 2, lvl, MONSTER));
 	return (true);
-
 }

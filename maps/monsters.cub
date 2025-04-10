@@ -3,6 +3,13 @@
  WE ./textures/moss.png
  EA ./textures/moss.png
  MO ./textures/monster.png
+ D1 ./textures/door1.png
+ D2 ./textures/door2.png
+ D3 ./textures/door3.png
+ D4 ./textures/door4.png
+ D5 ./textures/door5.png
+ D6 ./textures/door6.png
+ D7 ./textures/door7.png
  E1 ./textures/exit1.png
  E2 ./textures/exit2.png
  E3 ./textures/exit3.png
@@ -21,7 +28,7 @@
 111111111011000001110000000000001
 10000000001100000111011111P111111
 11110111111111011100000010001
-11110111111111011101010010S01
+11110111111111022201010020S01
 11000000110101011100000010001
 10000000000000001100000010001
 10000000000000001101010010001
