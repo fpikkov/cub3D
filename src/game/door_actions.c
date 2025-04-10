@@ -30,7 +30,7 @@ static	bool	next_to_exit(int x, int y, t_level *lvl)
 {
 	if (x <= 0 || x >= lvl->col_len || y <= 0 || y >= lvl->row_len)
 		return (false);
-	if (lvl->map[y][x] && lvl->map[y][x] == 'R')
+	if (lvl->map[y][x] && lvl->map[y][x] == 'P')
 	{
 		lvl->exit.time = get_time();
 		return (true);
@@ -57,28 +57,10 @@ void	door_action(t_data *data)
 
 void	move_exit(t_level *lvl)
 {
-	if (lvl->exit.status > CLOSED && get_time() - lvl->door.time >= 200)
+	if (lvl->exit.status > CLOSED && lvl->exit.status < OPEN && get_time() - lvl->door.time >= 200)
 	{
-		if (lvl->exit.status == OPENING1)
-			lvl->map[lvl->exit.y][lvl->exit.x] = 'T';
-		else if (lvl->exit.status == OPENING2)
-			lvl->map[lvl->exit.y][lvl->exit.x] = 'Y';
-		else if (lvl->exit.status == OPENING3)
-			lvl->map[lvl->exit.y][lvl->exit.x] = 'U';
-		else if (lvl->exit.status == OPENING4)
-			lvl->map[lvl->exit.y][lvl->exit.x] = 'I';
-		else if (lvl->exit.status == OPENING5)
-			lvl->map[lvl->exit.y][lvl->exit.x] = 'O';
-		if (lvl->exit.status == OPEN)
-		{
-			lvl->map[lvl->exit.y][lvl->exit.x] = 'P';
-			lvl->exit.status = CLOSED;
-		}
-		else
-		{
-			lvl->exit.status++;
-			lvl->exit.time = get_time();
-		}
+		lvl->exit.status++;
+		lvl->exit.time = get_time();
 	}
 
 }

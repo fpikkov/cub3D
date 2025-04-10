@@ -59,7 +59,7 @@ static	void	check_for_sprites(t_level *lvl)
 				lvl->has_doors = true;
 			else if (lvl->map[i][j] == 'M')
 				lvl->has_monsters = true;
-			else if (lvl->map[i][j] == 'R')
+			else if (lvl->map[i][j] == 'P')
 				lvl->has_exit = true;
 			j++;
 		}
@@ -103,7 +103,7 @@ static	void	find_exit(t_level *lvl)
 		j = 0;
 		while (lvl->map[i][j])
 		{
-			if (lvl->map[i][j] == 'R')
+			if (lvl->map[i][j] == 'P')
 			{
 				lvl->exit.y = i;
 				lvl->exit.x = j;
