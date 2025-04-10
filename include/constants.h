@@ -81,8 +81,7 @@
 // Image depths
 # define BG_DEPTH 0
 # define FG_DEPTH 1
-# define TO_DEPTH 2
-# define FL_DEPTH 3
-# define MM_DEPTH 4
+# define FL_DEPTH 2
+# define MM_DEPTH 3
 
 #endif

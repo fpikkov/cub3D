@@ -28,11 +28,11 @@ static void	sprite_init(mlx_t *mlx, mlx_image_t *img, bool active, int32_t z)
 
 void	fl_sprite_setup(t_data *data)
 {
-	sprite_init(data->mlx, data->torch.off, true, TO_DEPTH);
-	sprite_init(data->mlx, data->torch.one, false, TO_DEPTH);
-	sprite_init(data->mlx, data->torch.two, false, TO_DEPTH);
-	sprite_init(data->mlx, data->torch.three, false, TO_DEPTH);
-	sprite_init(data->mlx, data->torch.four, false, TO_DEPTH);
-	sprite_init(data->mlx, data->torch.five, false, TO_DEPTH);
+	sprite_init(data->mlx, data->torch.off, true, MM_DEPTH);
+	sprite_init(data->mlx, data->torch.one, false, MM_DEPTH);
+	sprite_init(data->mlx, data->torch.two, false, MM_DEPTH);
+	sprite_init(data->mlx, data->torch.three, false, MM_DEPTH);
+	sprite_init(data->mlx, data->torch.four, false, MM_DEPTH);
+	sprite_init(data->mlx, data->torch.five, false, MM_DEPTH);
 	data->torch.battery = BATTERY_MAX;
 }
