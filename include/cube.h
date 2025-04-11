@@ -13,13 +13,17 @@
 #ifndef CUBE_H
 # define CUBE_H
 
-# include "headers.h"
-# include "types.h"
-# include "constants.h"
-
 # ifndef DEBUG
 #  define DEBUG 0
 # endif
+
+# ifndef AUDIO
+#  define AUDIO 0
+# endif
+
+# include "headers.h"
+# include "types.h"
+# include "constants.h"
 
 // Parsing functions
 
@@ -138,5 +142,9 @@ void		update_minimap(t_data *data, t_level *lvl);
 void		free_map(char **map);
 void		delete_levels(t_data *data);
 void		terminate(t_data *data);
+
+// Audio functions
+
+void		audio_setup(void);
 
 #endif

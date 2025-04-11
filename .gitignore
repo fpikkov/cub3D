@@ -54,6 +54,7 @@ dkms.conf
 # Custom ignores
 build/
 obj/
+lib/
 .vscode/
 *.json
 *.txt

@@ -35,6 +35,8 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 		return (print_error(FILE_NO_ARGS, false));
+	if (AUDIO)
+		audio_setup();
 	ft_memset(&data, 0, sizeof(t_data));
 	if (!init_window(&data))
 		return (EXIT_FAILURE);

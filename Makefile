@@ -12,8 +12,11 @@ DBG_FLAGS = -fdiagnostics-color=always -g -DDEBUG=1
 INC_FLAGS = -I$(INCLUDE_DIR) -I$(LFT_DIR)/$(INCLUDE_DIR) -I$(MLX_INCLUDE)
 LIB_FLAGS = -L$(LFT_DIR) -l$(LFT) -L$(MLX_BUILD) -l$(LMLX)
 MLX_FLAGS = -ldl -lglfw -pthread -lm
+AUD_FLAGS = -lopenal
 
 MLX_URL = https://github.com/codam-coding-college/MLX42.git
+DR_WAV_URL = https://raw.githubusercontent.com/mackron/dr_libs/refs/heads/master/dr_wav.h
+OPENAL_URL = https://github.com/kcat/openal-soft.git
 
 INCLUDE_DIR = ./include
 MLX_INCLUDE = $(MLX_DIR)/$(INCLUDE_DIR)/MLX42
@@ -24,16 +27,22 @@ OBJ_DIR = ./obj
 LIB_DIR = ./lib
 MLX_DIR = $(LIB_DIR)/mlx
 LFT_DIR = $(LIB_DIR)/libft
+DR_DIR = $(LIB_DIR)/drlib
 
 NAME = cub3d
 DBG_NAME = debug
 
 LFT = ft
 LMLX = mlx42
+DRWAV = dr_wav.h
 
 MLX_BUILD = ${MLX_DIR}/${BUILD_DIR}
 BUILD = ${BUILD_DIR}/${NAME}
 DBG_BUILD = ${BUILD_DIR}/${DBG_NAME}
+DRLIB_BUILD = ${DR_DIR}/${DRWAV}
+
+# Check if OpenAL is installed on the system
+SYS_OPENAL := $(shell pkg-config --exists openal && echo yes || echo no)
 
 # Paths to source files, add additinal dirs here
 VPATH = ${SRC_DIR}/main/ \
@@ -42,6 +51,7 @@ VPATH = ${SRC_DIR}/main/ \
 		${SRC_DIR}/game/ \
 		${SRC_DIR}/renderer/ \
 		${SRC_DIR}/minimap/ \
+		${SRC_DIR}/audio/ \
 
 SRCS =	parser.c \
 		launch_parser.c \
@@ -85,15 +95,18 @@ SRCS =	parser.c \
 		minimap.c \
 		main.c \
 
+SRCS_AUDIO = audio_setup.c \
+
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}
+OBJS_AUDIO = ${SRCS_AUDIO:%.c=${OBJ_DIR}/%.o}
 
 # --------	MAKE TARGETS	--------
-all: lftbuild ${MLX_BUILD} | ${BUILD}
+all: lftbuild ${MLX_BUILD} | build
 
-${BUILD}: ${OBJS}
+build: ${OBJS}
 	@echo "${GREEN}Generating build...${CLEAR}"
 	@mkdir -p ${BUILD_DIR}
-	@${CC} ${CFLAGS} -o $@ $^ ${LIB_FLAGS} ${MLX_FLAGS}
+	@${CC} ${CFLAGS} -o ${BUILD} $^ ${LIB_FLAGS} ${MLX_FLAGS}
 	@echo "${GREEN}Executable ${YELLOW}${NAME}${GREEN} was created in ${YELLOW}"${BUILD_DIR}"${CLEAR}"
 
 ${OBJ_DIR}/%.o : %.c
@@ -113,6 +126,8 @@ ${MLX_BUILD}:
 lftbuild:
 	@make --no-print-directory -C ${LFT_DIR}
 
+# Rules for the debugging build
+
 debug: CFLAGS = ${DBG_FLAGS}
 debug: lftbuild ${MLX_BUILD} | ${DBG_BUILD}
 
@@ -121,6 +136,35 @@ ${DBG_BUILD}: ${OBJS}
 	@mkdir -p ${BUILD_DIR}
 	@$(CC) $(DBG_FLAGS) -o $@ $^ $(LIB_FLAGS) $(MLX_FLAGS)
 	@echo "${GREEN}Executable ${YELLOW}${DBG_NAME}${GREEN} was created in ${YELLOW}"${BUILD_DIR}"${CLEAR}"
+
+# Rules for building the project with audio features enabled
+
+audio: audiodeps lftbuild ${MLX_BUILD} | audiobuild
+
+audiodeps: ${DRLIB_BUILD}
+ifeq ($(SYS_OPENAL),yes)
+	${eval LIB_FLAGS += ${AUD_FLAGS}}
+else
+	${error OpenAL is not installed on the system}
+endif
+	${eval CFLAGS += -DAUDIO=1}
+	${eval INC_FLAGS += -I${DR_DIR}}
+
+audiobuild: ${OBJS} ${OBJS_AUDIO}
+	@echo "${GREEN}Generating build...${CLEAR}"
+	@mkdir -p ${BUILD_DIR}
+	@${CC} ${CFLAGS} -o ${BUILD} $^ ${LIB_FLAGS} ${MLX_FLAGS}
+	@echo "${GREEN}Executable ${YELLOW}${NAME}${GREEN} was created in ${YELLOW}"${BUILD_DIR}"${CLEAR}"
+
+${DRLIB_BUILD}:
+	@if [ ! -d ${DR_DIR} ]; then \
+		mkdir -p ${DR_DIR}; \
+	fi
+	@if [ ! -f ${DRLIB_BUILD} ]; then \
+		curl -L -o ${DRLIB_BUILD} ${DR_WAV_URL}; \
+	fi
+
+# Cleanup rules
 
 clean:
 	@echo "${RED}Cleaning object files...${CLEAR}"
@@ -133,7 +177,12 @@ fclean: clean
 	@if [ -d ${MLX_BUILD} ]; then \
 		rm -rf ${MLX_BUILD}; \
 	fi
+	@if [ -d ${DR_DIR} ]; then \
+		rm -rf ${DR_DIR}; \
+	fi
 	@make fclean --no-print-directory -C ${LFT_DIR}
+
+re: fclean all
 
 mlxbuild: ${MLX_BUILD}
 
@@ -141,6 +190,4 @@ mlxclean: fclean
 	@echo "${RED}Removing MLX repository...${CLEAR}"
 	@rm -rf ${MLX_DIR}
 
-re: fclean all
-
-.PHONY: all re clean fclean mlxbuild mlxclean lftbuild debug
+.PHONY: all re clean fclean mlxbuild mlxclean lftbuild debug audio
