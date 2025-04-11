@@ -14,6 +14,8 @@
 
 void	line_init(t_line *line, float distance)
 {
+	if (distance <= 0.0f)
+		distance = 0.1f;
 	line->height = W_HEIGHT / distance;
 	line->start = (-line->height / 2) + (W_HEIGHT / 2);
 	line->end = (line->height / 2) + (W_HEIGHT / 2);
@@ -96,7 +98,6 @@ static void	draw_foreground(t_level *lvl, t_player *p)
  */
 void	render_surfaces(t_level *lvl, t_player *p)
 {
-	level_setup(lvl, p);
 	reset_foreground(lvl);
 	draw_foreground(lvl, p);
 }
