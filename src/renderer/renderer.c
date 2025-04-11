@@ -85,8 +85,8 @@ static void	draw_foreground(t_level *lvl, t_player *p)
 			draw_line(&ray, lvl, x);
 		else
 			draw_fog(&ray, lvl, x);
-		if (ray.sprite_count > 0)
-			draw_sprites(&ray, lvl, x);
+		if (ray.sprite_count > 0 || ray.door_count > 0)
+			draw_doors_sprites(&ray, lvl, x);
 		x++;
 	}
 }

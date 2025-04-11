@@ -58,6 +58,7 @@ bool		print_error(t_errors error, bool warning);
 bool		is_wall(t_level	*lvl, int x, int y);
 bool		is_closed_door(t_level *lvl, int x, int y);
 int			get_sprite_type(t_level *lvl, int x, int y);
+int			get_door_type(t_level *lvl, int x, int y);
 
 // Game logic
 
@@ -112,6 +113,7 @@ int			light_step(int x, t_shade shader, int amount);
 // Renderer utils
 
 float		calc_sprite_pos(t_sprite_data *sprite, t_ray *r, t_player *p);
+float		calc_door_pos(t_door_data *door, t_ray *r, t_player *p);
 void		line_init(t_line *line, float distance);
 
 // Render door
@@ -119,7 +121,9 @@ void		line_init(t_line *line, float distance);
 uint32_t	pick_sprite_texture(t_sprite_data *sprite, t_level *lvl, int y);
 void		save_sprite_data(t_ray *r, t_player *p);
 void		save_door_data(t_ray *r, t_player *p);
-void		draw_sprites(t_ray *ray, t_level *lvl, int x);
+void		draw_sprite(t_ray *ray, t_level *lvl, int x);
+void		draw_door(t_ray *ray, t_level *lvl, int x);
+void		draw_doors_sprites(t_ray *ray, t_level *lvl, int x);
 
 // Player position
 

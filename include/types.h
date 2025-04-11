@@ -268,6 +268,14 @@ typedef struct s_sprite_data
 	int		y;
 }	t_sprite_data;
 
+typedef struct s_door_data
+{
+	float	hit_column;
+	float	dist;
+	int		x;
+	int		y;
+}	t_door_data;
+
 typedef struct s_ray
 {
 	t_direction		wall_type;
@@ -288,7 +296,9 @@ typedef struct s_ray
 	int				side;
 	float			camera_x;
 	t_sprite_data	sprites[30];
+	t_door_data	doors[30];
 	int				sprite_count;
+	int				door_count;
 }	t_ray;
 
 typedef struct s_line

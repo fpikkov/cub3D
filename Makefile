@@ -66,6 +66,7 @@ SRCS =	parser.c \
 		tick.c \
 		flashlight.c \
 		renderer.c \
+		render_doors.c \
 		render_sprites.c \
 		render_utils.c \
 		raycast.c \

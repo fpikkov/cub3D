@@ -68,7 +68,8 @@ void	move_exit(t_level *lvl)
 
 void	move_door(t_level *lvl)
 {
-	if (lvl->door.status > CLOSED && get_time() - lvl->door.time >= 200)
+	if (lvl->door.status > CLOSED \
+	&& get_time() - lvl->door.time >= 200)
 	{
 		if (lvl->door.status == OPENING1)
 			lvl->map[lvl->door.y][lvl->door.x] = '3';
