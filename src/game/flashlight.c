@@ -30,7 +30,7 @@ void	flashlight_state(t_torch *torch)
 		return ;
 	reset_flashlight(torch);
 	if (torch->battery == 0)
-		flashlight_switch(torch);
+		flashlight_disable(torch);
 	else if (torch->battery == 1)
 		torch->one->enabled = true;
 	else if (torch->battery == 2)
@@ -76,4 +76,13 @@ void	flashlight_switch(t_torch *torch)
 	torch->light->enabled = !torch->light->enabled;
 	torch->off->enabled = !torch->off->enabled;
 	flashlight_state(torch);
+}
+
+void	flashlight_disable(t_torch *torch)
+{
+	reset_flashlight(torch);
+	torch->enabled = false;
+	torch->dark->enabled = true;
+	torch->light->enabled = false;
+	torch->off->enabled = true;
 }
