@@ -79,46 +79,31 @@ static uint32_t	pick_door_texture(t_door_data *door, t_level *lvl, int y)
 	return (color);
 }
 
-void	draw_door(t_ray *ray, t_level *lvl, int x)
+void	draw_doors(t_ray *ray, t_level *lvl, int x)
 {
 	t_line		line;
 	int			scaled_y;
 	uint32_t	color;
 
 	color = 0;
-	ft_memset(&line, 0, sizeof(t_line));
-	line_init(&line, ray->doors[ray->door_count].dist);
-	if (line.current < 0)
-		line.current = 0;
-	while (line.current <= line.end && line.current < W_HEIGHT)
+	while (--ray->door_count >= 0)
 	{
-		scaled_y = scale_texture_height(&line);
-		color = pick_door_texture(&ray->doors[ray->door_count], \
-		lvl, scaled_y);
-		if (color)
+		ft_memset(&line, 0, sizeof(t_line));
+		line_init(&line, ray->doors[ray->door_count].dist);
+		if (line.current < 0)
+			line.current = 0;
+		while (line.current <= line.end && line.current < W_HEIGHT)
 		{
-			mlx_put_pixel(lvl->imgs.fg, x, (int)line.current, color);
-			draw_light(lvl, &line, x, \
-			ray->doors[ray->door_count].dist);
+			scaled_y = scale_texture_height(&line);
+			color = pick_door_texture(&ray->doors[ray->door_count], \
+			lvl, scaled_y);
+			if (color)
+			{
+				mlx_put_pixel(lvl->imgs.fg, x, (int)line.current, color);
+				draw_light(lvl, &line, x, \
+				ray->doors[ray->door_count].dist);
+			}
+					line.current++;
 		}
-				line.current++;
-	}
-	ray->door_count--;
-}
-
-void	draw_doors_sprites(t_ray *ray, t_level *lvl, int x)
-{
-	ray->door_count--;
-	ray->sprite_count--;
-	while (ray->door_count >= 0 || ray->sprite_count >= 0)
-	{
-		if (ray->door_count >= 0 && ray->sprite_count < 0)
-			draw_door(ray, lvl, x);
-		else if (ray->sprite_count >= 0 && ray->door_count < 0)
-			draw_sprite(ray, lvl, x);
-		else if (ray->doors[ray->door_count].dist > ray->sprites[ray->sprite_count].dist)
-			draw_door(ray, lvl, x);
-		else if (ray->sprites[ray->sprite_count].dist > ray->doors[ray->door_count].dist)
-			draw_sprite(ray, lvl, x);
 	}
 }

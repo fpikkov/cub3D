@@ -264,8 +264,16 @@ typedef struct s_sprite_data
 {
 	float	hit_column;
 	float	dist;
-	int		x;
-	int		y;
+	float	dist_x;
+	float	dist_y;
+	float	inv_det;
+	float	transform_x;
+	float	transform_y;
+	float	x;
+	float	y;
+	float		height;
+	float		width;
+	float		screen_x;
 }	t_sprite_data;
 
 typedef struct s_door_data

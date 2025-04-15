@@ -118,12 +118,12 @@ void		line_init(t_line *line, float distance);
 
 // Render door
 
-uint32_t	pick_sprite_texture(t_sprite_data *sprite, t_level *lvl, int y);
 void		save_sprite_data(t_ray *r, t_player *p);
 void		save_door_data(t_ray *r, t_player *p);
-void		draw_sprite(t_ray *ray, t_level *lvl, int x);
-void		draw_door(t_ray *ray, t_level *lvl, int x);
-void		draw_doors_sprites(t_ray *ray, t_level *lvl, int x);
+void		draw_doors(t_ray *ray, t_level *lvl, int x);
+void		draw_sprite(t_sprite_data *sprite, t_level *lvl, int x);
+void		draw_all_sprites(t_sprite_data *sprites, int sprite_count, t_level *lvl);
+void		draw_full_sprite(t_sprite_data *sprite, t_level *lvl);
 
 // Player position
 
