@@ -27,12 +27,10 @@ bool		launch_parser(char **argv, t_data *data);
 int			build_path(char *path, t_data *data);
 bool		parse_data(char **argv, t_data *data);
 bool		parse_textures(char *filename, t_data *data);
-bool		is_sprite_texture(char *buffer, int idx, t_level *lvl);
+bool		is_bonus_texture(char *buffer, int idx, t_level *lvl);
 bool		load_texture(char *buffer, t_level *lvl, int direction);
 char		*tex_join_path(char *buf, size_t st, size_t len, t_file *info);
-void		load_door_texture(mlx_texture_t *tex, t_level *lvl, int type);
-void		load_exit_texture(mlx_texture_t *tex, t_level *lvl, int type);
-void		load_monster_texture(mlx_texture_t *tex, t_level *lvl, int type);
+void		load_bonus_texture(mlx_texture_t *tex, t_level *lvl, int type);
 int			parse_color_data(int fd, t_level *lvl);
 uint32_t	fetch_color(char *buffer);
 bool		create_background(t_level *lvl);
@@ -54,10 +52,15 @@ char		**resize_to_rectangular(char **map);
 int64_t		get_time(void);
 float		to_radian(int degrees);
 void		space_to_one(char **map);
+void		step_vertical(t_ray *r);
+void		step_horizontal(t_ray *r);
 bool		print_error(t_errors error, bool warning);
 bool		is_wall(t_level	*lvl, int x, int y);
 bool		is_closed_door(t_level *lvl, int x, int y);
+bool		next_to_door(int x, int y, t_level *lvl);
+bool		next_to_exit(int x, int y, t_level *lvl);
 int			get_sprite_type(t_level *lvl, int x, int y);
+int			get_door_type(t_level *lvl, int x, int y);
 
 // Game logic
 
@@ -78,7 +81,7 @@ t_level		*current_level(t_data *data);
 
 void		door_action(t_data *data);
 void		move_door(t_level *instance);
-void		move_exit(t_level *lvl);
+void		open_exit(t_level *lvl);
 
 // Monster actions
 
@@ -98,6 +101,7 @@ void		reset_foreground(t_level *lvl);
 void		render_surfaces(t_level *lvl, t_player *p);
 bool		raycast(t_ray *ray, t_level *lvl, t_player *p, int x);
 uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y);
+uint32_t	sprite_interpolation(mlx_texture_t *tex, float relative_x, uint32_t y);
 int			scale_texture_height(t_line *line);
 void		image_fill(mlx_image_t *img, uint32_t color);
 void		draw_fog(t_ray *ray, t_level *lvl, int x);
@@ -113,14 +117,15 @@ int			light_step(int x, t_shade shader, int amount);
 // Renderer utils
 
 float		calc_sprite_pos(t_sprite_data *sprite, t_ray *r, t_player *p);
+float		calc_door_pos(t_door_data *door, t_ray *r, t_player *p);
 void		line_init(t_line *line, float distance);
 
 // Render door
 
-uint32_t	pick_sprite_texture(t_sprite_data *sprite, t_level *lvl, int y);
 void		save_sprite_data(t_ray *r, t_player *p);
 void		save_door_data(t_ray *r, t_player *p);
-void		draw_sprites(t_ray *ray, t_level *lvl, int x);
+void		draw_doors(t_ray *ray, t_level *lvl, int x);
+void		draw_full_sprite(t_sprite_data *sprite, t_level *lvl, float *z_buffer);
 
 // Player position
 

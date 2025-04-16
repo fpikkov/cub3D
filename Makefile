@@ -47,7 +47,8 @@ SRCS =	parser.c \
 		launch_parser.c \
 		path_builder.c \
 		parse_textures.c \
-		parse_sprite_textures.c \
+		is_bonus_texture.c \
+		load_bonus_textures.c \
 		parse_texture_utils.c \
 		flashlight_images.c \
 		flashlight_setup.c \
@@ -61,11 +62,12 @@ SRCS =	parser.c \
 		resize_map.c \
 		error.c \
 		cleanup.c \
-		location_utils.c \
+		identify_objects.c \
 		hook.c \
 		tick.c \
 		flashlight.c \
 		renderer.c \
+		render_doors.c \
 		render_sprites.c \
 		render_utils.c \
 		raycast.c \
@@ -80,7 +82,9 @@ SRCS =	parser.c \
 		interpolation.c \
 		init_minimap.c \
 		draw_minimap.c \
-		door_actions.c \
+		move_doors.c \
+		door_utils.c \
+		raycaster_utils.c \
 		monster_actions.c \
 		minimap.c \
 		main.c \

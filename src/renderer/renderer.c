@@ -79,18 +79,27 @@ static void	draw_foreground(t_level *lvl, t_player *p)
 	t_ray	ray;
 	int		x;
 
+	ft_memset(&ray, 0, sizeof(t_ray));
 	x = 0;
 	while (x < W_WIDTH)
 	{
-		ft_memset(&ray, 0, sizeof(t_ray));
 		if (raycast(&ray, lvl, p, x))
 			draw_line(&ray, lvl, x);
 		else
 			draw_fog(&ray, lvl, x);
-		if (ray.sprite_count > 0)
-			draw_sprites(&ray, lvl, x);
+		if (ray.door_count > 0)
+		{
+			ray.z_buffer[x] = ray.doors[0].dist;
+			draw_doors(&ray, lvl, x);
+			ft_memset(&ray.doors, 0, sizeof(t_door_data) * 20);
+			ray.door_count = 0;
+		}
+		else
+			ray.z_buffer[x] = ray.distance;
 		x++;
 	}
+	while (--ray.sprite_count >= 0)
+		draw_full_sprite(&ray.sprites[ray.sprite_count], lvl, ray.z_buffer);
 }
 
 /**

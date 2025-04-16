@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_utils.c                                     :+:      :+:    :+:   */
+/*   raycaster_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahentton <ahentton@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/02 13:42:47 by ahentton          #+#    #+#             */
-/*   Updated: 2025/04/02 13:42:52 by ahentton         ###   ########.fr       */
+/*   Created: 2025/04/16 13:48:46 by ahentton          #+#    #+#             */
+/*   Updated: 2025/04/16 13:48:50 by ahentton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-float	calc_sprite_pos(t_sprite_data *sprite, t_ray *r, t_player *p)
+void	step_vertical(t_ray *r)
 {
-	float	sprite_pos;
+	r->side_dist_x += r->delta_dist_x;
+	r->map_x += r->step_x;
+	r->side = VERTICAL;
+}
 
-	sprite_pos = 0.0;
-	if (r->side == VERTICAL)
-		sprite_pos = p->y + sprite->dist * r->dir_y;
-	else
-		sprite_pos = p->x + sprite->dist * r->dir_x;
-	sprite_pos -= floorf(sprite_pos);
-	return (sprite_pos);
+void	step_horizontal(t_ray *r)
+{
+	r->side_dist_y += r->delta_dist_y;
+	r->map_y += r->step_y;
+	r->side = HORIZONTAL;
 }

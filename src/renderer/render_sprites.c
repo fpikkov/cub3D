@@ -12,119 +12,102 @@
 
 #include "cube.h"
 
+static	bool	check_unique(t_ray *ray)
+{
+	int		i;
+
+	i = 0;
+	while (i < ray->sprite_count)
+	{
+		if ((int)ray->sprites[i].x == ray->map_x \
+		&& (int)ray->sprites[i].y == ray->map_y)
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 void	save_sprite_data(t_ray *r, t_player *p)
 {
-	float				sprite_pos;
-	t_sprite_data		*sprite;
+	t_sprite_data		*s;
+	float				rel_x;
+	float				rel_y;
+	float				inv_det;
 
-	if (r->sprite_count >= 30)
+	if (r->sprite_count >= 20 || !check_unique(r))
 		return ;
-	sprite = &r->sprites[r->sprite_count];
-	if (r->side == VERTICAL)
-		sprite->dist = fabsf(r->side_dist_x - r->delta_dist_x);
-	else
-		sprite->dist = fabsf(r->side_dist_y - r->delta_dist_y);
-	sprite->x = r->map_x;
-	sprite->y = r->map_y;
-	sprite_pos = calc_sprite_pos(sprite, r, p);
-	sprite->hit_column = (int)(sprite_pos * (float)TILE);
+	s = &r->sprites[r->sprite_count];
+	s->x = r->map_x + 0.5f;
+	s->y = r->map_y + 0.5f;
+	rel_x = s->x - p->x;
+	rel_y = s->y - p->y;
+	s->dist = rel_x * rel_x + rel_y * rel_y;
+	inv_det = 1.0f / (r->plane_x * r->dir_y - r->dir_x * r->plane_y);
+	s->transform_x = inv_det * (p->dir_y * rel_x - p->dir_x * rel_y);
+	s->transform_y = inv_det * (-r->plane_y * rel_x + r->plane_x * rel_y);
+	if (s->transform_y < 0.1f)
+		s->transform_y = 0.1f;
+	s->screen_x = (W_WIDTH / 2) * (1 + s->transform_x / s->transform_y);
+	s->height = abs((int)(W_HEIGHT / s->transform_y));
+	s->width = s->height;
 	r->sprite_count++;
 }
 
-static	mlx_texture_t	*pick_exit_texture(t_level *lvl, int status)
-{
-	if (status == CLOSED)
-		return (lvl->textures.exit1);
-	else if (status == OPENING1)
-		return (lvl->textures.exit2);
-	else if (status == OPENING2)
-		return (lvl->textures.exit3);
-	else if (status == OPENING3)
-		return (lvl->textures.exit4);
-	else if (status == OPENING4)
-		return (lvl->textures.exit5);
-	else if (status == OPENING5)
-		return (lvl->textures.exit6);
-	else if (status == OPEN)
-		return (lvl->textures.exit7);
-	return (NULL);
-}
-/*
-mlx_texture_t	*pick_door_texture(t_level *lvl, int status)
-{
-	if (status == CLOSED)
-		return (lvl->textures.door1);
-	else if (status == OPENING1)
-		return (lvl->textures.door2);
-	else if (status == OPENING2)
-		return (lvl->textures.door3);
-	else if (status == OPENING3)
-		return (lvl->textures.door4);
-	else if (status == OPENING4)
-		return (lvl->textures.door5);
-	else if (status == OPENING5)
-		return (lvl->textures.door6);
-	else if (status == OPEN)
-		return (lvl->textures.door7);
-	return (NULL);
-
-}*/
-
-uint32_t	pick_sprite_texture(t_sprite_data *sprite, t_level *lvl, int y)
+static	uint32_t	pick_color(t_sprite_data *s, t_level *lvl, float x, int y)
 {
 	uint32_t		color;
-	mlx_texture_t	*tex;
 
 	color = 0x0;
-	if (lvl->map[sprite->y][sprite->x] == '2')
-		color = nearest_neighbor(lvl->textures.door1, sprite->hit_column, y);
-	else if (lvl->map[sprite->y][sprite->x] == '3')
-		color = nearest_neighbor(lvl->textures.door2, sprite->hit_column, y);
-	else if (lvl->map[sprite->y][sprite->x] == '4')
-		color = nearest_neighbor(lvl->textures.door3, sprite->hit_column, y);
-	else if (lvl->map[sprite->y][sprite->x] == '5')
-		color = nearest_neighbor(lvl->textures.door4, sprite->hit_column, y);
-	else if (lvl->map[sprite->y][sprite->x] == '6')
-		color = nearest_neighbor(lvl->textures.door5, sprite->hit_column, y);
-	else if (lvl->map[sprite->y][sprite->x] == '7')
-		color = nearest_neighbor(lvl->textures.door6, sprite->hit_column, y);
-	else if (lvl->map[sprite->y][sprite->x] == '8')
-		color = nearest_neighbor(lvl->textures.door7, sprite->hit_column, y);
-	else if (lvl->map[sprite->y][sprite->x] == 'M')
-		color = nearest_neighbor(lvl->textures.monster, sprite->hit_column, y);
-	else if (lvl->map[sprite->y][sprite->x] == 'P')
-	{
-		tex = pick_exit_texture(lvl, lvl->exit.status);
-		color = nearest_neighbor(tex, sprite->hit_column, y);
-	}
+	if (lvl->map[(int)s->y][(int)s->x] == 'M')
+		color = sprite_interpolation(lvl->textures.monster, x, y);
 	return (color);
 }
 
-void	draw_sprites(t_ray *ray, t_level *lvl, int x)
+static	void	draw_sprite(t_sprite_data *s, t_level *lvl, int x, float *z_buf)
 {
 	t_line		line;
 	int			scaled_y;
 	uint32_t	color;
+	float		relative_x;
 
+	relative_x = (float)(x - (s->screen_x - s->width / 2)) / s->width;
 	color = 0;
-	while (--ray->sprite_count >= 0)
+	ft_memset(&line, 0, sizeof(t_line));
+	line_init(&line, s->transform_y);
+	if (line.current < 0)
+		line.current = 0;
+	while (line.current <= line.end && line.current < W_HEIGHT)
 	{
-		ft_memset(&line, 0, sizeof(t_line));
-		line_init(&line, ray->sprites[ray->sprite_count].dist);
-		while (line.current <= line.end && line.current < W_HEIGHT)
+		if (s->transform_y > 0 && s->transform_y < z_buf[x])
 		{
-			if (line.current < 0)
-				line.current = 0;
 			scaled_y = scale_texture_height(&line);
-			color = pick_sprite_texture(&ray->sprites[ray->sprite_count], \
-			lvl, scaled_y);
+			color = pick_color(s, lvl, relative_x, scaled_y);
 			if (color)
 			{
 				mlx_put_pixel(lvl->imgs.fg, x, (int)line.current, color);
-				draw_light(lvl, &line, x, \
-				ray->sprites[ray->sprite_count].dist);
+				draw_light(lvl, &line, x, s->dist);
 			}
-			line.current++;
 		}
+		line.current++;
+	}
+}
+
+void	draw_full_sprite(t_sprite_data *s, t_level *lvl, float *z_buffer)
+{
+	int		start_x;
+	int		end_x;
+	int		x;
+
+	start_x = s->screen_x - s->width / 2;
+	end_x = s->screen_x + s->width / 2;
+	if (start_x < 0)
+		start_x = 0;
+	if (end_x >= W_WIDTH)
+		end_x = W_WIDTH - 1;
+	x = start_x;
+	while (x < end_x)
+	{
+		draw_sprite(s, lvl, x, z_buffer);
+		x++;
 	}
 }

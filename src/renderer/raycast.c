@@ -22,6 +22,7 @@
  * Deltas: The distance between adjacent vertical or horizontal cell borders.
  * Sides: The length of the ray's adjacent and opposite vectors.
  */
+
 static void	ray_init(t_ray *r, t_player *p)
 {
 	r->map_x = (int)p->x;
@@ -63,17 +64,11 @@ static bool	hitscan(t_ray *r, t_level *lvl, t_player *p)
 	while (!hit && ++depth < DOF)
 	{
 		if (r->side_dist_x < r->side_dist_y)
-		{
-			r->side_dist_x += r->delta_dist_x;
-			r->map_x += r->step_x;
-			r->side = VERTICAL;
-		}
+			step_vertical(r);
 		else
-		{
-			r->side_dist_y += r->delta_dist_y;
-			r->map_y += r->step_y;
-			r->side = HORIZONTAL;
-		}
+			step_horizontal(r);
+		if (get_door_type(lvl, r->map_x, r->map_y))
+			save_door_data(r, p);
 		if (get_sprite_type(lvl, r->map_x, r->map_y))
 			save_sprite_data(r, p);
 		if (is_wall(lvl, r->map_x, r->map_y))

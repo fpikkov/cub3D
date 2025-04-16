@@ -71,12 +71,8 @@ bool	load_texture(char *buffer, t_level *lvl, int direction)
 		lvl->textures.south = texture;
 	else if (direction == WEST && !lvl->textures.west)
 		lvl->textures.west = texture;
-	else if (direction >= DOOR1 && direction <= DOOR7)
-		load_door_texture(texture, lvl, direction);
-	else if (direction >= EXIT1 && direction <= EXIT7)
-		load_exit_texture(texture, lvl, direction);
-	else if (direction == MONSTER)
-		load_monster_texture(texture, lvl, direction);
+	else if (direction >= DOOR1 && direction <= MONSTER)
+		load_bonus_texture(texture, lvl, direction);
 	else
 		mlx_delete_texture(texture);
 	return (true);
@@ -97,7 +93,7 @@ static bool	is_texture_or_color(char *buffer, int idx, t_level *lvl)
 	else if (ft_strncmp(buffer + idx, "C", 1) == 0)
 		lvl->imgs.ceiling = fetch_color(buffer + idx + 1);
 	else
-		return (is_sprite_texture(buffer, idx, lvl));
+		return (is_bonus_texture(buffer, idx, lvl));
 	return (true);
 }
 
