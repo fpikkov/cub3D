@@ -30,7 +30,7 @@ void	game_hook(void *param)
 		if (instance->has_doors)
 			move_door(instance);
 		if (instance->has_exit)
-			move_exit(instance);
+			open_exit(instance);
 		movement_handler(data, instance);
 		render_surfaces(instance, &data->player);
 		update_minimap(data, instance);

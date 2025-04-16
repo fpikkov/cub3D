@@ -69,56 +69,35 @@ static void	draw_line(t_ray *ray, t_level *lvl, int x)
 	light_floor(lvl, &line, x);
 }
 
-static	bool	check_unique(t_sprite_data sprites[20], int sprite_count, t_sprite_data *hit_sprite)
-{
-	int		i;
-
-	i = 0;
-	while (i < sprite_count)
-	{
-		if ((int)sprites[i].x == (int)hit_sprite->x && (int)sprites[i].y == (int)hit_sprite->y)
-			return (false);
-		i++;
-	}
-	return (true);
-}
 /**
  * @brief Draws walls line by line to the foreground image
  */
 static void	draw_foreground(t_level *lvl, t_player *p)
 {
 	t_ray	ray;
-	t_sprite_data	sprites[20];
-	int		sprite_count;
 	int		x;
-	int		i;
 
-	ft_memset(&sprites, 0, sizeof(t_sprite_data) * 20);
-	sprite_count = 0;
+	ft_memset(&ray, 0, sizeof(t_ray));
 	x = 0;
 	while (x < W_WIDTH)
 	{
-		i = 0;
-		ft_memset(&ray, 0, sizeof(t_ray));
 		if (raycast(&ray, lvl, p, x))
 			draw_line(&ray, lvl, x);
 		else
 			draw_fog(&ray, lvl, x);
 		if (ray.door_count > 0)
-			draw_doors(&ray, lvl, x);
-		while (i < ray.sprite_count && sprite_count < 20)
 		{
-			if (check_unique(sprites, sprite_count, ray.sprites) == true)
-			{
-				sprites[sprite_count] = ray.sprites[i];
-				sprite_count++;
-			}
-			i++;
+			ray.z_buffer[x] = ray.doors[0].dist;
+			draw_doors(&ray, lvl, x);
+			ft_memset(&ray.doors, 0, sizeof(t_door_data) * 20);
+			ray.door_count = 0;
 		}
+		else
+			ray.z_buffer[x] = ray.distance;
 		x++;
 	}
-	if (sprite_count > 0)
-		draw_all_sprites(sprites, sprite_count, lvl);
+	while (--ray.sprite_count >= 0)
+		draw_full_sprite(&ray.sprites[ray.sprite_count], lvl, ray.z_buffer);
 }
 
 /**

@@ -52,7 +52,7 @@ static	mlx_texture_t	*pick_exit_texture(t_level *lvl, int status)
 
 static uint32_t	pick_door_texture(t_door_data *door, t_level *lvl, int y)
 {
-	uint32_t	color;
+	uint32_t		color;
 	mlx_texture_t	*tex;
 
 	color = 0x0;
@@ -103,7 +103,7 @@ void	draw_doors(t_ray *ray, t_level *lvl, int x)
 				draw_light(lvl, &line, x, \
 				ray->doors[ray->door_count].dist);
 			}
-					line.current++;
+			line.current++;
 		}
 	}
 }

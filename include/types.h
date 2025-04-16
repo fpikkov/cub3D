@@ -17,6 +17,10 @@
 #  include "MLX42.h"
 # endif
 
+# ifndef CONSTANTS_H
+#  include "constants.h"
+# endif
+
 typedef enum e_errors
 {
 	FILE_NO_ARGS = 200,
@@ -74,7 +78,12 @@ typedef enum e_door_status
 	OPENING3,
 	OPENING4,
 	OPENING5,
-	OPEN
+	OPEN,
+	CLOSING1,
+	CLOSING2,
+	CLOSING3,
+	CLOSING4,
+	CLOSING5
 }	t_door_status;
 
 typedef enum e_shade
@@ -273,7 +282,7 @@ typedef struct s_sprite_data
 	float	y;
 	float		height;
 	float		width;
-	float		screen_x;
+	int		screen_x;
 }	t_sprite_data;
 
 typedef struct s_door_data
@@ -297,6 +306,7 @@ typedef struct s_ray
 	float			side_dist_y;
 	float			delta_dist_x;
 	float			delta_dist_y;
+	float			z_buffer[W_WIDTH];
 	int				map_x;
 	int				map_y;
 	int				step_x;

@@ -12,112 +12,102 @@
 
 #include "cube.h"
 
-static	uint32_t	sprite_interpolation(mlx_texture_t *tex, float relative_x, uint32_t y)
+static	bool	check_unique(t_ray *ray)
 {
-	uint32_t	src_x;
-	uint32_t	src_y;
-	uint32_t	color;
-	uint8_t		*ptr;
+	int		i;
 
-	src_x = (uint32_t)(relative_x * tex->width);
-	if (src_x >= tex->width)
-		src_x = tex->width - 1;
-	src_y = (uint32_t)(((float)y / TILE) * tex->height);
-	if (src_y >= tex->height)
-		src_y = tex->height - 1;
-	ptr = &tex->pixels[(src_y * tex->width + src_x) * tex->bytes_per_pixel];
-	color = 0;
-	color |= *ptr << 24;
-	ptr++;
-	color |= *ptr << 16;
-	ptr++;
-	color |= *ptr << 8;
-	ptr++;
-	color |= *ptr;
-	return (color);
+	i = 0;
+	while (i < ray->sprite_count)
+	{
+		if ((int)ray->sprites[i].x == ray->map_x \
+		&& (int)ray->sprites[i].y == ray->map_y)
+			return (false);
+		i++;
+	}
+	return (true);
 }
 
 void	save_sprite_data(t_ray *r, t_player *p)
 {
-	t_sprite_data		*sprite;
-	float			rel_x;
-	float			rel_y;
-	float			inv_det;
+	t_sprite_data		*s;
+	float				rel_x;
+	float				rel_y;
+	float				inv_det;
 
-	if (r->sprite_count >= 20)
+	if (r->sprite_count >= 20 || !check_unique(r))
 		return ;
-	sprite = &r->sprites[r->sprite_count];
-	sprite->x = r->map_x + 0.5f;
-	sprite->y = r->map_y + 0.5f;
-	rel_x = sprite->x - p->x;
-	rel_y = sprite->y - p->y;
-	sprite->dist = rel_x * rel_x + rel_y * rel_y;
+	s = &r->sprites[r->sprite_count];
+	s->x = r->map_x + 0.5f;
+	s->y = r->map_y + 0.5f;
+	rel_x = s->x - p->x;
+	rel_y = s->y - p->y;
+	s->dist = rel_x * rel_x + rel_y * rel_y;
 	inv_det = 1.0f / (r->plane_x * r->dir_y - r->dir_x * r->plane_y);
-	sprite->transform_x = inv_det * (p->dir_y * rel_x - p->dir_x * rel_y);
-	sprite->transform_y = inv_det * (-r->plane_y * rel_x + r->plane_x * rel_y);
-	if (sprite->transform_y < 0.1f)
-		sprite->transform_y = 0.1f;
-	sprite->screen_x = (W_WIDTH / 2) * (1 + sprite->transform_x / sprite->transform_y);
-	sprite->height = abs((int)(W_HEIGHT / sprite->transform_y));
-	sprite->width = sprite->height;
+	s->transform_x = inv_det * (p->dir_y * rel_x - p->dir_x * rel_y);
+	s->transform_y = inv_det * (-r->plane_y * rel_x + r->plane_x * rel_y);
+	if (s->transform_y < 0.1f)
+		s->transform_y = 0.1f;
+	s->screen_x = (W_WIDTH / 2) * (1 + s->transform_x / s->transform_y);
+	s->height = abs((int)(W_HEIGHT / s->transform_y));
+	s->width = s->height;
 	r->sprite_count++;
 }
 
-static	uint32_t	pick_sprite_texture(t_sprite_data *sprite, t_level *lvl, float relative_x, int y)
+static	uint32_t	pick_color(t_sprite_data *s, t_level *lvl, float x, int y)
 {
 	uint32_t		color;
 
 	color = 0x0;
-	if (lvl->map[(int)sprite->y][(int)sprite->x] == 'M')
-		color = sprite_interpolation(lvl->textures.monster, relative_x, y);
+	if (lvl->map[(int)s->y][(int)s->x] == 'M')
+		color = sprite_interpolation(lvl->textures.monster, x, y);
 	return (color);
 }
 
-void	draw_sprite(t_sprite_data *sprite, t_level *lvl, int x)
+static	void	draw_sprite(t_sprite_data *s, t_level *lvl, int x, float *z_buf)
 {
 	t_line		line;
 	int			scaled_y;
 	uint32_t	color;
-	float	relative_x;
+	float		relative_x;
 
-	relative_x = (float)(x - (sprite->screen_x - sprite->width / 2)) / sprite->width;
+	relative_x = (float)(x - (s->screen_x - s->width / 2)) / s->width;
 	color = 0;
 	ft_memset(&line, 0, sizeof(t_line));
-	line_init(&line, sprite->transform_y);
+	line_init(&line, s->transform_y);
 	if (line.current < 0)
 		line.current = 0;
 	while (line.current <= line.end && line.current < W_HEIGHT)
 	{
-		scaled_y = scale_texture_height(&line);
-		color = pick_sprite_texture(sprite, lvl, relative_x, scaled_y);
-		if (color)
+		if (s->transform_y > 0 && s->transform_y < z_buf[x])
 		{
-			mlx_put_pixel(lvl->imgs.fg, x, (int)line.current, color);
-			draw_light(lvl, &line, x, \
-			sprite->dist);
+			scaled_y = scale_texture_height(&line);
+			color = pick_color(s, lvl, relative_x, scaled_y);
+			if (color)
+			{
+				mlx_put_pixel(lvl->imgs.fg, x, (int)line.current, color);
+				draw_light(lvl, &line, x, s->dist);
+			}
 		}
 		line.current++;
 	}
 }
 
-void	draw_full_sprite(t_sprite_data *sprite, t_level *lvl)
+void	draw_full_sprite(t_sprite_data *s, t_level *lvl, float *z_buffer)
 {
 	int		start_x;
 	int		end_x;
 	int		x;
 
-	start_x = sprite->screen_x - sprite->width / 2;
-	end_x = sprite->screen_x + sprite->width / 2;
+	start_x = s->screen_x - s->width / 2;
+	end_x = s->screen_x + s->width / 2;
 	if (start_x < 0)
 		start_x = 0;
 	if (end_x >= W_WIDTH)
 		end_x = W_WIDTH - 1;
-	for (x = start_x; x < end_x; x++)
-		draw_sprite(sprite, lvl, x);
-}
-
-void	draw_all_sprites(t_sprite_data *sprites, int sprite_count, t_level *lvl)
-{
-	while (--sprite_count >= 0)
-		draw_full_sprite(&sprites[sprite_count], lvl);
+	x = start_x;
+	while (x < end_x)
+	{
+		draw_sprite(s, lvl, x, z_buffer);
+		x++;
+	}
 }

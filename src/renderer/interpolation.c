@@ -42,6 +42,31 @@ uint32_t	nearest_neighbor(mlx_texture_t *tex, uint32_t x, uint32_t y)
 	return (color);
 }
 
+uint32_t	sprite_interpolation(mlx_texture_t *tex, float x, uint32_t y)
+{
+	uint32_t	src_x;
+	uint32_t	src_y;
+	uint32_t	color;
+	uint8_t		*ptr;
+
+	src_x = (uint32_t)(x * tex->width);
+	if (src_x >= tex->width)
+		src_x = tex->width - 1;
+	src_y = (uint32_t)(((float)y / TILE) * tex->height);
+	if (src_y >= tex->height)
+		src_y = tex->height - 1;
+	ptr = &tex->pixels[(src_y * tex->width + src_x) * tex->bytes_per_pixel];
+	color = 0;
+	color |= *ptr << 24;
+	ptr++;
+	color |= *ptr << 16;
+	ptr++;
+	color |= *ptr << 8;
+	ptr++;
+	color |= *ptr;
+	return (color);
+}
+
 int	scale_texture_height(t_line *line)
 {
 	return (((line->current - line->start) * (TILE - 1)) / line->delta);

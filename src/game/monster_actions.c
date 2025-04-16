@@ -28,16 +28,16 @@ static	void	move_monster(t_level *lvl, t_monster *monster)
 {
 	lvl->map[monster->y][monster->x] = '0';
 	if (monster->move_down && !is_wall(lvl, monster->x, monster->y + 1)
-		&& !is_closed_door(lvl, monster->x, monster->y + 1))
+		&& !get_door_type(lvl, monster->x, monster->y + 1))
 		monster->y++;
 	else if (monster->move_up && !is_wall(lvl, monster->x, monster->y - 1)
-		&& !is_closed_door(lvl, monster->x, monster->y - 1))
+		&& !get_door_type(lvl, monster->x, monster->y - 1))
 		monster->y--;
 	if (monster->move_right && !is_wall(lvl, monster->x + 1, monster->y)
-		&& !is_closed_door(lvl, monster->x + 1, monster->y))
+		&& !get_door_type(lvl, monster->x + 1, monster->y))
 		monster->x++;
 	else if (monster->move_left && !is_wall(lvl, monster->x - 1, monster->y)
-		&& !is_closed_door(lvl, monster->x - 1, monster->y))
+		&& !get_door_type(lvl, monster->x - 1, monster->y))
 		monster->x--;
 	lvl->map[monster->y][monster->x] = 'M';
 	monster->move_down = false;
