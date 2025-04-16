@@ -69,8 +69,9 @@ SRCS =	parser.c \
 		renderer.c \
 		render_doors.c \
 		render_sprites.c \
-		render_utils.c \
 		raycast.c \
+		save_door_data.c \
+		save_sprite_data.c \
 		refresh.c \
 		depth_of_field.c \
 		light.c \

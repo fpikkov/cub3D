@@ -12,25 +12,6 @@
 
 #include "cube.h"
 
-void	save_door_data(t_ray *r, t_player *p)
-{
-	float		door_pos;
-	t_door_data	*door;
-
-	if (r->door_count >= 20)
-		return ;
-	door = &r->doors[r->door_count];
-	if (r->side == VERTICAL)
-		door->dist = fabsf(r->side_dist_x - r->delta_dist_x);
-	else
-		door->dist = fabsf(r->side_dist_y - r->delta_dist_y);
-	door->x = r->map_x;
-	door->y = r->map_y;
-	door_pos = calc_door_pos(door, r, p);
-	door->hit_column = (int)(door_pos * (float)TILE);
-	r->door_count++;
-}
-
 static	mlx_texture_t	*pick_exit_texture(t_level *lvl, int status)
 {
 	if (status == CLOSED)
