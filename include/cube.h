@@ -92,6 +92,7 @@ void		monster_action(t_level *lvl);
 void		flashlight_switch(t_torch *torch);
 void		flashlight_state(t_torch *torch);
 void		flashlight_battery(t_torch *torch);
+void		flashlight_disable(t_torch *torch);
 
 // Renderer
 
