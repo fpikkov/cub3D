@@ -18,7 +18,6 @@
  *
  * @brief Main game hook of the game which handles movement and rendering
  */
-
 void	game_hook(void *param)
 {
 	t_data	*data;

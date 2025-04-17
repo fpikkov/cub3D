@@ -61,13 +61,13 @@ void	move_door(t_level *lvl)
 {
 	if (lvl->door.status > CLOSED \
 	&& lvl->door.status <= OPEN \
-	&& get_time() - lvl->door.time >= 200)
+	&& get_time() - lvl->door.time >= 150)
 		open_door(lvl);
-	if (lvl->door.status == OPEN && get_time() - lvl->door.time >= 2000 \
+	if (lvl->door.status == OPEN && get_time() - lvl->door.time >= 2500 \
 	&& (lvl->player_x != lvl->door.x || lvl->player_y != lvl->door.y))
 		lvl->door.status++;
 	else if (lvl->door.status > OPEN \
-	&& get_time() - lvl->door.time >= 200)
+	&& get_time() - lvl->door.time >= 150)
 		close_door(lvl);
 }
 

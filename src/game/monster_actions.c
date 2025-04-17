@@ -63,7 +63,7 @@ void	monster_action(t_level *lvl)
 	while (id < lvl->monster_count)
 	{
 		if (lvl->monster[id].active \
-		&& get_time () - lvl->monster[id].time > 2000)
+		&& get_time () - lvl->monster[id].time > 3000)
 		{
 			decide_dir(&lvl->monster[id], lvl->player_x, lvl->player_y);
 			move_monster(lvl, &lvl->monster[id]);

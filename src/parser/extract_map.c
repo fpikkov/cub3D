@@ -125,6 +125,7 @@ char	**extract_map(char *file)
 		print_error(SYS_MALLOC, false);
 		return (free_null(&file_data));
 	}
+	free_null(&file_data);
 	space_to_one(map);
 	return (map);
 }

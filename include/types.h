@@ -272,14 +272,14 @@ typedef struct s_data
 
 typedef struct s_sprite_data
 {
-	float	hit_column;
-	float	transform_x;
-	float	transform_y;
-	float	x;
-	float	y;
+	float		hit_column;
+	float		transform_x;
+	float		transform_y;
+	float		x;
+	float		y;
 	float		height;
 	float		width;
-	int		screen_x;
+	int			screen_x;
 }	t_sprite_data;
 
 typedef struct s_door_data
@@ -311,7 +311,7 @@ typedef struct s_ray
 	int				side;
 	float			camera_x;
 	t_sprite_data	sprites[30];
-	t_door_data	doors[30];
+	t_door_data		doors[30];
 	int				sprite_count;
 	int				door_count;
 }	t_ray;
