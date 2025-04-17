@@ -15,7 +15,8 @@
 static char	*g_default_levels[5] = {
 	"./build/cub3d",
 	"maps/default.cub",
-	"maps/level_one.cub"
+	"maps/level_one.cub",
+	"maps/level_three.cub"
 };
 
 static void	argument_failure(char **args, size_t idx)
