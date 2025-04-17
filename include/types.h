@@ -167,6 +167,7 @@ typedef struct s_level
 	bool			has_doors;
 	bool			has_monsters;
 	bool			has_exit;
+	bool			player_dead;
 	char			**map;
 	char			**map_copy;
 	int				row_len;
@@ -272,10 +273,6 @@ typedef struct s_data
 typedef struct s_sprite_data
 {
 	float	hit_column;
-	float	dist;
-	float	dist_x;
-	float	dist_y;
-	float	inv_det;
 	float	transform_x;
 	float	transform_y;
 	float	x;

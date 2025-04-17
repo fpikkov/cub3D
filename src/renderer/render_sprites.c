@@ -44,7 +44,7 @@ static	void	draw_sprite(t_sprite_data *s, t_level *lvl, int x, float *z_buf)
 			if (color)
 			{
 				mlx_put_pixel(lvl->imgs.fg, x, (int)line.current, color);
-				draw_light(lvl, &line, x, s->dist);
+				draw_light(lvl, &line, x, s->transform_y);
 			}
 		}
 		line.current++;

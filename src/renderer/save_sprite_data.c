@@ -27,7 +27,21 @@ static	bool	check_unique(t_ray *ray)
 	return (true);
 }
 
-void	save_sprite_data(t_ray *r, t_player *p)
+static	void	set_monster_active(int x, int y, t_level *lvl)
+{
+	int		i;
+
+	i = 0;
+	while (i < lvl->monster_count)
+	{
+		if (x == lvl->monster[i].x \
+		&& y == lvl->monster[i].y)
+			lvl->monster[i].active = false;
+		i++;
+	}
+}
+
+void	save_sprite_data(t_ray *r, t_player *p, t_level *lvl)
 {
 	t_sprite_data		*s;
 	float				rel_x;
@@ -36,12 +50,12 @@ void	save_sprite_data(t_ray *r, t_player *p)
 
 	if (r->sprite_count >= 20 || !check_unique(r))
 		return ;
+	set_monster_active(r->map_x, r->map_y, lvl);
 	s = &r->sprites[r->sprite_count];
 	s->x = r->map_x + 0.5f;
 	s->y = r->map_y + 0.5f;
 	rel_x = s->x - p->x;
 	rel_y = s->y - p->y;
-	s->dist = rel_x * rel_x + rel_y * rel_y;
 	inv_det = 1.0f / (r->plane_x * r->dir_y - r->dir_x * r->plane_y);
 	s->transform_x = inv_det * (p->dir_y * rel_x - p->dir_x * rel_y);
 	s->transform_y = inv_det * (-r->plane_y * rel_x + r->plane_x * rel_y);

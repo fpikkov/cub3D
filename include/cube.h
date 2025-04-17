@@ -122,7 +122,7 @@ void		step_horizontal(t_ray *r);
 
 // Datasavers that run inside raycaster
 
-void		save_sprite_data(t_ray *r, t_player *p);
+void		save_sprite_data(t_ray *r, t_player *p, t_level *lvl);
 void		save_door_data(t_ray *r, t_player *p);
 
 // Lighting

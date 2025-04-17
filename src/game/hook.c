@@ -18,6 +18,7 @@
  *
  * @brief Main game hook of the game which handles movement and rendering
  */
+
 void	game_hook(void *param)
 {
 	t_data	*data;
@@ -28,18 +29,22 @@ void	game_hook(void *param)
 	if (game_tick())
 	{
 		render_surfaces(instance, &data->player);
-		if (instance->has_monsters)
-			monster_action(instance);
+		movement_handler(data, instance);
+		update_minimap(data, instance);
+		monster_action(instance);
 		if (instance->has_doors)
 			move_door(instance);
 		if (instance->has_exit)
 			open_exit(instance);
-		movement_handler(data, instance);
-		update_minimap(data, instance);
 		flashlight_battery(&data->torch);
 		if (instance->map[instance->player_y][instance->player_x] == 'P'
 			&& instance->exit.status == OPEN)
 			next_level(data);
+		else if (instance->player_dead)
+		{
+			printf("Spookieman caught you, GAME OVER\n");
+			mlx_close_window(data->mlx);
+		}
 	}
 }
 

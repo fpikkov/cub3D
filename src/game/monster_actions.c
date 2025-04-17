@@ -46,21 +46,32 @@ static	void	move_monster(t_level *lvl, t_monster *monster)
 	monster->move_left = false;
 }
 
+static	bool	player_caught(t_monster *monster, int player_x, int player_y)
+{
+	if (monster->x == player_x && monster->y == player_y)
+		return (true);
+	return (false);
+}
+
 void	monster_action(t_level *lvl)
 {
 	int		id;
 
+	if (!lvl->has_monsters)
+		return ;
 	id = 0;
 	while (id < lvl->monster_count)
 	{
-		lvl->monster[id].active = true;
 		if (lvl->monster[id].active \
 		&& get_time () - lvl->monster[id].time > 2000)
 		{
 			decide_dir(&lvl->monster[id], lvl->player_x, lvl->player_y);
 			move_monster(lvl, &lvl->monster[id]);
+			if (player_caught(&lvl->monster[id], lvl->player_x, lvl->player_y))
+				lvl->player_dead = true;
 			lvl->monster[id].time = get_time();
 		}
+		lvl->monster[id].active = true;
 		id++;
 	}
 }
