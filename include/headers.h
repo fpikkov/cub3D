@@ -24,10 +24,4 @@
 # include "get_next_line.h"
 # include "MLX42.h"
 
-# if AUDIO
-#  include "dr_wav.h"
-#  include <AL/al.h>
-#  include <AL/alc.h>
-# endif
-
 #endif

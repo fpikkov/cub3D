@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "cube.h"
+#include "miniaudio.h"
 
 void	audio_setup(void)
 {

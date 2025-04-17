@@ -7,15 +7,17 @@ CLEAR = \033[0m
 
 # --------	MAKE VARIABLES	--------
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Ofast
+CFLAGS = -Wall -Wextra -Werror
+OBJ_FLAGS = -Ofast
+OBJA_FLAGS = -O1
 DBG_FLAGS = -fdiagnostics-color=always -g -DDEBUG=1
 INC_FLAGS = -I$(INCLUDE_DIR) -I$(LFT_DIR)/$(INCLUDE_DIR) -I$(MLX_INCLUDE)
 LIB_FLAGS = -L$(LFT_DIR) -l$(LFT) -L$(MLX_BUILD) -l$(LMLX)
 MLX_FLAGS = -ldl -lglfw -pthread -lm
-AUD_FLAGS = -lopenal
 
 MLX_URL = https://github.com/codam-coding-college/MLX42.git
-DR_WAV_URL = https://raw.githubusercontent.com/mackron/dr_libs/refs/heads/master/dr_wav.h
+MAUDIO_H_URL = https://raw.githubusercontent.com/mackron/miniaudio/refs/heads/master/miniaudio.h
+MAUDIO_C_URL = https://raw.githubusercontent.com/mackron/miniaudio/refs/heads/master/miniaudio.c
 OPENAL_URL = https://github.com/kcat/openal-soft.git
 
 INCLUDE_DIR = ./include
@@ -27,22 +29,21 @@ OBJ_DIR = ./obj
 LIB_DIR = ./lib
 MLX_DIR = $(LIB_DIR)/mlx
 LFT_DIR = $(LIB_DIR)/libft
-DR_DIR = $(LIB_DIR)/drlib
+MAUDIO_DIR = $(LIB_DIR)/miniaudio
 
 NAME = cub3d
 DBG_NAME = debug
 
 LFT = ft
 LMLX = mlx42
-DRWAV = dr_wav.h
+MAUDIO_H = miniaudio.h
+MAUDIO_C = miniaudio.c
 
 MLX_BUILD = ${MLX_DIR}/${BUILD_DIR}
 BUILD = ${BUILD_DIR}/${NAME}
 DBG_BUILD = ${BUILD_DIR}/${DBG_NAME}
-DRLIB_BUILD = ${DR_DIR}/${DRWAV}
-
-# Check if OpenAL is installed on the system
-SYS_OPENAL := $(shell pkg-config --exists openal && echo yes || echo no)
+MAUDIO_BUILD =	${MAUDIO_DIR}/${MAUDIO_H} \
+				${MAUDIO_DIR}/${MAUDIO_C} \
 
 # Paths to source files, add additinal dirs here
 VPATH = ${SRC_DIR}/main/ \
@@ -53,7 +54,8 @@ VPATH = ${SRC_DIR}/main/ \
 		${SRC_DIR}/minimap/ \
 		${SRC_DIR}/audio/ \
 
-SRCS =	parser.c \
+SRCS =	main.c \
+		parser.c \
 		launch_parser.c \
 		path_builder.c \
 		parse_textures.c \
@@ -93,7 +95,6 @@ SRCS =	parser.c \
 		door_actions.c \
 		monster_actions.c \
 		minimap.c \
-		main.c \
 
 SRCS_AUDIO = audio_setup.c \
 
@@ -112,7 +113,12 @@ build: ${OBJS}
 ${OBJ_DIR}/%.o : %.c
 	@echo "${CYAN}Generating object files...${CLEAR}"
 	@mkdir -p ${OBJ_DIR}
-	@$(CC) $(CFLAGS) -c $< -o $@ ${INC_FLAGS}
+	@$(CC) $(CFLAGS) ${OBJ_FLAGS} -c $< -o $@ ${INC_FLAGS}
+
+${OBJ_DIR}/audio_%.o : audio_%.c
+	@echo "${CYAN}Generating audio object files...${CLEAR}"
+	@mkdir -p ${OBJ_DIR}
+	@$(CC) $(CFLAGS) ${OBJA_FLAGS} -c $< -o $@ ${INC_FLAGS} -I${MAUDIO_DIR}
 
 ${MLX_BUILD}:
 	@if [ ! -d ${MLX_DIR} ]; then \
@@ -139,29 +145,27 @@ ${DBG_BUILD}: ${OBJS}
 
 # Rules for building the project with audio features enabled
 
-audio: audiodeps lftbuild ${MLX_BUILD} | audiobuild
-
-audiodeps: ${DRLIB_BUILD}
-ifeq ($(SYS_OPENAL),yes)
-	${eval LIB_FLAGS += ${AUD_FLAGS}}
-else
-	${error OpenAL is not installed on the system}
-endif
+audio: lftbuild ${MAUDIO_BUILD} ${MLX_BUILD} | audiodeps audiobuild
 	${eval CFLAGS += -DAUDIO=1}
-	${eval INC_FLAGS += -I${DR_DIR}}
 
-audiobuild: ${OBJS} ${OBJS_AUDIO}
+audiodeps: ${OBJS} ${OBJS_AUDIO}
+	${eval OBJS_ALL := ${OBJS} ${OBJS_AUDIO}}
+
+audiobuild: ${OBJS_ALL}
 	@echo "${GREEN}Generating build...${CLEAR}"
 	@mkdir -p ${BUILD_DIR}
-	@${CC} ${CFLAGS} -o ${BUILD} $^ ${LIB_FLAGS} ${MLX_FLAGS}
+	@${CC} ${CFLAGS} -o ${BUILD} $^ ${MAUDIO_DIR}/${MAUDIO_C} ${LIB_FLAGS} ${MLX_FLAGS}
 	@echo "${GREEN}Executable ${YELLOW}${NAME}${GREEN} was created in ${YELLOW}"${BUILD_DIR}"${CLEAR}"
 
-${DRLIB_BUILD}:
-	@if [ ! -d ${DR_DIR} ]; then \
-		mkdir -p ${DR_DIR}; \
+${MAUDIO_BUILD}:
+	@if [ ! -d ${MAUDIO_DIR} ]; then \
+		mkdir -p ${MAUDIO_DIR}; \
 	fi
-	@if [ ! -f ${DRLIB_BUILD} ]; then \
-		curl -L -o ${DRLIB_BUILD} ${DR_WAV_URL}; \
+	@if [ ! -f ${MAUDIO_DIR}/${MAUDIO_H} ]; then \
+		curl -L -o ${MAUDIO_DIR}/${MAUDIO_H} ${MAUDIO_H_URL}; \
+	fi
+	@if [ ! -f ${MAUDIO_DIR}/${MAUDIO_C} ]; then \
+		curl -L -o ${MAUDIO_DIR}/${MAUDIO_C} ${MAUDIO_C_URL}; \
 	fi
 
 # Cleanup rules
@@ -177,8 +181,8 @@ fclean: clean
 	@if [ -d ${MLX_BUILD} ]; then \
 		rm -rf ${MLX_BUILD}; \
 	fi
-	@if [ -d ${DR_DIR} ]; then \
-		rm -rf ${DR_DIR}; \
+	@if [ -d ${MAUDIO_DIR} ]; then \
+		rm -rf ${MAUDIO_DIR}; \
 	fi
 	@make fclean --no-print-directory -C ${LFT_DIR}
 
