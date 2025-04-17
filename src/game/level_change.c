@@ -84,7 +84,6 @@ void	next_level(t_data *data)
 		mlx_close_window(data->mlx);
 	else
 	{
-		flashlight_disable(&data->torch);
 		data->lvl_idx++;
 		delete_level_images(previous);
 	}

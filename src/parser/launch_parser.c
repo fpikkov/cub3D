@@ -14,7 +14,6 @@
 
 static char	*g_default_levels[5] = {
 	"./build/cub3d",
-	"maps/doors.cub",
 	"maps/default.cub",
 	"maps/level_one.cub"
 };

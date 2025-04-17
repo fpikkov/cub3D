@@ -52,7 +52,7 @@ void	flashlight_battery(t_torch *torch)
 
 	counter++;
 	if (!torch->enabled)
-		counter++;
+		counter += BATTERY_RECHARGE;
 	if (counter < BATTERY_LIFE)
 		return ;
 	if (torch->enabled)
@@ -75,7 +75,10 @@ void	flashlight_switch(t_torch *torch)
 	torch->dark->enabled = !torch->dark->enabled;
 	torch->light->enabled = !torch->light->enabled;
 	torch->off->enabled = !torch->off->enabled;
-	flashlight_state(torch);
+	if (torch->enabled)
+		flashlight_state(torch);
+	else
+		flashlight_disable(torch);
 }
 
 void	flashlight_disable(t_torch *torch)
