@@ -16,7 +16,6 @@
 //which is used to draw the minimap correctly.
 //Map width, map height, and player coordinates are crucial information.
 //Range and tile_size are subject to change later, when scaling is included.
-//TODO:: Make range and tile_size compatible for scaling of the minimap.
 bool	init_minimap(t_data *data)
 {
 	ft_memset(&data->minimap, 0, sizeof(t_minimap));
