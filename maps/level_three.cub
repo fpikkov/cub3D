@@ -1,22 +1,22 @@
- NO ./textures/cobblestone.png
- SO ./textures/moss.png
- WE ./textures/bloody.png
- EA ./textures/cobblestone.png
+ NO ./textures/holy_wall2.png
+ SO ./textures/holy_wall2.png
+ WE ./textures/holy_wall1.png
+ EA ./textures/holy_wall1.png
  MO ./textures/monster.png
- D1 ./textures/door1.png
- D2 ./textures/door2.png
- D3 ./textures/door3.png
- D4 ./textures/door4.png
- D5 ./textures/door5.png
- D6 ./textures/door6.png
- D7 ./textures/door7.png
- E1 ./textures/exit1.png
- E2 ./textures/exit2.png
- E3 ./textures/exit3.png
- E4 ./textures/exit4.png
- E5 ./textures/exit5.png
- E6 ./textures/exit6.png
- E7 ./textures/exit7.png
+ D1 ./textures/door_lvl3_1.png
+ D2 ./textures/door_lvl3_2.png
+ D3 ./textures/door_lvl3_3.png
+ D4 ./textures/door_lvl3_4.png
+ D5 ./textures/door_lvl3_5.png
+ D6 ./textures/door_lvl3_6.png
+ D7 ./textures/door_lvl3_7.png
+ E1 ./textures/exit_lvl3_1.png
+ E2 ./textures/exit_lvl3_2.png
+ E3 ./textures/exit_lvl3_3.png
+ E4 ./textures/exit_lvl3_4.png
+ E5 ./textures/exit_lvl3_5.png
+ E6 ./textures/exit_lvl3_6.png
+ E7 ./textures/exit_lvl3_7.png
 
  F 90,80,100
  C 60,60,60
