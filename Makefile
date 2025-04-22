@@ -94,7 +94,7 @@ SRCS =	parser.c \
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}
 
 # --------	MAKE TARGETS	--------
-all: lftbuild ${MLX_BUILD} | ${BUILD}
+all: ${LIB_DIR} lftbuild ${MLX_BUILD} | ${BUILD}
 
 ${BUILD}: ${OBJS}
 	@echo "${GREEN}Generating build...${CLEAR}"
@@ -121,6 +121,9 @@ ${LFT_DIR}:
 		echo "${CYAN}Cloning libft repository...${CLEAR}"; \
 		git clone ${LFT_URL} ${LFT_DIR}; \
 	fi
+
+${LIB_DIR}:
+	@mkdir -p ${LIB_DIR};
 
 lftbuild: ${LFT_DIR}
 	@make --no-print-directory -C ${LFT_DIR}
