@@ -14,6 +14,7 @@ LIB_FLAGS = -L$(LFT_DIR) -l$(LFT) -L$(MLX_BUILD) -l$(LMLX)
 MLX_FLAGS = -ldl -lglfw -pthread -lm
 
 MLX_URL = https://github.com/codam-coding-college/MLX42.git
+LFT_URL = https://github.com/fpikkov/libft.git
 
 INCLUDE_DIR = ./include
 MLX_INCLUDE = $(MLX_DIR)/$(INCLUDE_DIR)/MLX42
@@ -108,14 +109,20 @@ ${OBJ_DIR}/%.o : %.c
 
 ${MLX_BUILD}:
 	@if [ ! -d ${MLX_DIR} ]; then \
-		@echo "${CYAN}Cloning mlx42 repository...${CLEAR}"; \
-		@git clone ${MLX_URL} ${MLX_DIR}; \
+		echo "${CYAN}Cloning mlx42 repository...${CLEAR}"; \
+		git clone ${MLX_URL} ${MLX_DIR}; \
 	fi
 	@echo "${CYAN}Building mlx42 library...${CLEAR}"
 	@cmake -S ${MLX_DIR} -B ${MLX_BUILD}
 	@make --no-print-directory -C ${MLX_BUILD}
 
-lftbuild:
+${LFT_DIR}:
+	@if [ ! -d ${LFT_DIR} ]; then \
+		echo "${CYAN}Cloning libft repository...${CLEAR}"; \
+		git clone ${LFT_URL} ${LFT_DIR}; \
+	fi
+
+lftbuild: ${LFT_DIR}
 	@make --no-print-directory -C ${LFT_DIR}
 
 debug: CFLAGS = ${DBG_FLAGS}
@@ -129,7 +136,9 @@ ${DBG_BUILD}: ${OBJS}
 
 clean:
 	@echo "${RED}Cleaning object files...${CLEAR}"
-	@make clean --no-print-directory -C ${LFT_DIR}
+	@if [ -d ${LFT_DIR} ]; then \
+		make clean --no-print-directory -C ${LFT_DIR}; \
+	fi
 	@rm -rf ${OBJ_DIR}
 
 fclean: clean
@@ -138,7 +147,9 @@ fclean: clean
 	@if [ -d ${MLX_BUILD} ]; then \
 		rm -rf ${MLX_BUILD}; \
 	fi
-	@make fclean --no-print-directory -C ${LFT_DIR}
+	@if [ -d ${LFT_DIR} ]; then \
+		make fclean --no-print-directory -C ${LFT_DIR}; \
+	fi
 
 mlxbuild: ${MLX_BUILD}
 
