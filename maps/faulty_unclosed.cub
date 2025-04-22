@@ -1,7 +1,7 @@
- NO ./textures/cobblestone.png
- SO ./textures/cobblestone.png
- WE ./textures/moss.png
- EA ./textures/moss.png
+ NO ./textures/stone_wall1.png
+ SO ./textures/stone_wall2.png
+ WE ./textures/mossy_wall1.png
+ EA ./textures/mossy_wall2.png
 
  F 150,130,110
  C 25,150,200

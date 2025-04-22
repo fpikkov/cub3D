@@ -1,22 +1,22 @@
- NO ./textures/cobblestone.png
- SO ./textures/cobblestone.png
- WE ./textures/moss.png
- EA ./textures/moss.png
+ NO ./textures/mossy_wall1.png
+ SO ./textures/mossy_wall1.png
+ WE ./textures/mossy_wall2.png
+ EA ./textures/mossy_wall2.png
  MO ./textures/monster.png
- D1 ./textures/door1.png
- D2 ./textures/door2.png
- D3 ./textures/door3.png
- D4 ./textures/door4.png
- D5 ./textures/door5.png
- D6 ./textures/door6.png
- D7 ./textures/door7.png
- E1 ./textures/exit1.png
- E2 ./textures/exit2.png
- E3 ./textures/exit3.png
- E4 ./textures/exit4.png
- E5 ./textures/exit5.png
- E6 ./textures/exit6.png
- E7 ./textures/exit7.png
+ D1 ./textures/door_lvl2_1.png
+ D2 ./textures/door_lvl2_2.png
+ D3 ./textures/door_lvl2_3.png
+ D4 ./textures/door_lvl2_4.png
+ D5 ./textures/door_lvl2_5.png
+ D6 ./textures/door_lvl2_6.png
+ D7 ./textures/door_lvl2_7.png
+ E1 ./textures/exit_lvl2_1.png
+ E2 ./textures/exit_lvl2_2.png
+ E3 ./textures/exit_lvl2_3.png
+ E4 ./textures/exit_lvl2_4.png
+ E5 ./textures/exit_lvl2_5.png
+ E6 ./textures/exit_lvl2_6.png
+ E7 ./textures/exit_lvl2_7.png
 
  F 80,60,40
  C 45,75,50
