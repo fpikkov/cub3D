@@ -27,7 +27,7 @@ static	bool	check_unique(t_ray *ray)
 	return (true);
 }
 
-static	void	set_monster_active(int x, int y, t_level *lvl)
+static	void	set_monster_inactive(int x, int y, t_level *lvl)
 {
 	int		i;
 
@@ -50,7 +50,7 @@ void	save_sprite_data(t_ray *r, t_player *p, t_level *lvl)
 
 	if (r->sprite_count >= 20 || !check_unique(r))
 		return ;
-	set_monster_active(r->map_x, r->map_y, lvl);
+	set_monster_inactive(r->map_x, r->map_y, lvl);
 	s = &r->sprites[r->sprite_count];
 	s->x = r->map_x + 0.5f;
 	s->y = r->map_y + 0.5f;
