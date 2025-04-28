@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-static char	*g_message[21] = {
+static char	*g_message[22] = {
 	"missing argument to map file(s)",
 	"invalid file extension",
 	"unable to open file",
@@ -32,7 +32,8 @@ static char	*g_message[21] = {
 	"the given map is not closed properly",
 	"allocation failure",
 	"failed to fetch root directory of the project",
-	"failed to resize image"
+	"failed to resize image",
+	"hook creation failure"
 };
 
 /**

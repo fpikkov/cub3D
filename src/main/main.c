@@ -36,8 +36,10 @@ int	main(int argc, char **argv)
 	ft_memset(&data.levels->door, 0, sizeof(t_door));
 	mlx_key_hook(data.mlx, key_hook, &data);
 	init_mouse(&data);
-	mlx_loop_hook(data.mlx, game_hook, &data);
-	mlx_loop(data.mlx);
+	if (!mlx_loop_hook(data.mlx, game_hook, &data))
+		print_error(GAME_HOOK_FAILURE, false);
+	else
+		mlx_loop(data.mlx);
 	terminate(&data);
 	return (EXIT_SUCCESS);
 }

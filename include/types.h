@@ -43,6 +43,7 @@ typedef enum e_errors
 	SYS_MALLOC,
 	PATH_FAILURE,
 	IMG_RESIZE_FAILURE,
+	GAME_HOOK_FAILURE,
 }	t_errors;
 
 typedef enum e_direction

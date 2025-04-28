@@ -21,6 +21,7 @@
 // ANSI color macros
 # define RED "\033[1;31m"
 # define YLW "\033[1;33m"
+# define CYAN "\033[1;36m"
 # define CLR "\033[0m"
 
 // Parsing
