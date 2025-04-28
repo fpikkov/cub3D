@@ -20,13 +20,18 @@ static uint8_t	get_next_color(char *buffer, bool reset)
 	if (reset)
 		idx = 0;
 	while (buffer[idx] && ft_strchr(NUMBERS, buffer[idx]) == NULL)
+	{
+		letter_in_colors(buffer[idx]);
 		idx++;
+	}
 	if (buffer[idx] && ft_isdigit(buffer[idx]))
 		value = ft_atoi(buffer + idx);
 	else
 		value = 255;
 	while (buffer[idx] && ft_strchr(NUMBERS, buffer[idx]) != NULL)
 		idx++;
+	if (value < 0 || value > 255)
+		print_error(IMG_COLOR_LIMIT, true);
 	if (value < 0)
 		return ((uint8_t)0);
 	else if (value > 255)

@@ -62,6 +62,7 @@ int64_t		get_time(void);
 float		to_radian(int degrees);
 bool		print_error(t_errors error, bool warning);
 void		print_tutorial(void);
+void		letter_in_colors(int c);
 
 // Object identifying utils
 

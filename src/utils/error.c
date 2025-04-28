@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-static char	*g_message[22] = {
+static char	*g_message[24] = {
 	"missing argument to map file(s)",
 	"invalid file extension",
 	"unable to open file",
@@ -33,7 +33,9 @@ static char	*g_message[22] = {
 	"allocation failure",
 	"failed to fetch root directory of the project",
 	"failed to resize image",
-	"hook creation failure"
+	"hook creation failure",
+	"given value is outside the color channel range, limiting to 8 bit value",
+	"ignoring letters found in color values, hexadecimal values not accepted"
 };
 
 /**
@@ -59,4 +61,20 @@ bool	print_error(t_errors error, bool warning)
 	if (error == FILE_NO_ARGS)
 		return (true);
 	return (false);
+}
+
+/**
+ * @brief Prints warning once when a letter is found in the color data
+ */
+void	letter_in_colors(int c)
+{
+	static bool	printed = false;
+
+	if (printed)
+		return ;
+	if (ft_isalpha(c))
+	{
+		print_error(IMG_COLOR_CHARACTERS, true);
+		printed = true;
+	}
 }

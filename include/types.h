@@ -44,6 +44,8 @@ typedef enum e_errors
 	PATH_FAILURE,
 	IMG_RESIZE_FAILURE,
 	GAME_HOOK_FAILURE,
+	IMG_COLOR_LIMIT,
+	IMG_COLOR_CHARACTERS,
 }	t_errors;
 
 typedef enum e_direction
