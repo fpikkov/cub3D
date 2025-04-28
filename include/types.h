@@ -262,6 +262,7 @@ typedef struct s_file
 typedef struct s_data
 {
 	mlx_t		*mlx;
+	bool		mouse_unlock;
 	size_t		lvl_idx;
 	t_level		*levels;
 	t_player	player;

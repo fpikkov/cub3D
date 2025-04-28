@@ -65,6 +65,8 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_RELEASE)
 		if (data->torch.battery != 0)
 			flashlight_switch(&data->torch);
+	if (keydata.key == MLX_KEY_U && keydata.action == MLX_RELEASE)
+		mouselook_switch(data);
 }
 
 void	mouse_hook(mouse_key_t b, action_t a, modifier_key_t m, void *p)

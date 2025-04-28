@@ -78,6 +78,11 @@ bool		game_tick(void);
 float		frame_delay(void);
 void		next_level(t_data *data);
 
+// Mouselook
+
+void		init_mouse(t_data *data);
+void		mouselook_switch(t_data *data);
+
 // Level handling
 
 void		init_level_params(t_level *level, t_player *player);

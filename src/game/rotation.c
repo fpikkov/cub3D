@@ -42,15 +42,17 @@ void	rotation_handler(t_data *data, float delay)
 
 	mouse_x = 0;
 	mouse_y = 0;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
+		rotate_left(&data->player, delay);
+	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+		rotate_right(&data->player, delay);
+	if (data->mouse_unlock)
+		return ;
 	mlx_get_mouse_pos(data->mlx, &mouse_x, &mouse_y);
 	sensitivity = (mouse_x - W_WIDTH / 2) * (1.0f / DPI);
 	if (sensitivity < 0)
 		rotate_left(&data->player, -sensitivity * delay);
 	else if (sensitivity > 0)
 		rotate_right(&data->player, sensitivity * delay);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
-		rotate_left(&data->player, delay);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-		rotate_right(&data->player, delay);
 	mlx_set_mouse_pos(data->mlx, W_WIDTH / 2, W_HEIGHT / 2);
 }

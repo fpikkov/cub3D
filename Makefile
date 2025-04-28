@@ -90,6 +90,7 @@ SRCS =	parser.c \
 		monster_actions.c \
 		minimap.c \
 		main.c \
+		mouselook.c \
 
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}
 
