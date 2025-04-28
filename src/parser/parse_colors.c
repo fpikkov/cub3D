@@ -12,31 +12,26 @@
 
 #include "cube.h"
 
-static uint8_t	get_next_color(char *buffer, bool reset)
+static uint8_t	get_next_color(char *buffer, t_channel channel)
 {
 	static int32_t	idx = 0;
-	int32_t			value;
+	uint8_t			value;
 
-	if (reset)
+	value = 255;
+	if (channel == C_RED)
 		idx = 0;
 	while (buffer[idx] && ft_strchr(NUMBERS, buffer[idx]) == NULL)
 	{
-		letter_in_colors(buffer[idx]);
+		color_warning(buffer[idx]);
 		idx++;
 	}
-	if (buffer[idx] && ft_isdigit(buffer[idx]))
-		value = ft_atoi(buffer + idx);
-	else
-		value = 255;
+	if (buffer[idx])
+		value = arg_to_uchar(buffer + idx);
+	if (!buffer[idx] && channel != C_ALPHA)
+		print_error(IMG_COLOR_MISSING, true);
 	while (buffer[idx] && ft_strchr(NUMBERS, buffer[idx]) != NULL)
 		idx++;
-	if (value < 0 || value > 255)
-		print_error(IMG_COLOR_LIMIT, true);
-	if (value < 0)
-		return ((uint8_t)0);
-	else if (value > 255)
-		return ((uint8_t)255);
-	return ((uint8_t)value);
+	return (value);
 }
 
 /**
@@ -48,10 +43,10 @@ uint32_t	fetch_color(char *buffer)
 	t_color	color;
 
 	ft_memset(&color, 0, sizeof(t_color));
-	color.red = get_next_color(buffer, true);
-	color.green = get_next_color(buffer, false);
-	color.blue = get_next_color(buffer, false);
-	color.alpha = get_next_color(buffer, false);
+	color.red = get_next_color(buffer, C_RED);
+	color.green = get_next_color(buffer, C_GREEN);
+	color.blue = get_next_color(buffer, C_BLUE);
+	color.alpha = get_next_color(buffer, C_ALPHA);
 	return (color.red << 24 | color.green << 16 | \
 	color.blue << 8 | color.alpha);
 }

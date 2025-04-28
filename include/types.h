@@ -45,7 +45,9 @@ typedef enum e_errors
 	IMG_RESIZE_FAILURE,
 	GAME_HOOK_FAILURE,
 	IMG_COLOR_LIMIT,
+	IMG_COLOR_MISSING,
 	IMG_COLOR_CHARACTERS,
+	IMG_COLOR_SIGNEDNESS,
 }	t_errors;
 
 typedef enum e_direction
@@ -95,6 +97,14 @@ typedef enum e_shade
 	INCREASE,
 	DECREASE
 }	t_shade;
+
+typedef enum e_channel
+{
+	C_RED = 1,
+	C_GREEN,
+	C_BLUE,
+	C_ALPHA
+}	t_channel;
 
 typedef struct s_color
 {
