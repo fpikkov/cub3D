@@ -39,7 +39,10 @@ int	main(int argc, char **argv)
 	if (!mlx_loop_hook(data.mlx, game_hook, &data))
 		print_error(GAME_HOOK_FAILURE, false);
 	else
+	{
+		print_tutorial();
 		mlx_loop(data.mlx);
+	}
 	terminate(&data);
 	return (EXIT_SUCCESS);
 }
