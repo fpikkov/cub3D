@@ -49,8 +49,11 @@ SRCS =	parser.c \
 		path_builder.c \
 		parse_textures.c \
 		is_bonus_texture.c \
-		load_bonus_textures.c \
+		pick_bonus_texture.c \
+		save_bonus_texture.c \
+		load_textures.c \
 		parse_texture_utils.c \
+		parse_color_data.c \
 		flashlight_images.c \
 		flashlight_setup.c \
 		texture_path.c \

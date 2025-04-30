@@ -34,9 +34,20 @@ void		fl_sprite_setup(t_data *data);
 
 // Verify/Load textures
 
-bool		is_bonus_texture(char *buffer, int idx, t_level *lvl);
+bool		save_texture(mlx_texture_t **texture, mlx_texture_t *new);
+bool		is_bonus_texture(char *buffer);
 bool		load_texture(char *buffer, t_level *lvl, int direction);
-void		load_bonus_texture(mlx_texture_t *tex, t_level *lvl, int type);
+bool		load_bonus_texture(char *buffer, t_level *lvl);
+bool		save_bonus_texture(mlx_texture_t *tex, t_level *lvl, int type);
+int			pick_bonus_texture(char *buffer);
+
+//texture parsing utils
+
+bool	map_started(char *buffer);
+bool	verify_png(char *filepath);
+char	*texture_path(char *buffer, t_file *info);
+bool	save_texture(mlx_texture_t **texture, mlx_texture_t *new);
+
 
 // Map parsing/preparation
 
