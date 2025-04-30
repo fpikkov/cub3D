@@ -95,6 +95,7 @@ SRCS =	parser.c \
 		main.c \
 		mouselook.c \
 		tutorial.c \
+		arg_to_uchar.c \
 
 OBJS = ${SRCS:%.c=${OBJ_DIR}/%.o}
 
