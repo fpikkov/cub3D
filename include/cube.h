@@ -29,7 +29,7 @@ bool		parse_textures(char *filename, t_data *data);
 int			build_path(char *path, t_data *data);
 int			parse_color_data(int fd, t_level *lvl);
 char		*tex_join_path(char *buf, size_t st, size_t len, t_file *info);
-uint32_t	fetch_color(char *buffer);
+uint32_t	fetch_color(char *buffer, bool *fail);
 void		fl_sprite_setup(t_data *data);
 
 // Verify/Load textures
@@ -43,10 +43,10 @@ int			pick_bonus_texture(char *buffer);
 
 //texture parsing utils
 
-bool	map_started(char *buffer);
-bool	verify_png(char *filepath);
-char	*texture_path(char *buffer, t_file *info);
-bool	save_texture(mlx_texture_t **texture, mlx_texture_t *new);
+bool		map_started(char *buffer);
+bool		verify_png(char *filepath);
+char		*texture_path(char *buffer, t_file *info);
+bool		save_texture(mlx_texture_t **texture, mlx_texture_t *new);
 
 
 // Map parsing/preparation
@@ -73,8 +73,9 @@ int64_t		get_time(void);
 float		to_radian(int degrees);
 bool		print_error(t_errors error, bool warning);
 void		print_tutorial(void);
-void		color_warning(int c);
-uint8_t		arg_to_uchar(const char *str);
+bool		color_warning(int c);
+uint8_t		arg_to_uchar(const char *str, bool *failure);
+uint8_t		extra_colors(char *buffer, int idx, bool *fail);
 
 // Object identifying utils
 

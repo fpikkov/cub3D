@@ -14,6 +14,9 @@
 
 static bool	is_texture_or_color(char *buffer, int idx, t_level *lvl)
 {
+	bool	fail;
+
+	fail = false;
 	if (ft_strncmp(buffer + idx, "NO", 2) == 0)
 		return (load_texture(buffer + idx + 2, lvl, NORTH));
 	else if (ft_strncmp(buffer + idx, "EA", 2) == 0)
@@ -23,9 +26,9 @@ static bool	is_texture_or_color(char *buffer, int idx, t_level *lvl)
 	else if (ft_strncmp(buffer + idx, "WE", 2) == 0)
 		return (load_texture(buffer + idx + 2, lvl, WEST));
 	else if (ft_strncmp(buffer + idx, "F", 1) == 0)
-		lvl->imgs.floor = fetch_color(buffer + idx + 1);
+		lvl->imgs.floor = fetch_color(buffer + idx + 1, &fail);
 	else if (ft_strncmp(buffer + idx, "C", 1) == 0)
-		lvl->imgs.ceiling = fetch_color(buffer + idx + 1);
+		lvl->imgs.ceiling = fetch_color(buffer + idx + 1, &fail);
 	else if (is_bonus_texture(buffer + idx))
 		return (load_bonus_texture(buffer + idx, lvl));
 	else
@@ -33,6 +36,8 @@ static bool	is_texture_or_color(char *buffer, int idx, t_level *lvl)
 		print_error(UNKNOWN_TOKEN, false);
 		return (false);
 	}
+	if (fail)
+		return (false);
 	return (true);
 }
 

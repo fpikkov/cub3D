@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-static char	*g_message[26] = {
+static char	*g_message[28] = {
 	"missing argument to map file(s)",
 	"invalid file extension",
 	"unable to open file",
@@ -36,10 +36,11 @@ static char	*g_message[26] = {
 	"failed to fetch root directory of the project",
 	"failed to resize image",
 	"hook creation failure",
-	"given value is outside the color channel range, limiting to max value",
-	"missing value in color information, defaulting to maximum channel value",
-	"ignoring letters found in color values, hexadecimal values not accepted",
-	"ignoring signedness in color information"
+	"given value is outside the color channel range",
+	"missing value in color information",
+	"letters found in color values",
+	"signedness in color information",
+	"too many colors were entered"
 };
 
 /**
@@ -65,4 +66,19 @@ bool	print_error(t_errors error, bool warning)
 	if (error == FILE_NO_ARGS)
 		return (true);
 	return (false);
+}
+
+uint8_t	extra_colors(char *buffer, int idx, bool *fail)
+{
+	while (buffer[idx])
+	{
+		if (ft_strchr(SEPARATOR, buffer[idx]) == NULL)
+		{
+			*fail = true;
+			print_error(IMG_COLOR_EXCESS, false);
+			return (0);
+		}
+		idx++;
+	}
+	return (0);
 }

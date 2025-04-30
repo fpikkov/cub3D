@@ -50,6 +50,7 @@ typedef enum e_errors
 	IMG_COLOR_MISSING,
 	IMG_COLOR_CHARACTERS,
 	IMG_COLOR_SIGNEDNESS,
+	IMG_COLOR_EXCESS,
 }	t_errors;
 
 typedef enum e_direction
@@ -105,7 +106,8 @@ typedef enum e_channel
 	C_RED = 1,
 	C_GREEN,
 	C_BLUE,
-	C_ALPHA
+	C_ALPHA,
+	C_EXTRA
 }	t_channel;
 
 typedef struct s_color

@@ -12,23 +12,29 @@
 
 #include "cube.h"
 
-static uint8_t	get_next_color(char *buffer, t_channel channel)
+static uint8_t	get_next_color(char *buffer, t_channel channel, bool *fail)
 {
 	static int32_t	idx = 0;
 	uint8_t			value;
 
 	value = 255;
+	if (channel == C_EXTRA)
+		return (extra_colors(buffer, idx, fail));
 	if (channel == C_RED)
 		idx = 0;
 	while (buffer[idx] && ft_strchr(NUMBERS, buffer[idx]) == NULL)
 	{
-		color_warning(buffer[idx]);
+		*fail = color_warning(buffer[idx]);
+		if (*fail == true)
+			return (value);
 		idx++;
 	}
 	if (buffer[idx])
-		value = arg_to_uchar(buffer + idx);
+		value = arg_to_uchar(buffer + idx, fail);
+	if (*fail == true)
+		return (value);
 	if (!buffer[idx] && channel != C_ALPHA)
-		print_error(IMG_COLOR_MISSING, true);
+		*fail = !print_error(IMG_COLOR_MISSING, false);
 	while (buffer[idx] && ft_strchr(NUMBERS, buffer[idx]) != NULL)
 		idx++;
 	return (value);
@@ -38,15 +44,24 @@ static uint8_t	get_next_color(char *buffer, t_channel channel)
  * @brief Fetches the color data in buffer
  * @return color value im 32 bit unsigned integer
  */
-uint32_t	fetch_color(char *buffer)
+uint32_t	fetch_color(char *buffer, bool *fail)
 {
 	t_color	color;
 
 	ft_memset(&color, 0, sizeof(t_color));
-	color.red = get_next_color(buffer, C_RED);
-	color.green = get_next_color(buffer, C_GREEN);
-	color.blue = get_next_color(buffer, C_BLUE);
-	color.alpha = get_next_color(buffer, C_ALPHA);
+	color.red = get_next_color(buffer, C_RED, fail);
+	if (*fail == true)
+		return (0);
+	color.green = get_next_color(buffer, C_GREEN, fail);
+	if (*fail == true)
+		return (0);
+	color.blue = get_next_color(buffer, C_BLUE, fail);
+	if (*fail == true)
+		return (0);
+	color.alpha = get_next_color(buffer, C_ALPHA, fail);
+	if (*fail == true)
+		return (0);
+	(void)get_next_color(buffer, C_EXTRA, fail);
 	return (color.red << 24 | color.green << 16 | \
 	color.blue << 8 | color.alpha);
 }
