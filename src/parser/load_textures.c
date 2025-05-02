@@ -40,8 +40,8 @@ bool	load_texture(char *buffer, t_level *lvl, int direction)
 bool	load_bonus_texture(char *buffer, t_level *lvl)
 {
 	mlx_texture_t	*texture;
-	int		type;
-	char		*path;
+	int				type;
+	char			*path;
 
 	if (!buffer)
 		return (true);

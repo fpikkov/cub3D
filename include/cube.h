@@ -48,7 +48,6 @@ bool		verify_png(char *filepath);
 char		*texture_path(char *buffer, t_file *info);
 bool		save_texture(mlx_texture_t **texture, mlx_texture_t *new);
 
-
 // Map parsing/preparation
 
 bool		parse_map(char *filename, t_data *data);
